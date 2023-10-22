@@ -1,0 +1,53 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:image_water_marker/utils/colors.dart';
+
+class OutPutTextField extends StatelessWidget {
+  const OutPutTextField({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 280,
+      height: 40,
+      child: TextField(
+        cursorColor: myGrey[700],
+        cursorOpacityAnimates: true,
+        cursorRadius: const Radius.circular(12),
+        cursorWidth: 1,
+        textAlignVertical: TextAlignVertical.center,
+        style: GoogleFonts.karla(
+          fontWeight: FontWeight.w500,
+          color: myGrey[100],
+        ),
+        textAlign: TextAlign.center,
+        decoration: InputDecoration(
+          hintText: "Out put file name",
+          hintStyle: GoogleFonts.karla(
+            fontWeight: FontWeight.w500,
+            color: myGrey[400],
+          ),
+          filled: true,
+          fillColor: myGrey[900],
+          contentPadding: const EdgeInsets.all(2),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            gapPadding: 0,
+            borderSide: BorderSide(
+              width: 1,
+              color: myOrange[800]!,
+            ),
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            gapPadding: 0,
+            borderSide: BorderSide(
+              width: 1,
+              color: myOrange[800]!,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
