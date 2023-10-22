@@ -2,15 +2,24 @@
 
 A new Flutter project.
 
-## Getting Started
+## Project Description
 
-This project is a starting point for a Flutter application.
+The desktop application enables you to watermark your images for use on websites, social networks, and other resources. This program is written in the Dart programming language and built using the Flutter framework.
 
-A few resources to get you started if this is your first Flutter project:
+The features and packages utilized in this application are as follows:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Custom Watermark: With this program, you can add your custom watermark to your images. This watermark can include text, a logo, or any signature of your choice. Packages used in this project:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+GetX
+
+Window Manager
+
+Google Fonts
+
+FadingPageView
+
+URL Launcher
+
+Project Contribution: This project is open-source, allowing you to contribute to its development, add new features, and address issues. This opportunity enables other developers to assist in improving and expanding this application.
+
+With this software, you can easily convert your images into watermarked versions and share them. The program is designed with a focus on user interface design, flexibility, and performance, utilizing the selected packages to achieve these goals.
