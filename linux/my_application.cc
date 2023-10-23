@@ -66,6 +66,7 @@ static void my_application_activate(GApplication* application) {
 static gboolean my_application_local_command_line(GApplication* application, gchar*** arguments, int* exit_status) {
   MyApplication* self = MY_APPLICATION(application);
   // Strip out the first argument as it is the binary name.
+  // gtk_widget_set_size_request(GTK_WIDGET(window), 1200, 800);
   self->dart_entrypoint_arguments = g_strdupv(*arguments + 1);
 
   g_autoptr(GError) error = nullptr;
