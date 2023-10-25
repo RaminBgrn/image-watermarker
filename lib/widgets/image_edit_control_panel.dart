@@ -10,7 +10,7 @@ class ImageEditControlPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 300,
-      height: 350,
+      height: 250,
       margin: const EdgeInsets.symmetric(horizontal: 4),
       decoration: BoxDecoration(
         color: myGrey[700],

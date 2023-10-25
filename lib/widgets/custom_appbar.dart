@@ -15,7 +15,7 @@ class CustomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 48,
+      height: 44,
       margin: const EdgeInsets.only(
         top: 4,
         left: 6,
@@ -38,10 +38,10 @@ class CustomAppBar extends StatelessWidget {
           filter: ImageFilter.blur(sigmaX: 9, sigmaY: 9),
           child: Container(
             width: double.infinity,
-            height: 48,
+            height: 44,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: myGrey[400]!.withOpacity(0.1),
+              color: myGrey[900]!.withOpacity(0.6),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
