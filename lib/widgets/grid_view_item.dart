@@ -1,9 +1,14 @@
 import 'package:animated_svg/animated_svg.dart';
+import 'package:cyclop/cyclop.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_water_marker/common/tool_tip.dart';
+import 'package:image_water_marker/common/my_tool_tip.dart';
+import 'package:image_water_marker/customs/radio_item.dart';
+import 'package:image_water_marker/customs/widget_radio_group.dart';
 import 'package:image_water_marker/utils/colors.dart';
+import 'package:image_water_marker/widgets/my_color_picker.dart';
 
 class GridViewItem extends StatefulWidget {
   const GridViewItem({super.key});
@@ -16,6 +21,7 @@ class _GridViewItemState extends State<GridViewItem> {
   late SvgController svgController;
   late double height;
   late bool isExpand;
+  final ValueNotifier<Color?> hoveredColor = ValueNotifier<Color?>(null);
   @override
   void initState() {
     svgController = AnimatedSvgController();
@@ -223,33 +229,51 @@ class _GridViewItemState extends State<GridViewItem> {
                                 ),
                               ),
                             ]),
-                      )
+                      ),
+                      MyColorPicker(
+                        onColor: (value) {},
+                        widget: Container(
+                          color: myGrey[700],
+                          child: SvgPicture.asset(
+                            'svgs/color_picker.svg',
+                            colorFilter: ColorFilter.mode(
+                              myGrey[300]!,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0,
-                    vertical: 16.0,
-                  ),
-                  child: Container(
-                      width: 300,
-                      height: 300,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: Colors.white),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Image.asset(
-                          'images/test.jpg',
-                          fit: BoxFit.fill,
-                        ),
-                      )),
-                ),
-              )
+              WidgetRadioGroup(items: [
+                RadioItem(icon: SvgPicture.asset('svgs/contain.svg')),
+                RadioItem(icon: SvgPicture.asset('svgs/cover.svg')),
+                RadioItem(icon: SvgPicture.asset('svgs/fill.svg')),
+                RadioItem(icon: SvgPicture.asset('svgs/fill_height.svg')),
+              ])
+              // Align(
+              //   alignment: Alignment.bottomCenter,
+              //   child: Padding(
+              //       padding: const EdgeInsets.symmetric(
+              //         horizontal: 8.0,
+              //         vertical: 16.0,
+              //       ),
+              //       child: Container(
+              //           width: 300,
+              //           height: 300,
+              //           decoration: BoxDecoration(
+              //               borderRadius: BorderRadius.circular(12),
+              //               color: Colors.white),
+              //           child: ClipRRect(
+              //             borderRadius: BorderRadius.circular(12),
+              //             child: Image.asset(
+              //               'images/test.jpg',
+              //               fit: BoxFit.fill,
+              //             ),
+              //           ))),
+              // )
             ],
           )),
     );
