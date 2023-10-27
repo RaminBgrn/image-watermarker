@@ -3,13 +3,17 @@ import 'package:get/get.dart';
 
 typedef OnClick = Function(String value);
 
-class RadioItem extends StatefulWidget {
-  final Widget icon;
-  final Color? color;
-  final EdgeInsets? margin;
-  final EdgeInsets? padding;
-  final BoxDecoration? decoration;
-  const RadioItem({
+class RadioItem extends StatelessWidget {
+  Widget icon;
+  Color? color;
+  String? svgUrl;
+  String? svgPath;
+  String? imageUrl;
+  String? imagePath;
+  EdgeInsets? margin;
+  EdgeInsets? padding;
+  BoxDecoration? decoration;
+  RadioItem({
     required this.icon,
     this.color,
     this.margin,
@@ -18,19 +22,17 @@ class RadioItem extends StatefulWidget {
     super.key,
   });
 
-  @override
-  State<RadioItem> createState() => _RadioItemState();
-}
+  RadioItem.fromSvgAsset({
+    super.key,
+    required this.icon,
+    this.color,
+    // this.margin,
+    // this.padding,
+    // this.decoration,
+  });
 
-class _RadioItemState extends State<RadioItem> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 20,
-      height: 20,
-      margin: const EdgeInsets.symmetric(horizontal: 4),
-      color: Colors.amber,
-      child: widget.icon,
-    );
+    return Container();
   }
 }
