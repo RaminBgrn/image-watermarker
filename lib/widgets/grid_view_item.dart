@@ -247,11 +247,27 @@ class _GridViewItemState extends State<GridViewItem> {
                   ),
                 ),
               ),
-              WidgetRadioGroup(items: [
-                RadioItem(icon: SvgPicture.asset('svgs/contain.svg')),
-                RadioItem(icon: SvgPicture.asset('svgs/cover.svg')),
-                RadioItem(icon: SvgPicture.asset('svgs/fill.svg')),
-                RadioItem(icon: SvgPicture.asset('svgs/fill_height.svg')),
+              RadioGroup.wrap(items: [
+                RadioItem.svgFromAsset(
+                  svgPaht: 'svgs/cover.svg',
+                  value: BoxFit.cover,
+                ),
+                RadioItem.svgFromAsset(
+                  svgPaht: 'svgs/contain.svg',
+                  value: BoxFit.contain,
+                ),
+                RadioItem.svgFromAsset(
+                  svgPaht: 'svgs/fill.svg',
+                  value: BoxFit.fill,
+                ),
+                RadioItem.svgFromAsset(
+                  svgPaht: 'svgs/fill_height.svg',
+                  value: BoxFit.fitHeight,
+                ),
+                RadioItem.svgFromAsset(
+                  svgPaht: 'svgs/fill_width.svg',
+                  value: BoxFit.fitWidth,
+                ),
               ])
               // Align(
               //   alignment: Alignment.bottomCenter,
