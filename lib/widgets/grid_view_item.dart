@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_water_marker/common/my_tool_tip.dart';
+import 'package:image_water_marker/customs/model/radio_data.dart';
 import 'package:image_water_marker/customs/radio_item.dart';
 import 'package:image_water_marker/customs/widget_radio_group.dart';
 import 'package:image_water_marker/utils/colors.dart';
@@ -245,28 +246,33 @@ class _GridViewItemState extends State<GridViewItem> {
                   ),
                 ),
               ),
-              RadioGroup.wrap(items: [
-                RadioItem.svgFromAsset(
-                  svgPaht: 'svgs/cover.svg',
-                  value: BoxFit.cover,
-                ),
-                RadioItem.svgFromAsset(
-                  svgPaht: 'svgs/contain.svg',
-                  value: BoxFit.contain,
-                ),
-                RadioItem.svgFromAsset(
-                  svgPaht: 'svgs/fill.svg',
-                  value: BoxFit.fill,
-                ),
-                RadioItem.svgFromAsset(
-                  svgPaht: 'svgs/fill_height.svg',
-                  value: BoxFit.fitHeight,
-                ),
-                RadioItem.svgFromAsset(
-                  svgPaht: 'svgs/fill_width.svg',
-                  value: BoxFit.fitWidth,
-                ),
-              ])
+              WidgetRadioGroup(
+                  data: [
+                    RadioData(
+                      iconPath: 'svgs/fill.svg',
+                      value: BoxFit.fill,
+                    ),
+                    RadioData(
+                      iconPath: 'svgs/contain.svg',
+                      value: BoxFit.contain,
+                    ),
+                    RadioData(
+                      iconPath: 'svgs/cover.svg',
+                      value: BoxFit.cover,
+                    ),
+                    RadioData(
+                        iconPath: 'svgs/fill_width.svg',
+                        value: BoxFit.fitWidth),
+                    RadioData(
+                        iconPath: 'svgs/fill_height.svg',
+                        value: BoxFit.fitHeight),
+                  ],
+                  iconTye: IconType.svgAsset,
+                  activeIconColor: Colors.cyan,
+                  deactivateIconColor: Colors.grey,
+                  onRadioClick: (value) {
+                    print(value);
+                  })
               // Align(
               //   alignment: Alignment.bottomCenter,
               //   child: Padding(
