@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_water_marker/common/my_tool_tip.dart';
 import 'package:image_water_marker/customs/model/radio_data.dart';
-import 'package:image_water_marker/customs/radio_item.dart';
 import 'package:image_water_marker/customs/widget_radio_group.dart';
 import 'package:image_water_marker/utils/colors.dart';
 import 'package:image_water_marker/widgets/my_color_picker.dart';
@@ -132,101 +131,52 @@ class _GridViewItemState extends State<GridViewItem> {
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              MouseRegion(
-                                cursor: SystemMouseCursors.click,
-                                child: Tooltip(
-                                  message: 'Fill',
-                                  textStyle:
-                                      GoogleFonts.karla(color: myGrey[200]),
-                                  verticalOffset: -45,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: myGrey[900],
+                              WidgetRadioGroup(
+                                  iconTye: IconType.svgAsset,
+                                  activeIconColor:
+                                      myGreen[500]!.withOpacity(0.7),
+                                  deactivateIconColor: myGrey[400],
+                                  backgroundColor: myGrey[700],
+                                  activeShadow: [
+                                    BoxShadow(
+                                        offset: Offset(0, 3),
+                                        color: myGreen[800]!,
+                                        blurRadius: 7),
+                                  ],
+                                  toolTipDecoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    color: myGrey[800],
                                   ),
-                                  child: SvgPicture.asset(
-                                    'svgs/fill.svg',
-                                    width: 26,
-                                    colorFilter: ColorFilter.mode(
-                                        myGrey[300]!, BlendMode.srcIn),
-                                  ),
-                                ),
-                              ),
-                              MouseRegion(
-                                cursor: SystemMouseCursors.click,
-                                child: Tooltip(
-                                  message: 'Fill Width',
-                                  textStyle:
-                                      GoogleFonts.karla(color: myGrey[200]),
-                                  verticalOffset: -45,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: myGrey[900],
-                                  ),
-                                  child: SvgPicture.asset(
-                                    'svgs/fill_width.svg',
-                                    width: 26,
-                                    colorFilter: ColorFilter.mode(
-                                        myGrey[300]!, BlendMode.srcIn),
-                                  ),
-                                ),
-                              ),
-                              MouseRegion(
-                                cursor: SystemMouseCursors.click,
-                                child: Tooltip(
-                                  message: 'Fill Heigth',
-                                  textStyle:
-                                      GoogleFonts.karla(color: myGrey[200]),
-                                  verticalOffset: -45,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: myGrey[900],
-                                  ),
-                                  child: SvgPicture.asset(
-                                    'svgs/fill_height.svg',
-                                    width: 26,
-                                    colorFilter: ColorFilter.mode(
-                                        myGrey[300]!, BlendMode.srcIn),
-                                  ),
-                                ),
-                              ),
-                              MouseRegion(
-                                cursor: SystemMouseCursors.click,
-                                child: Tooltip(
-                                  message: 'Contain',
-                                  textStyle:
-                                      GoogleFonts.karla(color: myGrey[200]),
-                                  verticalOffset: -45,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: myGrey[900],
-                                  ),
-                                  child: SvgPicture.asset(
-                                    'svgs/cover.svg',
-                                    width: 26,
-                                    colorFilter: ColorFilter.mode(
-                                        myGrey[300]!, BlendMode.srcIn),
-                                  ),
-                                ),
-                              ),
-                              MouseRegion(
-                                cursor: SystemMouseCursors.click,
-                                child: Tooltip(
-                                  message: 'Cover',
-                                  textStyle:
-                                      GoogleFonts.karla(color: myGrey[200]),
-                                  verticalOffset: -45,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: myGrey[900],
-                                  ),
-                                  child: SvgPicture.asset(
-                                    'svgs/contain.svg',
-                                    width: 26,
-                                    colorFilter: ColorFilter.mode(
-                                        myGrey[300]!, BlendMode.srcIn),
-                                  ),
-                                ),
-                              ),
+                                  verticalOffset: -40,
+                                  direction: Axis.horizontal,
+                                  itemMargin:
+                                      const EdgeInsets.symmetric(horizontal: 8),
+                                  activeDefault: 1,
+                                  data: [
+                                    RadioData(
+                                        iconPath: 'svgs/fill.svg',
+                                        value: BoxFit.fill,
+                                        toolTipText: 'Fill'),
+                                    RadioData(
+                                        iconPath: 'svgs/contain.svg',
+                                        value: BoxFit.contain,
+                                        toolTipText: "Contain"),
+                                    RadioData(
+                                        iconPath: 'svgs/cover.svg',
+                                        value: BoxFit.cover,
+                                        toolTipText: "Cover"),
+                                    RadioData(
+                                        iconPath: 'svgs/fill_width.svg',
+                                        value: BoxFit.fitWidth,
+                                        toolTipText: "Fill Width"),
+                                    RadioData(
+                                        iconPath: 'svgs/fill_height.svg',
+                                        value: BoxFit.fitHeight,
+                                        toolTipText: 'Fill Height'),
+                                  ],
+                                  onRadioClick: (value) {
+                                    print(value);
+                                  })
                             ]),
                       ),
                       MyColorPicker(
@@ -246,54 +196,27 @@ class _GridViewItemState extends State<GridViewItem> {
                   ),
                 ),
               ),
-              WidgetRadioGroup(
-                  data: [
-                    RadioData(
-                      iconPath: 'svgs/fill.svg',
-                      value: BoxFit.fill,
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                      vertical: 16.0,
                     ),
-                    RadioData(
-                      iconPath: 'svgs/contain.svg',
-                      value: BoxFit.contain,
-                    ),
-                    RadioData(
-                      iconPath: 'svgs/cover.svg',
-                      value: BoxFit.cover,
-                    ),
-                    RadioData(
-                        iconPath: 'svgs/fill_width.svg',
-                        value: BoxFit.fitWidth),
-                    RadioData(
-                        iconPath: 'svgs/fill_height.svg',
-                        value: BoxFit.fitHeight),
-                  ],
-                  iconTye: IconType.svgAsset,
-                  activeIconColor: Colors.cyan,
-                  deactivateIconColor: Colors.grey,
-                  onRadioClick: (value) {
-                    print(value);
-                  })
-              // Align(
-              //   alignment: Alignment.bottomCenter,
-              //   child: Padding(
-              //       padding: const EdgeInsets.symmetric(
-              //         horizontal: 8.0,
-              //         vertical: 16.0,
-              //       ),
-              //       child: Container(
-              //           width: 300,
-              //           height: 300,
-              //           decoration: BoxDecoration(
-              //               borderRadius: BorderRadius.circular(12),
-              //               color: Colors.white),
-              //           child: ClipRRect(
-              //             borderRadius: BorderRadius.circular(12),
-              //             child: Image.asset(
-              //               'images/test.jpg',
-              //               fit: BoxFit.fill,
-              //             ),
-              //           ))),
-              // )
+                    child: Container(
+                        width: 300,
+                        height: 300,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.white),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Image.asset(
+                            'images/test.jpg',
+                            fit: BoxFit.fill,
+                          ),
+                        ))),
+              )
             ],
           )),
     );
