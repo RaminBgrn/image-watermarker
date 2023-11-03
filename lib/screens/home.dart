@@ -18,6 +18,7 @@ class Home extends StatelessWidget {
           MasonryGridView.count(
             crossAxisCount: 4,
             mainAxisSpacing: 4,
+            itemCount: 20,
             padding: const EdgeInsets.only(top: 60, left: 12, right: 12),
             addRepaintBoundaries: true,
             shrinkWrap: true,

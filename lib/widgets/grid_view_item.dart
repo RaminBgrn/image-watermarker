@@ -1,8 +1,9 @@
 import 'package:animated_svg/animated_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get.dart';
 import 'package:image_water_marker/common/my_tool_tip.dart';
+import 'package:image_water_marker/controller/edit_image_controller.dart';
 import 'package:image_water_marker/customs/model/radio_data.dart';
 import 'package:image_water_marker/customs/widget_radio_group.dart';
 import 'package:image_water_marker/utils/colors.dart';
@@ -39,11 +40,7 @@ class _GridViewItemState extends State<GridViewItem> {
         color: myGrey[700]!,
       ),
       child: GestureDetector(
-          onTap: () {
-            svgController.isCompleted
-                ? svgController.reverse()
-                : svgController.forward();
-          },
+          onTap: () {},
           child: Stack(
             children: [
               Align(
@@ -76,6 +73,9 @@ class _GridViewItemState extends State<GridViewItem> {
                                     isExpand = !isExpand;
                                     setState(() {
                                       isExpand ? height = 450 : height = 360;
+                                      svgController.isCompleted
+                                          ? svgController.reverse()
+                                          : svgController.forward();
                                     });
                                   },
                                   controller: svgController,
@@ -133,13 +133,12 @@ class _GridViewItemState extends State<GridViewItem> {
                             children: [
                               WidgetRadioGroup(
                                   iconTye: IconType.svgAsset,
-                                  activeIconColor:
-                                      myGreen[500]!.withOpacity(0.7),
+                                  activeIconColor: Colors.cyan,
                                   deactivateIconColor: myGrey[400],
                                   backgroundColor: myGrey[700],
                                   activeShadow: [
                                     BoxShadow(
-                                        offset: Offset(0, 3),
+                                        offset: const Offset(0, 3),
                                         color: myGreen[800]!,
                                         blurRadius: 7),
                                   ],
@@ -175,7 +174,8 @@ class _GridViewItemState extends State<GridViewItem> {
                                         toolTipText: 'Fill Height'),
                                   ],
                                   onRadioClick: (value) {
-                                    print(value);
+                                    Get.find<EditImageController>()
+                                        .changeImageFit(value);
                                   })
                             ]),
                       ),
@@ -196,27 +196,31 @@ class _GridViewItemState extends State<GridViewItem> {
                   ),
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
+              GetBuilder<EditImageController>(builder: (clr) {
+                return Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 8.0,
                       vertical: 16.0,
                     ),
                     child: Container(
-                        width: 300,
-                        height: 300,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: Colors.white),
-                        child: ClipRRect(
+                      width: 300,
+                      height: 300,
+                      decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
-                          child: Image.asset(
-                            'images/test.jpg',
-                            fit: BoxFit.fill,
-                          ),
-                        ))),
-              )
+                          color: Colors.white),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.asset(
+                          'images/test.jpg',
+                          fit: clr.getBoxFit,
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              })
             ],
           )),
     );

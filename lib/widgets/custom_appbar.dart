@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_water_marker/controller/make_out_put_controller.dart';
 import 'package:image_water_marker/utils/colors.dart';
+import 'package:image_water_marker/widgets/add_image.dart';
 import 'package:image_water_marker/widgets/logo_button.dart';
 import 'package:image_water_marker/widgets/custom_text_field.dart';
+import 'package:image_water_marker/widgets/save_image.dart';
 import 'package:image_water_marker/widgets/setting.dart';
 
 class CustomAppBar extends StatelessWidget {
@@ -48,7 +50,15 @@ class CustomAppBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               textDirection: TextDirection.rtl,
               children: [
-                const Setting(),
+                const Row(
+                  children: [
+                    SaveImage(),
+                    SizedBox(width: 20),
+                    AddImage(),
+                    SizedBox(width: 10),
+                    Setting(),
+                  ],
+                ),
                 CustomTextField(
                   controller: Get.find<MakeOutPutController>()
                       .getSaveFileNameController,
