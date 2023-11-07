@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_water_marker/controller/setting_controller.dart';
 import 'package:image_water_marker/customs/model/radio_data.dart';
 import 'package:image_water_marker/customs/widget_radio_group.dart';
 import 'package:image_water_marker/utils/colors.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class Design extends StatelessWidget {
   const Design({super.key});
@@ -187,6 +190,46 @@ class Design extends StatelessWidget {
         const SizedBox(
           height: 40,
         ),
+        GetBuilder<SettingController>(builder: (clr) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 10,
+                  child: SliderTheme(
+                    data: const SliderThemeData(
+                      trackHeight: 0.5,
+                      thumbShape: RoundSliderThumbShape(
+                          enabledThumbRadius: 5,
+                          elevation: 0.2,
+                          pressedElevation: 1),
+                    ),
+                    child: Slider(
+                      value: clr.getWaterMarkOpacity,
+                      max: 1,
+                      min: 0.1,
+                      inactiveColor: myGrey[400],
+                      activeColor: Colors.cyan,
+                      onChangeStart: (value) {},
+                      onChangeEnd: (value) {},
+                      onChanged: (opacity) {
+                        clr.setWaterMarkOpacity(opacity);
+                      },
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    clr.getWaterMarkOpacity.toStringAsFixed(2),
+                    style: GoogleFonts.karla(fontSize: 12, color: myGrey[300]),
+                  ),
+                ),
+              ],
+            ),
+          );
+        })
       ],
     );
   }
