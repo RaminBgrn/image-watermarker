@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:cyclop/cyclop.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,6 +24,7 @@ void main() async {
     // await windowManager.setMinimizable(false);
     await windowManager.setMinimumSize(const Size(1200, 800));
   });
+  checkConfigFile();
   runApp(const MyApp());
 }
 
@@ -42,4 +46,25 @@ class MyApp extends StatelessWidget {
       home: EyeDrop(child: const Home()),
     );
   }
+}
+
+void checkConfigFile() async {
+  String path = Directory.current.path;
+  Directory('$path/data').createSync(recursive: true);
+  File configFile = File("$path/data/config.json");
+  if (!await configFile.exists()) {
+    configFile.create();
+    Map<String, dynamic> configData = {
+      'business_logo': "",
+      'brands_logo': "",
+      'water_mark': "",
+      'water_mark_box_fit': "",
+      'water_mark_logo_position': "",
+      'product_brands_position': "",
+      'business_logo_position': ""
+    };
+    configFile.writeAsStringSync(jsonEncode(configData));
+    return;
+  }
+  print('exists');
 }
