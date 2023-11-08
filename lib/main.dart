@@ -61,7 +61,10 @@ void checkConfigFile() async {
       'water_mark_box_fit': "",
       'water_mark_logo_position': "",
       'product_brands_position': "",
-      'business_logo_position': ""
+      'business_logo_position': "",
+      'water_mark_opacity': 0.5,
+      'boarder_color': "",
+      'image_border_radius': "",
     };
     configFile.writeAsStringSync(jsonEncode(configData));
     return;
