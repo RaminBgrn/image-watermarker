@@ -5,7 +5,6 @@ import 'package:image_water_marker/controller/setting_controller.dart';
 import 'package:image_water_marker/customs/model/radio_data.dart';
 import 'package:image_water_marker/customs/widget_radio_group.dart';
 import 'package:image_water_marker/utils/colors.dart';
-import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class Design extends StatelessWidget {
   const Design({super.key});
