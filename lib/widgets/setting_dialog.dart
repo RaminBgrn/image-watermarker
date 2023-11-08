@@ -152,13 +152,32 @@ void showSettingDialog() {
                           children: [
                             const SizedBox(),
                             Align(
-                              alignment: Alignment.center,
-                              child: Container(
-                                width: 300,
-                                height: 400,
-                                color: Colors.cyan,
-                              ),
-                            ),
+                                alignment: Alignment.center,
+                                child: Container(
+                                  width: 300,
+                                  height: 400,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(12),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            offset: const Offset(0, 4),
+                                            blurRadius: 8,
+                                            color:
+                                                myGrey[600]!.withOpacity(0.3))
+                                      ]),
+                                  padding: const EdgeInsets.all(8),
+                                  child: Stack(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: Image.asset(
+                                          'images/dummy.jpg',
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )),
                             Align(
                               alignment: Alignment.bottomRight,
                               child: Padding(

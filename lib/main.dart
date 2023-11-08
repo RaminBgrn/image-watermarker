@@ -69,5 +69,5 @@ void checkConfigFile() async {
     configFile.writeAsStringSync(jsonEncode(configData));
     return;
   }
-  print('exists');
+  
 }
