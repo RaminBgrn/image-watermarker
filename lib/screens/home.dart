@@ -5,7 +5,6 @@ import 'package:image_water_marker/screens/main_page.dart';
 import 'package:image_water_marker/screens/settings_page.dart';
 import 'package:image_water_marker/utils/colors.dart';
 import 'package:image_water_marker/widgets/custom_appbar.dart';
-import 'package:image_water_marker/widgets/grid_view_item.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -20,12 +19,12 @@ class Home extends StatelessWidget {
         child: Stack(children: [
           PageView(
             controller: Get.find<ScreenController>().getPageController,
-            children: [
+            children: const [
               MainPage(),
               SettingsPage(),
             ],
           ),
-          CustomAppBar(),
+          const CustomAppBar(),
         ]),
       ),
     );

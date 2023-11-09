@@ -149,86 +149,108 @@ class SettingsPage extends StatelessWidget {
                       const SizedBox(),
                       Align(
                           alignment: Alignment.center,
-                          child: Container(
-                            width: 300,
-                            height: 400,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(12),
-                                boxShadow: [
-                                  BoxShadow(
-                                      offset: const Offset(0, 4),
-                                      blurRadius: 8,
-                                      color: myGrey[600]!.withOpacity(0.3))
-                                ]),
-                            child:
-                                GetBuilder<SettingController>(builder: (clr) {
-                              return Stack(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.center,
-                                    child: Image.asset(
-                                      'images/dummy.jpg',
-                                    ),
-                                  ),
-                                  Positioned.fill(
-                                    bottom: 14,
-                                    child: Align(
-                                      alignment: clr.getBrandsLogoAlignment,
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 12, vertical: 4),
-                                        child: Text('brands logo'),
-                                        decoration: BoxDecoration(
-                                            border: Border(
-                                                bottom: BorderSide(
-                                                    width: 1,
-                                                    color: myPink[400]!),
-                                                top: BorderSide(
-                                                  width: 1,
-                                                  color: myPink[400]!,
-                                                ),
-                                                right: BorderSide(
-                                                  width: 1,
-                                                  color: myPink[400]!,
-                                                ),
-                                                left: BorderSide(
-                                                    width: 5,
-                                                    color: myPink[400]!))),
+                          child: GetBuilder<SettingController>(builder: (clr) {
+                            return Container(
+                              width: 300,
+                              height: 400,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(
+                                      clr.getImageBoarderRadius),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        offset: const Offset(0, 4),
+                                        blurRadius: 8,
+                                        color: myGrey[600]!.withOpacity(0.3))
+                                  ]),
+                              child:
+                                  GetBuilder<SettingController>(builder: (clr) {
+                                return Stack(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Image.asset(
+                                        'images/dummy.jpg',
                                       ),
                                     ),
-                                  ),
-                                  Positioned.fill(
-                                    top: 14,
-                                    child: Align(
-                                      alignment: Alignment.topRight,
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 12, vertical: 4),
-                                        child: Text('logo'),
-                                        decoration: BoxDecoration(
-                                            border: Border(
-                                                bottom: BorderSide(
+                                    Positioned.fill(
+                                      bottom: 14,
+                                      top: 14,
+                                      child: Align(
+                                        alignment: clr.getBrandsLogoAlignment,
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 12, vertical: 4),
+                                          decoration: BoxDecoration(
+                                              border: Border(
+                                                  bottom: BorderSide(
+                                                      width: 1,
+                                                      color: myPink[400]!),
+                                                  top: BorderSide(
                                                     width: 1,
-                                                    color: myPink[400]!),
-                                                top: BorderSide(
-                                                  width: 1,
-                                                  color: myPink[400]!,
-                                                ),
-                                                left: BorderSide(
-                                                  width: 1,
-                                                  color: myPink[400]!,
-                                                ),
-                                                right: BorderSide(
-                                                    width: 5,
-                                                    color: myPink[400]!))),
+                                                    color: myPink[400]!,
+                                                  ),
+                                                  right: BorderSide(
+                                                    width: clr
+                                                        .getRightBrandBoarderWidth,
+                                                    color: myPink[400]!,
+                                                  ),
+                                                  left: BorderSide(
+                                                      width: clr
+                                                          .getLeftBrandBoarderWidth,
+                                                      color: myPink[400]!))),
+                                          child: Text(
+                                            'brands logo',
+                                            style: GoogleFonts.karla(
+                                                color: myGrey[700],
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              );
-                            }),
-                          )),
+                                    Positioned.fill(
+                                      top: 14,
+                                      bottom: 14,
+                                      child: Align(
+                                        alignment: clr.getBusinessLogoAlignment,
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 12, vertical: 4),
+                                          decoration: BoxDecoration(
+                                              border: Border(
+                                                  bottom: BorderSide(
+                                                      width: 1,
+                                                      color: myPink[400]!),
+                                                  top: BorderSide(
+                                                    width: 1,
+                                                    color: myPink[400]!,
+                                                  ),
+                                                  left: BorderSide(
+                                                    width: clr
+                                                        .getLeftBusinessBoarderWidth,
+                                                    color: myPink[400]!,
+                                                  ),
+                                                  right: BorderSide(
+                                                      width: clr
+                                                          .getRightBusinessBoarderWidth,
+                                                      color: myPink[400]!))),
+                                          child: Text(
+                                            'logo',
+                                            style: GoogleFonts.karla(
+                                              fontSize: 14,
+                                              color: myGrey[700],
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }),
+                            );
+                          })),
                       Align(
                         alignment: Alignment.bottomRight,
                         child: Padding(
