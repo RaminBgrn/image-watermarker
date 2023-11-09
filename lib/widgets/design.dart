@@ -122,23 +122,25 @@ class Design extends StatelessWidget {
               color: myGrey[700], borderRadius: BorderRadius.circular(13)),
           verticalOffset: -44,
           activeIconColor: Colors.cyan.withOpacity(0.7),
-          onRadioClick: (fit) {},
+          onRadioClick: (align) {
+            Get.find<SettingController>().changeBrandsLogoAlignment(align);
+          },
           data: [
             RadioData(
                 iconPath: 'svgs/top_right.svg',
-                value: Alignment.topCenter,
+                value: Alignment.topRight,
                 toolTipText: 'Top Right'),
             RadioData(
                 iconPath: 'svgs/top_left.svg',
-                value: Alignment.center,
+                value: Alignment.topLeft,
                 toolTipText: 'Top Left'),
             RadioData(
                 iconPath: 'svgs/bottom_right.svg',
-                value: Alignment.bottomCenter,
+                value: Alignment.bottomRight,
                 toolTipText: 'Bottom Right'),
             RadioData(
                 iconPath: 'svgs/bottom_left.svg',
-                value: Alignment.bottomCenter,
+                value: Alignment.bottomLeft,
                 toolTipText: 'Bottom Left'),
           ],
         ),

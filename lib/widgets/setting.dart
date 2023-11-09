@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:image_water_marker/controller/screens_controller.dart';
 import 'package:image_water_marker/utils/colors.dart';
-import 'package:image_water_marker/widgets/setting_dialog.dart';
 
 class Setting extends StatelessWidget {
   const Setting({super.key});
@@ -10,7 +11,7 @@ class Setting extends StatelessWidget {
     return IconButton(
       alignment: Alignment.center,
       onPressed: () {
-        showSettingDialog();
+        Get.find<ScreenController>().moveToSetting();
       },
       icon: Icon(
         Icons.settings,
