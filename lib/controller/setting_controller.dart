@@ -1,9 +1,33 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SettingController extends GetxController {
+  // =========================== logo section ===============================
+  bool _isImageSet = false;
+  bool get hasImage => _isImageSet;
+
   final TextEditingController _productLogosPath = TextEditingController();
-  TextEditingController get getProductLogosPathController => _productLogosPath;
+  TextEditingController get getBusinessLogoPath => _productLogosPath;
+
+  File? _selectedFile;
+  File get getLogoImage => _selectedFile!;
+
+// =========================== Water mark Section ===========================
+
+  final TextEditingController _waterMarkImageFilePathController =
+      TextEditingController();
+  TextEditingController get getWaterMarkImageFilePathController =>
+      _waterMarkImageFilePathController;
+
+// ============================= brand Section ==============================
+
+  final TextEditingController _brandsFolderPathController =
+      TextEditingController();
+  TextEditingController get getBrandsFolderPathController =>
+      _brandsFolderPathController;
 
   Alignment _brandsLogoAlignment = Alignment.bottomLeft;
   Alignment get getBrandsLogoAlignment => _brandsLogoAlignment;
@@ -67,5 +91,23 @@ class SettingController extends GetxController {
   void setWaterMarkOpacity(double opacity) {
     _waterMarkOpacity = opacity;
     update();
+  }
+
+  void clearBusinessLogo() {
+    _productLogosPath.text = "";
+    _isImageSet = false;
+    update();
+  }
+
+  void getBusinessLogo() async {
+    ImagePicker businessImage = ImagePicker();
+    XFile? businessLogo =
+        await businessImage.pickImage(source: ImageSource.gallery);
+    if (businessLogo != null) {
+      _productLogosPath.text = businessLogo.path;
+      _isImageSet = true;
+      _selectedFile = File(businessLogo.path);
+      update();
+    }
   }
 }

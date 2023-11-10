@@ -34,6 +34,7 @@ class CustomTextField extends StatelessWidget {
         textAlignVertical: TextAlignVertical.center,
         style: GoogleFonts.karla(
           fontWeight: FontWeight.w500,
+          fontSize: 14,
           color: myGrey[100],
         ),
         textAlign: TextAlign.center,
@@ -41,6 +42,7 @@ class CustomTextField extends StatelessWidget {
           hintText: hint ?? "Out put file name",
           hintStyle: GoogleFonts.karla(
             fontWeight: FontWeight.w500,
+            fontSize: 14,
             color: myGrey[400],
           ),
           filled: true,

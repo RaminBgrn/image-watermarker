@@ -1,7 +1,10 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:image_water_marker/controller/setting_controller.dart';
 import 'package:image_water_marker/utils/colors.dart';
 import 'package:image_water_marker/widgets/design.dart';
@@ -41,26 +44,6 @@ class SettingsPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: SvgPicture.asset(
-                        'svgs/close.svg',
-                        colorFilter:
-                            ColorFilter.mode(myRed[800]!, BlendMode.srcIn),
-                        width: 30,
-                      ),
-                    ),
-                  ),
-                ),
-              )
             ]),
           ),
           Expanded(
@@ -72,29 +55,45 @@ class SettingsPage extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
-                          'Files Configuration',
-                          style: GoogleFonts.karla(
-                              fontSize: 22, color: myGrey[300]),
-                        ),
-                        TextFieldWithTitle(
-                          controller: TextEditingController(),
-                          title: "",
-                          isReadOnly: true,
-                          textFieldHint: 'your business logo',
-                        ),
-                        TextFieldWithTitle(
-                          controller: TextEditingController(),
-                          title: "",
-                          textFieldHint: "water mark image file",
-                          isReadOnly: true,
-                        ),
-                        TextFieldWithTitle(
-                          controller: TextEditingController(),
-                          title: "",
-                          isReadOnly: true,
-                          textFieldHint: 'brands folder file(s)',
-                        ),
+                        GetBuilder<SettingController>(builder: (clr) {
+                          return Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'Files Configuration',
+                                style: GoogleFonts.karla(
+                                    fontSize: 22, color: myGrey[300]),
+                              ),
+                              TextFieldWithTitle(
+                                controller: clr.getBusinessLogoPath,
+                                title: "",
+                                isReadOnly: true,
+                                textFieldHint: 'your business logo',
+                                clearButtonColor:
+                                    clr.hasImage ? myRed[400] : myGrey[300],
+                                onClearTap: clr.clearBusinessLogo,
+                                onTap: () async {
+                                  Get.find<SettingController>()
+                                      .getBusinessLogo();
+                                },
+                              ),
+                              TextFieldWithTitle(
+                                controller: TextEditingController(),
+                                title: "",
+                                textFieldHint: "water mark image file",
+                                isReadOnly: true,
+                                onTap: () {},
+                              ),
+                              TextFieldWithTitle(
+                                controller: TextEditingController(),
+                                title: "",
+                                isReadOnly: true,
+                                textFieldHint: 'brands folder file(s)',
+                                onTap: () {},
+                              ),
+                            ],
+                          );
+                        }),
                         const SizedBox(
                           height: 15,
                         ),
@@ -143,143 +142,179 @@ class SettingsPage extends StatelessWidget {
                       ])),
                 ),
                 Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const SizedBox(),
-                      Align(
-                          alignment: Alignment.center,
-                          child: GetBuilder<SettingController>(builder: (clr) {
-                            return Container(
-                              width: 300,
-                              height: 400,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(
-                                      clr.getImageBoarderRadius),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        offset: const Offset(0, 4),
-                                        blurRadius: 8,
-                                        color: myGrey[600]!.withOpacity(0.3))
-                                  ]),
+                  child: Builder(builder: (context) {
+                    return GetBuilder<SettingController>(builder: (clr) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const SizedBox(),
+                          Align(
+                              alignment: Alignment.center,
                               child:
                                   GetBuilder<SettingController>(builder: (clr) {
-                                return Stack(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.center,
-                                      child: Image.asset(
-                                        'images/dummy.jpg',
-                                      ),
-                                    ),
-                                    Positioned.fill(
-                                      bottom: 14,
-                                      top: 14,
-                                      child: Align(
-                                        alignment: clr.getBrandsLogoAlignment,
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 12, vertical: 4),
-                                          decoration: BoxDecoration(
-                                              border: Border(
-                                                  bottom: BorderSide(
-                                                      width: 1,
-                                                      color: myPink[400]!),
-                                                  top: BorderSide(
-                                                    width: 1,
-                                                    color: myPink[400]!,
-                                                  ),
-                                                  right: BorderSide(
-                                                    width: clr
-                                                        .getRightBrandBoarderWidth,
-                                                    color: myPink[400]!,
-                                                  ),
-                                                  left: BorderSide(
-                                                      width: clr
-                                                          .getLeftBrandBoarderWidth,
-                                                      color: myPink[400]!))),
-                                          child: Text(
-                                            'brands logo',
-                                            style: GoogleFonts.karla(
-                                                color: myGrey[700],
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold),
+                                return Container(
+                                  width: 300,
+                                  height: 400,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(
+                                          clr.getImageBoarderRadius),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            offset: const Offset(0, 4),
+                                            blurRadius: 8,
+                                            color:
+                                                myGrey[600]!.withOpacity(0.3))
+                                      ]),
+                                  child: GetBuilder<SettingController>(
+                                      builder: (clr) {
+                                    return Stack(
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.center,
+                                          child: Image.asset(
+                                            'images/dummy.jpg',
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                    Positioned.fill(
-                                      top: 14,
-                                      bottom: 14,
-                                      child: Align(
-                                        alignment: clr.getBusinessLogoAlignment,
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 12, vertical: 4),
-                                          decoration: BoxDecoration(
-                                              border: Border(
-                                                  bottom: BorderSide(
-                                                      width: 1,
-                                                      color: myPink[400]!),
-                                                  top: BorderSide(
-                                                    width: 1,
-                                                    color: myPink[400]!,
-                                                  ),
-                                                  left: BorderSide(
-                                                    width: clr
-                                                        .getLeftBusinessBoarderWidth,
-                                                    color: myPink[400]!,
-                                                  ),
-                                                  right: BorderSide(
-                                                      width: clr
-                                                          .getRightBusinessBoarderWidth,
-                                                      color: myPink[400]!))),
-                                          child: Text(
-                                            'logo',
-                                            style: GoogleFonts.karla(
-                                              fontSize: 14,
-                                              color: myGrey[700],
-                                              fontWeight: FontWeight.bold,
+                                        Positioned.fill(
+                                          bottom: 18,
+                                          top: 18,
+                                          child: Align(
+                                            alignment:
+                                                clr.getBrandsLogoAlignment,
+                                            child: Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 12,
+                                                      vertical: 4),
+                                              decoration: BoxDecoration(
+                                                  border: Border(
+                                                      bottom: BorderSide(
+                                                          width: 1,
+                                                          color: myPink[400]!),
+                                                      top: BorderSide(
+                                                        width: 1,
+                                                        color: myPink[400]!,
+                                                      ),
+                                                      right: BorderSide(
+                                                        width: clr
+                                                            .getRightBrandBoarderWidth,
+                                                        color: myPink[400]!,
+                                                      ),
+                                                      left: BorderSide(
+                                                          width: clr
+                                                              .getLeftBrandBoarderWidth,
+                                                          color:
+                                                              myPink[400]!))),
+                                              child: Text(
+                                                'brands logo',
+                                                style: GoogleFonts.karla(
+                                                    color: myGrey[700],
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
                                             ),
                                           ),
                                         ),
+                                        Positioned.fill(
+                                          top: 18,
+                                          bottom: 18,
+                                          child: Align(
+                                            alignment:
+                                                clr.getBusinessLogoAlignment,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  border: Border(
+                                                      bottom: BorderSide(
+                                                          width: 1,
+                                                          color: myPink[400]!),
+                                                      top: BorderSide(
+                                                        width: 1,
+                                                        color: myPink[400]!,
+                                                      ),
+                                                      left: BorderSide(
+                                                        width: clr
+                                                            .getLeftBusinessBoarderWidth,
+                                                        color: myPink[400]!,
+                                                      ),
+                                                      right: BorderSide(
+                                                          width: clr
+                                                              .getRightBusinessBoarderWidth,
+                                                          color:
+                                                              myPink[400]!))),
+                                              child: clr.hasImage
+                                                  ? ClipRect(
+                                                      child: BackdropFilter(
+                                                        filter:
+                                                            ImageFilter.blur(
+                                                                sigmaX: 4,
+                                                                sigmaY: 4),
+                                                        child: Container(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  horizontal:
+                                                                      12,
+                                                                  vertical: 4),
+                                                          color: Colors.white
+                                                              .withOpacity(0.1),
+                                                          child: Image.file(
+                                                            clr.getLogoImage,
+                                                            // width: 50,
+                                                            height: 25,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : Text(
+                                                      'logo',
+                                                      style: GoogleFonts.karla(
+                                                        fontSize: 14,
+                                                        color: myGrey[700],
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  }),
+                                );
+                              })),
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: Padding(
+                              padding: const EdgeInsets.all(18),
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      side: BorderSide(
+                                        width: 1,
+                                        color: myGreen[600]!,
+                                      ),
+                                      backgroundColor:
+                                          myGreen[900]!.withOpacity(0.2)),
+                                  onPressed: () {},
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0, vertical: 6.0),
+                                    child: Text(
+                                      "Save",
+                                      style: GoogleFonts.karla(
+                                        fontSize: 18,
+                                        color: myGreen[600],
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                  ],
-                                );
-                              }),
-                            );
-                          })),
-                      Align(
-                        alignment: Alignment.bottomRight,
-                        child: Padding(
-                          padding: const EdgeInsets.all(18),
-                          child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  side: BorderSide(
-                                    width: 1,
-                                    color: myGreen[600]!,
-                                  ),
-                                  backgroundColor:
-                                      myGreen[900]!.withOpacity(0.2)),
-                              onPressed: () {},
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8.0, vertical: 6.0),
-                                child: Text(
-                                  "Save",
-                                  style: GoogleFonts.karla(
-                                    fontSize: 18,
-                                    color: myGreen[600],
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              )),
-                        ),
-                      )
-                    ],
-                  ),
+                                  )),
+                            ),
+                          )
+                        ],
+                      );
+                    });
+                  }),
                 )
               ],
             ),
