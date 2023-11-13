@@ -5,6 +5,7 @@ import 'package:image_water_marker/customs/model/radio_data.dart';
 import 'package:image_water_marker/customs/widget_radio_group.dart';
 import 'package:image_water_marker/utils/colors.dart';
 import 'package:image_water_marker/widgets/custom_text_field.dart';
+import 'package:image_water_marker/widgets/single_check_box.dart';
 
 class TextFieldWithTitle extends StatelessWidget {
   final TextEditingController controller;
@@ -94,12 +95,11 @@ class TextFieldWithTitle extends StatelessWidget {
                     ),
                   ),
                 ),
-                WidgetRadioGroup(
-                    data: [RadioData(iconPath: 'svgs/back.svg', value: true)],
-                    iconTye: IconType.svgAsset,
-                    onRadioClick: (has) {
-                      print(has);
-                    })
+                SingleCheckBox(
+                  onClick: (value) {
+                    print(value);
+                  },
+                )
               ],
             ),
           )

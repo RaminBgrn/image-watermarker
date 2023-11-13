@@ -113,7 +113,6 @@ class WidgetRadioGroup extends StatefulWidget {
 
 class _WidgetRadioGroupState extends State<WidgetRadioGroup> {
   late List<bool> buttonState;
-
   late int previousActiveButton;
   @override
   void initState() {
@@ -145,13 +144,13 @@ class _WidgetRadioGroupState extends State<WidgetRadioGroup> {
               verticalOffset: widget.verticalOffset,
               child: GestureDetector(
                 onTap: () {
-                  widget.onRadioClick(widget.data[index].value);
                   setState(() {
                     buttonState[index] = true;
                     if (previousActiveButton >= 0) {
                       buttonState[previousActiveButton] = false;
                     }
                     previousActiveButton = index;
+                    widget.onRadioClick(widget.data[index].value);
                   });
                 },
                 child: Row(
@@ -163,20 +162,19 @@ class _WidgetRadioGroupState extends State<WidgetRadioGroup> {
                         style: widget.titleStyle,
                       ),
                       Container(
-                        width: widget.iconWidth,
-                        height: widget.iconHeight,
-                        padding: widget.itemPadding,
-                        margin: widget.itemMargin,
-                        decoration: BoxDecoration(
-                          color: widget.backgroundColor,
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: buttonState[index]
-                              ? widget.activeShadow
-                              : widget.deactivateShadow,
-                        ),
-                        child: box(widget.iconTye, widget.data[index],
-                            buttonState[index]),
-                      )
+                          width: widget.iconWidth,
+                          height: widget.iconHeight,
+                          padding: widget.itemPadding,
+                          margin: widget.itemMargin,
+                          decoration: BoxDecoration(
+                            color: widget.backgroundColor,
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: buttonState[index]
+                                ? widget.activeShadow
+                                : widget.deactivateShadow,
+                          ),
+                          child: box(widget.iconTye, widget.data[index],
+                              buttonState[index]))
                     ]),
               ),
             ),
