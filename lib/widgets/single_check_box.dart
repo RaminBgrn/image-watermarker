@@ -15,11 +15,11 @@ class SingleCheckBox extends StatefulWidget {
 class _SingleCheckBoxState extends State<SingleCheckBox> {
   late bool _isChecked;
 
-  Color buttonColor = myGrey[500]!;
+  Color buttonColor = myGreen[400]!.withOpacity(0.8);
 
   @override
   void initState() {
-    _isChecked = false;
+    _isChecked = true;
     super.initState();
   }
 

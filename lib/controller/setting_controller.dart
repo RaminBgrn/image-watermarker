@@ -6,6 +6,13 @@ import 'package:image_picker/image_picker.dart';
 
 class SettingController extends GetxController {
   // =========================== logo section ===============================
+  bool _showLogoSection = true;
+  bool get hasShowLogo => _showLogoSection;
+  set checkToShowLog(bool data) {
+    _showLogoSection = data;
+    update();
+  }
+
   bool _isImageSet = false;
   bool get hasImage => _isImageSet;
 
