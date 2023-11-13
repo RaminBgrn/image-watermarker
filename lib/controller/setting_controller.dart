@@ -3,8 +3,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_water_marker/controller/config_file_controller.dart';
+import 'package:image_water_marker/models/config_file_model.dart';
 
 class SettingController extends GetxController {
+  // config file model;
+  ConfigFileModel _configFileModel = ConfigFileModel();
+
   // =========================== logo section ===============================
   bool _showLogoSection = true;
   bool get hasShowLogo => _showLogoSection;
@@ -16,8 +21,8 @@ class SettingController extends GetxController {
   bool _isImageSet = false;
   bool get hasImage => _isImageSet;
 
-  final TextEditingController _productLogosPath = TextEditingController();
-  TextEditingController get getBusinessLogoPath => _productLogosPath;
+  final TextEditingController _businessLogosPath = TextEditingController();
+  TextEditingController get getBusinessLogoPath => _businessLogosPath;
 
   File? _selectedFile;
   File get getLogoImage => _selectedFile!;
@@ -65,6 +70,19 @@ class SettingController extends GetxController {
   double _rightBusinessBoarderWidth = 5;
   double get getRightBusinessBoarderWidth => _rightBusinessBoarderWidth;
 
+  // Functions
+
+  @override
+  void onInit() {
+    _configFileModel = Get.find<ConfigFileController>().getConfigModel;
+    _waterMarkImageFilePathController.text =
+        _configFileModel.waterMarkImage ?? '';
+    _brandsFolderPathController.text = _configFileModel.brandsLogo ?? '';
+    _businessLogosPath.text = _configFileModel.businessLogo ?? '';
+    _waterMarkOpacity = _configFileModel.waterMarkOpacity ?? 0.6;
+    super.onInit();
+  }
+
   void changeBrandsLogoAlignment(Alignment align) {
     _brandsLogoAlignment = align;
     _checkBrandsBoarder(align);
@@ -108,7 +126,7 @@ class SettingController extends GetxController {
   }
 
   void clearBusinessLogo() {
-    _productLogosPath.text = "";
+    _businessLogosPath.text = "";
     _isImageSet = false;
     update();
   }
@@ -118,7 +136,7 @@ class SettingController extends GetxController {
     XFile? businessLogo =
         await businessImage.pickImage(source: ImageSource.gallery);
     if (businessLogo != null) {
-      _productLogosPath.text = businessLogo.path;
+      _businessLogosPath.text = businessLogo.path;
       _isImageSet = true;
       _selectedFile = File(businessLogo.path);
       update();

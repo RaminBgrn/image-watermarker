@@ -5,6 +5,7 @@ import 'package:cyclop/cyclop.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_water_marker/controller/base_controller.dart';
+import 'package:image_water_marker/controller/config_file_controller.dart';
 import 'package:image_water_marker/screens/home.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -24,7 +25,6 @@ void main() async {
     // await windowManager.setMinimizable(false);
     await windowManager.setMinimumSize(const Size(1200, 800));
   });
-  checkConfigFile();
   runApp(const MyApp());
 }
 
@@ -36,6 +36,8 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Water Marker',
       initialBinding: BaseController(),
+      onInit: () => Get.find<ConfigFileController>().checkConfigFile(),
+      onReady: () => Get.find<ConfigFileController>().readData(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         splashColor: Colors.transparent,
@@ -46,28 +48,4 @@ class MyApp extends StatelessWidget {
       home: EyeDrop(child: const Home()),
     );
   }
-}
-
-void checkConfigFile() async {
-  String path = Directory.current.path;
-  Directory('$path/data').createSync(recursive: true);
-  File configFile = File("$path/data/config.json");
-  if (!await configFile.exists()) {
-    configFile.create();
-    Map<String, dynamic> configData = {
-      'business_logo': "",
-      'brands_logo': "",
-      'water_mark': "",
-      'water_mark_box_fit': "",
-      'water_mark_logo_position': "",
-      'product_brands_position': "",
-      'business_logo_position': "",
-      'water_mark_opacity': 0.5,
-      'boarder_color': "",
-      'image_border_radius': "",
-    };
-    configFile.writeAsStringSync(jsonEncode(configData));
-    return;
-  }
-  
 }

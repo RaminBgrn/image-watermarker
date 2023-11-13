@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:image_water_marker/controller/config_file_controller.dart';
 import 'package:image_water_marker/controller/edit_image_controller.dart';
 import 'package:image_water_marker/controller/import_image_controller.dart';
 import 'package:image_water_marker/controller/make_out_put_controller.dart';
@@ -13,5 +14,6 @@ class BaseController extends Bindings {
     Get.put(EditImageController());
     Get.put(ImportImageController());
     Get.put(ScreenController());
+    Get.put(ConfigFileController());
   }
 }

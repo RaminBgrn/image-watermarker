@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_water_marker/controller/config_file_controller.dart';
 import 'package:image_water_marker/controller/setting_controller.dart';
 import 'package:image_water_marker/utils/colors.dart';
 import 'package:image_water_marker/widgets/design.dart';
@@ -104,6 +105,9 @@ class SettingsPage extends StatelessWidget {
                               TextFieldWithTitle(
                                 controller: TextEditingController(),
                                 textFieldHint: "water mark image file",
+                                onClearTap: () {
+                                  Get.find<ConfigFileController>().readData();
+                                },
                                 isReadOnly: true,
                                 onTap: () {},
                               ),

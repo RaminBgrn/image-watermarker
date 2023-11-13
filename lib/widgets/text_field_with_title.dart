@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:image_water_marker/utils/colors.dart';
 import 'package:image_water_marker/widgets/custom_text_field.dart';
-import 'package:image_water_marker/widgets/single_check_box.dart';
 
 class TextFieldWithTitle extends StatelessWidget {
   final TextEditingController controller;
