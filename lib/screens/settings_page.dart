@@ -90,7 +90,10 @@ class SettingsPage extends StatelessWidget {
                                         style: GoogleFonts.karla(
                                             fontSize: 16, color: myGrey[300]),
                                       ),
-                                      SingleCheckBox(onClick: (value) {}),
+                                      SingleCheckBox(onClick: (value) {
+                                        Get.find<SettingController>()
+                                            .showOrHideBrand = value;
+                                      }),
                                     ],
                                   ),
                                 ],
@@ -215,39 +218,44 @@ class SettingsPage extends StatelessWidget {
                                           child: Align(
                                             alignment:
                                                 clr.getBrandsLogoAlignment,
-                                            child: Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 12,
-                                                      vertical: 4),
-                                              decoration: BoxDecoration(
-                                                  border: Border(
-                                                      bottom: BorderSide(
-                                                          width: 1,
-                                                          color: myPink[400]!),
-                                                      top: BorderSide(
-                                                        width: 1,
-                                                        color: myPink[400]!,
-                                                      ),
-                                                      right: BorderSide(
-                                                        width: clr
-                                                            .getRightBrandBoarderWidth,
-                                                        color: myPink[400]!,
-                                                      ),
-                                                      left: BorderSide(
-                                                          width: clr
-                                                              .getLeftBrandBoarderWidth,
-                                                          color:
-                                                              myPink[400]!))),
-                                              child: Text(
-                                                'brands logo',
-                                                style: GoogleFonts.karla(
-                                                    color: myGrey[700],
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                            ),
+                                            child: clr.hasShowBrands
+                                                ? Container(
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                        horizontal: 12,
+                                                        vertical: 4),
+                                                    decoration: BoxDecoration(
+                                                        border: Border(
+                                                            bottom: BorderSide(
+                                                                width: 1,
+                                                                color: myPink[
+                                                                    400]!),
+                                                            top: BorderSide(
+                                                              width: 1,
+                                                              color:
+                                                                  myPink[400]!,
+                                                            ),
+                                                            right: BorderSide(
+                                                              width: clr
+                                                                  .getRightBrandBoarderWidth,
+                                                              color:
+                                                                  myPink[400]!,
+                                                            ),
+                                                            left: BorderSide(
+                                                                width: clr
+                                                                    .getLeftBrandBoarderWidth,
+                                                                color: myPink[
+                                                                    400]!))),
+                                                    child: Text(
+                                                      'brands logo',
+                                                      style: GoogleFonts.karla(
+                                                          color: myGrey[700],
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  )
+                                                : const SizedBox(),
                                           ),
                                         ),
                                         clr.hasShowLogo
@@ -325,7 +333,7 @@ class SettingsPage extends StatelessWidget {
                                                             )),
                                                 ),
                                               )
-                                            : SizedBox(),
+                                            : const SizedBox(),
                                       ],
                                     );
                                   }),

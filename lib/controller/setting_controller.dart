@@ -31,6 +31,13 @@ class SettingController extends GetxController {
 
 // ============================= brand Section ==============================
 
+  bool _showBrandsLogo = true;
+  bool get hasShowBrands => _showBrandsLogo;
+  set showOrHideBrand(bool hasShow) {
+    _showBrandsLogo = hasShow;
+    update();
+  }
+
   final TextEditingController _brandsFolderPathController =
       TextEditingController();
   TextEditingController get getBrandsFolderPathController =>
