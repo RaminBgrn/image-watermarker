@@ -105,9 +105,7 @@ class SettingsPage extends StatelessWidget {
                               TextFieldWithTitle(
                                 controller: TextEditingController(),
                                 textFieldHint: "water mark image file",
-                                onClearTap: () {
-                                  Get.find<ConfigFileController>().readData();
-                                },
+                                onClearTap: () {},
                                 isReadOnly: true,
                                 onTap: () {},
                               ),

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 class ConfigFileModel {
   String? businessLogo;
   String? brandsLogo;

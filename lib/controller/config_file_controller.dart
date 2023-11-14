@@ -19,7 +19,10 @@ class ConfigFileController extends GetxController {
 
   void checkConfigFile() async {
     String path = Directory.current.path;
-    Directory('$path/data').createSync(recursive: true);
+    Directory('$path/data/water mark').createSync(recursive: true);
+    Directory('$path/data/products logos').createSync(recursive: true);
+    Directory('$path/data/business logo').createSync(recursive: true);
+
     File configFile = File("$path/data/config.json");
     if (!await configFile.exists()) {
       configFile.create();
@@ -33,11 +36,11 @@ class ConfigFileController extends GetxController {
         'business_logo_position': "",
         'water_mark_opacity': 0.5,
         'boarder_color': "",
-        'image_border_radius': 4.0,
+        'image_border_radius': 8.0,
       };
       configFile.writeAsStringSync(jsonEncode(configData));
-      return;
     }
+    readData();
   }
 
   void updateConfigFile() {}

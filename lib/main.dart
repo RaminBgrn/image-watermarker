@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
       title: 'Water Marker',
       initialBinding: BaseController(),
       onInit: () => Get.find<ConfigFileController>().checkConfigFile(),
-      onReady: () => Get.find<ConfigFileController>().readData(),
+      // onReady: () => Get.find<ConfigFileController>().readData(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         splashColor: Colors.transparent,
