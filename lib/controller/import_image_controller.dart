@@ -13,6 +13,7 @@ class ImportImageController extends GetxController {
 
   void setWaterMarkImage() async {
     ImagePicker picker = ImagePicker();
+
     XFile? waterMarkImage = await picker.pickImage(source: ImageSource.gallery);
     if (waterMarkImage != null) {
       _waterMarkImage = File(waterMarkImage.path);
@@ -22,9 +23,11 @@ class ImportImageController extends GetxController {
     }
   }
 
-  void _copyData(File file) {
+  void copyData(File file) {
     String applicationDataPath = Directory.current.path;
-    File waterCopy = file
-        .copySync("$applicationDataPath/data/waterMark/${basename(file.path)}");
+    File waterCopy = file.copySync(
+        "$applicationDataPath/data/water mark/${basename(file.path)}");
+    _waterMarkImage = File(waterCopy.path);
+    update();
   }
 }

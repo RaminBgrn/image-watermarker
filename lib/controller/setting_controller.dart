@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_water_marker/controller/config_file_controller.dart';
+import 'package:image_water_marker/controller/import_image_controller.dart';
 import 'package:image_water_marker/models/config_file_model.dart';
 
 class SettingController extends GetxController {
@@ -139,6 +140,7 @@ class SettingController extends GetxController {
       _businessLogosPath.text = businessLogo.path;
       _isImageSet = true;
       _selectedFile = File(businessLogo.path);
+      Get.find<ImportImageController>().copyData(_selectedFile!);
       update();
     }
   }

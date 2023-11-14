@@ -17,6 +17,8 @@ class ConfigFileController extends GetxController {
     return decoderConfigFile;
   }
 
+  void updateConfigFile({required String key, required dynamic data}) {}
+
   void checkConfigFile() async {
     String path = Directory.current.path;
     Directory('$path/data/water mark').createSync(recursive: true);
@@ -42,6 +44,4 @@ class ConfigFileController extends GetxController {
     }
     readData();
   }
-
-  void updateConfigFile() {}
 }
