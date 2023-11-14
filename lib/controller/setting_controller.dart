@@ -73,14 +73,14 @@ class SettingController extends GetxController {
   // Functions
 
   @override
-  void onInit() {
+  void onReady() {
     _configFileModel = Get.find<ConfigFileController>().getConfigModel;
     _waterMarkImageFilePathController.text =
         _configFileModel.waterMarkImage ?? '';
     _brandsFolderPathController.text = _configFileModel.brandsLogo ?? '';
     _businessLogosPath.text = _configFileModel.businessLogo ?? '';
     _waterMarkOpacity = _configFileModel.waterMarkOpacity ?? 0.6;
-    super.onInit();
+    super.onReady();
   }
 
   void changeBrandsLogoAlignment(Alignment align) {

@@ -9,7 +9,7 @@ class ConfigFileModel {
   String? productBrandsPosition;
   String? businessLogoPosition;
   double? waterMarkOpacity;
-  Color? borderColor;
+  String? borderColor;
   double? imageBorderRadius;
 
   ConfigFileModel({

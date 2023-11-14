@@ -33,7 +33,7 @@ class ConfigFileController extends GetxController {
         'business_logo_position': "",
         'water_mark_opacity': 0.5,
         'boarder_color': "",
-        'image_border_radius': 4,
+        'image_border_radius': 4.0,
       };
       configFile.writeAsStringSync(jsonEncode(configData));
       return;
