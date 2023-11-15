@@ -24,6 +24,11 @@ class ConfigFileController extends GetxController {
     updateConfigFile.writeAsStringSync(jsonEncode(configMap));
   }
 
+  dynamic getSingleData({required String key}) async {
+    Map<String, dynamic> jsonMap = await readData();
+    return jsonMap[key];
+  }
+
   void checkConfigFile() async {
     Directory('$fileDire/data/water mark').createSync(recursive: true);
     Directory('$fileDire/data/products logos').createSync(recursive: true);

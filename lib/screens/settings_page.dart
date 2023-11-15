@@ -105,8 +105,13 @@ class SettingsPage extends StatelessWidget {
                                 controller:
                                     clr.getWaterMarkImageFilePathController,
                                 textFieldHint: "water mark image file",
-                                onClearTap: () {},
+                                onClearTap: () {
+                                  clr.clearWaterMarkImage();
+                                },
                                 isReadOnly: true,
+                                clearButtonColor: clr.isWaterMarkSelect
+                                    ? myRed[400]
+                                    : myGrey[300],
                                 onTap: () {
                                   clr.chooseWaterMark();
                                 },

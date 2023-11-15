@@ -54,6 +54,9 @@ class SettingController extends GetxController {
     update();
   }
 
+  List<File> _brands = [];
+  List<File> get getBrands => _brands;
+
   final TextEditingController _brandsFolderPathController =
       TextEditingController();
   TextEditingController get getBrandsFolderPathController =>
@@ -107,6 +110,7 @@ class SettingController extends GetxController {
       _waterMarkFile = await _getImage();
       _isWaterMarkFileSelected = true;
       _waterMarkImageFilePathController.text = basename(_waterMarkFile.path);
+
       File imageFromApplicationFolder = _waterMarkFile.copySync(
           "$applicationPath/data/water mark/${basename(_waterMarkFile.path)}");
       Get.find<ConfigFileController>().updateConfigFile(
@@ -119,6 +123,28 @@ class SettingController extends GetxController {
           messageColor: myRed[100]!,
           title: 'Error',
           message: 'Image has not select');
+    }
+  }
+
+  // clear water mark image
+  void clearWaterMarkImage() {
+    _isWaterMarkFileSelected = false;
+    _waterMarkImageFilePathController.clear();
+
+    Get.find<ConfigFileController>()
+        .updateConfigFile(data: '', key: 'water_mark');
+    update();
+  }
+
+  // get brands from hard disk
+
+  void importBrands() async {
+    ImagePicker brandsPicker = ImagePicker();
+    List<XFile> brands = await brandsPicker.pickMultiImage();
+    if (brands.isNotEmpty) {
+      for (XFile brand in brands) {
+        _brands.add(File(brand.path));
+      }
     }
   }
 
