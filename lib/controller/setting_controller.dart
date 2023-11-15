@@ -6,6 +6,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:image_water_marker/common/my_snackbar.dart';
 import 'package:image_water_marker/controller/config_file_controller.dart';
 import 'package:image_water_marker/models/config_file_model.dart';
+import 'package:image_water_marker/utils/colors.dart';
+import 'package:path/path.dart';
 
 class SettingController extends GetxController {
   // config file model;
@@ -18,6 +20,8 @@ class SettingController extends GetxController {
     _showLogoSection = data;
     update();
   }
+
+  String applicationPath = "";
 
   bool _isImageSet = false;
   bool get hasImage => _isImageSet;
@@ -80,6 +84,12 @@ class SettingController extends GetxController {
   // Functions
 
   @override
+  void onInit() {
+    applicationPath = Directory.current.path;
+    super.onInit();
+  }
+
+  @override
   void onReady() {
     _configFileModel = Get.find<ConfigFileController>().getConfigModel;
     _waterMarkImageFilePathController.text =
@@ -96,12 +106,19 @@ class SettingController extends GetxController {
     try {
       _waterMarkFile = await _getImage();
       _isWaterMarkFileSelected = true;
-      Get.find<ConfigFileController>()
-          .updateConfigFile(data: _waterMarkFile.path, key: 'water_mark');
+      _waterMarkImageFilePathController.text = basename(_waterMarkFile.path);
+      File imageFromApplicationFolder = _waterMarkFile.copySync(
+          "$applicationPath/data/water mark/${basename(_waterMarkFile.path)}");
+      Get.find<ConfigFileController>().updateConfigFile(
+          data: imageFromApplicationFolder.path, key: 'water_mark');
       update();
     } catch (e) {
-      MySnackBar.showMySnackBar(Colors.black,
-          title: 'Error', message: 'File has not select');
+      e.printError();
+      MySnackBar.showMySnackBar(
+          titleColor: myRed[400]!,
+          messageColor: myRed[100]!,
+          title: 'Error',
+          message: 'Image has not select');
     }
   }
 
