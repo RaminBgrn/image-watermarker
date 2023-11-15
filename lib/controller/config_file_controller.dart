@@ -6,10 +6,10 @@ import 'package:image_water_marker/models/config_file_model.dart';
 
 class ConfigFileController extends GetxController {
   ConfigFileModel _model = ConfigFileModel();
+  String fileDire = Directory.current.path;
   ConfigFileModel get getConfigModel => _model;
 
   Future<Map<String, dynamic>> readData() async {
-    String fileDire = Directory.current.path;
     File configFile = File("$fileDire/data/config.json");
     Map<String, dynamic> decoderConfigFile =
         jsonDecode(configFile.readAsStringSync());
@@ -17,15 +17,19 @@ class ConfigFileController extends GetxController {
     return decoderConfigFile;
   }
 
-  void updateConfigFile({required String key, required dynamic data}) {}
+  void updateConfigFile({required String key, required dynamic data}) async {
+    Map<String, dynamic> configMap = await readData();
+    configMap[key] = data;
+    File updateConfigFile = File("$fileDire/data/config.json");
+    updateConfigFile.writeAsStringSync(jsonEncode(configMap));
+  }
 
   void checkConfigFile() async {
-    String path = Directory.current.path;
-    Directory('$path/data/water mark').createSync(recursive: true);
-    Directory('$path/data/products logos').createSync(recursive: true);
-    Directory('$path/data/business logo').createSync(recursive: true);
+    Directory('$fileDire/data/water mark').createSync(recursive: true);
+    Directory('$fileDire/data/products logos').createSync(recursive: true);
+    Directory('$fileDire/data/business logo').createSync(recursive: true);
 
-    File configFile = File("$path/data/config.json");
+    File configFile = File("$fileDire/data/config.json");
     if (!await configFile.exists()) {
       configFile.create();
       Map<String, dynamic> configData = {

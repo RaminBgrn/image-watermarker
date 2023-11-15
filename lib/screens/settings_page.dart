@@ -102,11 +102,14 @@ class SettingsPage extends StatelessWidget {
                                 height: 8,
                               ),
                               TextFieldWithTitle(
-                                controller: TextEditingController(),
+                                controller:
+                                    clr.getWaterMarkImageFilePathController,
                                 textFieldHint: "water mark image file",
                                 onClearTap: () {},
                                 isReadOnly: true,
-                                onTap: () {},
+                                onTap: () {
+                                  clr.chooseWaterMark();
+                                },
                               ),
                               TextFieldWithTitle(
                                 hasEnableButton: true,
@@ -116,10 +119,7 @@ class SettingsPage extends StatelessWidget {
                                 clearButtonColor:
                                     clr.hasImage ? myRed[400] : myGrey[300],
                                 onClearTap: clr.clearBusinessLogo,
-                                onTap: () async {
-                                  Get.find<SettingController>()
-                                      .getBusinessLogo();
-                                },
+                                onTap: () async {},
                               ),
                               TextFieldWithTitle(
                                 hasEnableButton: true,
@@ -212,6 +212,12 @@ class SettingsPage extends StatelessWidget {
                                           child: Image.asset(
                                             'images/dummy.jpg',
                                           ),
+                                        ),
+                                        Align(
+                                          alignment: Alignment.center,
+                                          child: clr.isWaterMarkSelect
+                                              ? Image.file(clr.getWaterMarkFile)
+                                              : const SizedBox(),
                                         ),
                                         Positioned.fill(
                                           bottom: 18,

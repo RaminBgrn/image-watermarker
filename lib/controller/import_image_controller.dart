@@ -26,7 +26,7 @@ class ImportImageController extends GetxController {
   void copyData(File file) {
     String applicationDataPath = Directory.current.path;
     File waterCopy = file.copySync(
-        "$applicationDataPath/data/water mark/${basename(file.path)}");
+        "$applicationDataPath/data/business logo/${basename(file.path)}");
     _waterMarkImage = File(waterCopy.path);
     update();
   }

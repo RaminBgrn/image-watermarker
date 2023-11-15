@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_water_marker/common/my_snackbar.dart';
 import 'package:image_water_marker/controller/config_file_controller.dart';
 import 'package:image_water_marker/controller/import_image_controller.dart';
 import 'package:image_water_marker/models/config_file_model.dart';
@@ -29,6 +30,12 @@ class SettingController extends GetxController {
   File get getLogoImage => _selectedFile!;
 
 // =========================== Water mark Section ===========================
+
+  bool _isWaterMarkFileSelected = false;
+  bool get isWaterMarkSelect => _isWaterMarkFileSelected;
+
+  late File _waterMarkFile;
+  File get getWaterMarkFile => _waterMarkFile;
 
   final TextEditingController _waterMarkImageFilePathController =
       TextEditingController();
@@ -84,6 +91,21 @@ class SettingController extends GetxController {
     super.onReady();
   }
 
+  // get water mark image section
+
+  void chooseWaterMark() async {
+    try {
+      _waterMarkFile = await _getImage();
+      _isWaterMarkFileSelected = true;
+      Get.find<ConfigFileController>()
+          .updateConfigFile(data: _waterMarkFile.path, key: 'water_mark');
+      update();
+    } catch (e) {
+      MySnackBar.showMySnackBar(Colors.black,
+          title: 'Error', message: 'File has not select');
+    }
+  }
+
   void changeBrandsLogoAlignment(Alignment align) {
     _brandsLogoAlignment = align;
     _checkBrandsBoarder(align);
@@ -132,16 +154,11 @@ class SettingController extends GetxController {
     update();
   }
 
-  void getBusinessLogo() async {
+  Future<File> _getImage() async {
     ImagePicker businessImage = ImagePicker();
-    XFile? businessLogo =
+    XFile? selectedFile =
         await businessImage.pickImage(source: ImageSource.gallery);
-    if (businessLogo != null) {
-      _businessLogosPath.text = businessLogo.path;
-      _isImageSet = true;
-      _selectedFile = File(businessLogo.path);
-      Get.find<ImportImageController>().copyData(_selectedFile!);
-      update();
-    }
+    if (selectedFile == null) throw Exception();
+    return File(selectedFile.path);
   }
 }

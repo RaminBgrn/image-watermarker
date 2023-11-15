@@ -23,8 +23,6 @@ class ConfigFileModel {
     this.waterMarkOpacity,
   });
 
-  ConfigFileModel.toJson({required ConfigFileModel model}) {}
-
   ConfigFileModel.fromJson(Map<String, dynamic> json) {
     businessLogo = json['business_logo'];
     brandsLogo = json['brands_logo'];
