@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_water_marker/common/my_snackbar.dart';
 import 'package:image_water_marker/controller/config_file_controller.dart';
+import 'package:image_water_marker/controller/import_image_controller.dart';
 import 'package:image_water_marker/models/config_file_model.dart';
 import 'package:image_water_marker/utils/colors.dart';
 import 'package:path/path.dart';
@@ -23,11 +24,13 @@ class SettingController extends GetxController {
 
   String applicationPath = "";
 
-  bool _isImageSet = false;
-  bool get hasImage => _isImageSet;
+  bool _hasBusinessLogoSet = false;
+  bool get hasBusinessLogo => _hasBusinessLogoSet;
 
-  final TextEditingController _businessLogosPath = TextEditingController();
-  TextEditingController get getBusinessLogoPath => _businessLogosPath;
+  final TextEditingController _businessLogosPathTextController =
+      TextEditingController();
+  TextEditingController get getBusinessLogoPathTextController =>
+      _businessLogosPathTextController;
 
   File? _businessLogoFile;
   File get getLogoImage => _businessLogoFile!;
@@ -98,7 +101,7 @@ class SettingController extends GetxController {
     _waterMarkImageFilePathController.text =
         _configFileModel.waterMarkImage ?? '';
     _brandsFolderPathController.text = _configFileModel.brandsLogo ?? '';
-    _businessLogosPath.text = _configFileModel.businessLogo ?? '';
+    _businessLogosPathTextController.text = _configFileModel.businessLogo ?? '';
     _waterMarkOpacity = _configFileModel.waterMarkOpacity ?? 0.6;
     super.onReady();
   }
@@ -106,25 +109,35 @@ class SettingController extends GetxController {
   // get business Logo file
 
   void chooseBusinessLogoFile() async {
-    ImagePicker businessLogoPicker = ImagePicker();
-    XFile? selectedFile =
-        await businessLogoPicker.pickImage(source: ImageSource.gallery);
-    if (selectedFile == null) return;
-    _businessLogoFile = File(selectedFile.path);
+    _businessLogoFile = await Get.find<ImportImageController>()
+        .getImageFromStorage('business logo');
+    _hasBusinessLogoSet = true;
+    Get.find<ConfigFileController>()
+        .updateConfigFile(key: 'business_logo', data: _businessLogoFile!.path);
+    _businessLogosPathTextController.text = basename(_businessLogoFile!.path);
+    update();
+  }
+
+  // clear business logo data
+
+  void clearBusinessLogo() {
+    _businessLogosPathTextController.text = "";
+    _hasBusinessLogoSet = false;
+    Get.find<ConfigFileController>()
+        .updateConfigFile(data: '', key: 'business_logo');
+    update();
   }
 
   // get water mark image section
 
   void chooseWaterMark() async {
     try {
-      _waterMarkFile = await _getImage();
+      _waterMarkFile = await Get.find<ImportImageController>()
+          .getImageFromStorage('water mark');
       _isWaterMarkFileSelected = true;
       _waterMarkImageFilePathController.text = basename(_waterMarkFile.path);
-
-      File imageFromApplicationFolder = _waterMarkFile.copySync(
-          "$applicationPath/data/water mark/${basename(_waterMarkFile.path)}");
-      Get.find<ConfigFileController>().updateConfigFile(
-          data: imageFromApplicationFolder.path, key: 'water_mark');
+      Get.find<ConfigFileController>()
+          .updateConfigFile(data: _waterMarkFile.path, key: 'water_mark');
       update();
     } catch (e) {
       e.printError();
@@ -140,7 +153,6 @@ class SettingController extends GetxController {
   void clearWaterMarkImage() {
     _isWaterMarkFileSelected = false;
     _waterMarkImageFilePathController.clear();
-
     Get.find<ConfigFileController>()
         .updateConfigFile(data: '', key: 'water_mark');
     update();
@@ -198,19 +210,5 @@ class SettingController extends GetxController {
   void setWaterMarkOpacity(double opacity) {
     _waterMarkOpacity = opacity;
     update();
-  }
-
-  void clearBusinessLogo() {
-    _businessLogosPath.text = "";
-    _isImageSet = false;
-    update();
-  }
-
-  Future<File> _getImage() async {
-    ImagePicker businessImage = ImagePicker();
-    XFile? selectedFile =
-        await businessImage.pickImage(source: ImageSource.gallery);
-    if (selectedFile == null) throw Exception();
-    return File(selectedFile.path);
   }
 }

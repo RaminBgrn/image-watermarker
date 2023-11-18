@@ -118,13 +118,17 @@ class SettingsPage extends StatelessWidget {
                               ),
                               TextFieldWithTitle(
                                 hasEnableButton: true,
-                                controller: clr.getBusinessLogoPath,
+                                controller:
+                                    clr.getBusinessLogoPathTextController,
                                 isReadOnly: true,
                                 textFieldHint: 'your business logo',
-                                clearButtonColor:
-                                    clr.hasImage ? myRed[400] : myGrey[300],
+                                clearButtonColor: clr.hasBusinessLogo
+                                    ? myRed[400]
+                                    : myGrey[300],
                                 onClearTap: clr.clearBusinessLogo,
-                                onTap: () async {},
+                                onTap: () async {
+                                  clr.chooseBusinessLogoFile();
+                                },
                               ),
                               TextFieldWithTitle(
                                 hasEnableButton: true,
@@ -300,7 +304,7 @@ class SettingsPage extends StatelessWidget {
                                                                       .getRightBusinessBoarderWidth,
                                                                   color: myPink[
                                                                       400]!))),
-                                                      child: clr.hasImage
+                                                      child: clr.hasBusinessLogo
                                                           ? ClipRect(
                                                               child:
                                                                   BackdropFilter(
