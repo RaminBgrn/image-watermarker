@@ -29,8 +29,8 @@ class SettingController extends GetxController {
   final TextEditingController _businessLogosPath = TextEditingController();
   TextEditingController get getBusinessLogoPath => _businessLogosPath;
 
-  File? _selectedFile;
-  File get getLogoImage => _selectedFile!;
+  File? _businessLogoFile;
+  File get getLogoImage => _businessLogoFile!;
 
 // =========================== Water mark Section ===========================
 
@@ -101,6 +101,16 @@ class SettingController extends GetxController {
     _businessLogosPath.text = _configFileModel.businessLogo ?? '';
     _waterMarkOpacity = _configFileModel.waterMarkOpacity ?? 0.6;
     super.onReady();
+  }
+
+  // get business Logo file
+
+  void chooseBusinessLogoFile() async {
+    ImagePicker businessLogoPicker = ImagePicker();
+    XFile? selectedFile =
+        await businessLogoPicker.pickImage(source: ImageSource.gallery);
+    if (selectedFile == null) return;
+    _businessLogoFile = File(selectedFile.path);
   }
 
   // get water mark image section
