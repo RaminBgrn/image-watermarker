@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:image_water_marker/controller/setting_controller.dart';
 import 'package:image_water_marker/utils/colors.dart';
 import 'package:image_water_marker/widgets/design.dart';
@@ -135,7 +136,10 @@ class SettingsPage extends StatelessWidget {
                                 controller: TextEditingController(),
                                 isReadOnly: true,
                                 textFieldHint: 'brands folder file(s)',
-                                onTap: () {},
+                                onTap: () async {
+                                  ImagePicker pick = ImagePicker();
+                                  pick.pickMultiImage();
+                                },
                               ),
                             ],
                           );

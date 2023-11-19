@@ -1,6 +1,8 @@
+import 'package:image_water_marker/models/brands_logo_model.dart';
+
 class ConfigFileModel {
   String? businessLogo;
-  String? brandsLogo;
+  List<BrandsLogoModel>? brandsLogo;
   String? waterMarkImage;
   String? waterMarkImageBoxFit;
   String? waterMarkLogoPosition;
@@ -25,7 +27,8 @@ class ConfigFileModel {
 
   ConfigFileModel.fromJson(Map<String, dynamic> json) {
     businessLogo = json['business_logo'];
-    brandsLogo = json['brands_logo'];
+    //TODO : add for loop to extract data
+    // brandsLogo = json['brands_logo'];
     waterMarkImage = json['water_mark'];
     waterMarkImageBoxFit = json['water_mark_box_fit'];
     waterMarkLogoPosition = json['water_mark_logo_position'];

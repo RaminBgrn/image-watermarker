@@ -39,7 +39,7 @@ class ConfigFileController extends GetxController {
       configFile.create();
       Map<String, dynamic> configData = {
         'business_logo': "",
-        'brands_logo': "",
+        'brands_logo': [],
         'water_mark': "",
         'water_mark_box_fit': "",
         'water_mark_logo_position': "",

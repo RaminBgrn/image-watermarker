@@ -100,7 +100,7 @@ class SettingController extends GetxController {
     _configFileModel = Get.find<ConfigFileController>().getConfigModel;
     _waterMarkImageFilePathController.text =
         _configFileModel.waterMarkImage ?? '';
-    _brandsFolderPathController.text = _configFileModel.brandsLogo ?? '';
+
     _businessLogosPathTextController.text = _configFileModel.businessLogo ?? '';
     _waterMarkOpacity = _configFileModel.waterMarkOpacity ?? 0.6;
     super.onReady();
@@ -159,16 +159,6 @@ class SettingController extends GetxController {
   }
 
   // get brands from hard disk
-
-  void importBrands() async {
-    ImagePicker brandsPicker = ImagePicker();
-    List<XFile> brands = await brandsPicker.pickMultiImage();
-    if (brands.isNotEmpty) {
-      for (XFile brand in brands) {
-        _brands.add(File(brand.path));
-      }
-    }
-  }
 
   void changeBrandsLogoAlignment(Alignment align) {
     _brandsLogoAlignment = align;

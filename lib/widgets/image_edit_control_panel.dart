@@ -1,6 +1,6 @@
-import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:image_water_marker/customs/model/radio_data.dart';
+import 'package:image_water_marker/customs/widget_radio_group.dart';
 import 'package:image_water_marker/utils/colors.dart';
 
 class ImageEditControlPanel extends StatelessWidget {
@@ -18,44 +18,41 @@ class ImageEditControlPanel extends StatelessWidget {
       ),
       child: Column(
         children: [
-          CustomRadioButton(
-            buttonLables: const [
-              'Fill',
-              'Cover',
-              'Contain',
-              'Fill Withd',
-              'Fill Hight',
-              'none'
+          WidgetRadioGroup(
+            alignment: WrapAlignment.spaceBetween,
+            direction: Axis.horizontal,
+            activeDefault: 0,
+            itemMargin: const EdgeInsets.symmetric(horizontal: 8),
+            iconTye: IconType.svgAsset,
+            deactivateIconColor: myGrey[400],
+            toolTipDecoration: BoxDecoration(
+                color: myGrey[700], borderRadius: BorderRadius.circular(13)),
+            verticalOffset: -44,
+            activeIconColor: Colors.cyan.withOpacity(0.7),
+            onRadioClick: (fit) {},
+            data: [
+              RadioData(
+                  iconPath: 'svgs/fill.svg',
+                  value: BoxFit.fill,
+                  toolTipText: 'Fill'),
+              RadioData(
+                  iconPath: 'svgs/contain.svg',
+                  value: BoxFit.contain,
+                  toolTipText: 'Contain'),
+              RadioData(
+                  iconPath: 'svgs/cover.svg',
+                  value: BoxFit.cover,
+                  toolTipText: 'Cover'),
+              RadioData(
+                  iconPath: 'svgs/fill_height.svg',
+                  value: BoxFit.fitHeight,
+                  toolTipText: 'Fit Height'),
+              RadioData(
+                  iconPath: 'svgs/fill_width.svg',
+                  value: BoxFit.fitWidth,
+                  toolTipText: 'Fit Width'),
             ],
-            buttonValues: const [
-              BoxFit.fill,
-              BoxFit.cover,
-              BoxFit.contain,
-              BoxFit.fitWidth,
-              BoxFit.fitHeight,
-              BoxFit.none
-            ],
-            radioButtonValue: (value) {},
-            unSelectedColor: myGrey[900]!.withOpacity(0.4),
-            selectedColor: myOrange[900]!.withOpacity(0.4),
-            elevation: 0,
-            enableButtonWrap: true,
-            horizontal: false,
-            selectedBorderColor: Colors.transparent,
-            unSelectedBorderColor: Colors.transparent,
-            margin: const EdgeInsets.all(6),
-            autoWidth: true,
-            radius: 8,
-            wrapAlignment: WrapAlignment.center,
-            buttonTextStyle: ButtonTextStyle(
-              textStyle: GoogleFonts.karla(
-                fontWeight: FontWeight.w500,
-                color: myGrey[200],
-              ),
-              selectedColor: myGrey[300]!,
-              unSelectedColor: myGrey[200]!,
-            ),
-          )
+          ),
         ],
       ),
     );
