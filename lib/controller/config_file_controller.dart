@@ -6,8 +6,8 @@ import 'package:image_water_marker/models/config_file_model.dart';
 
 class ConfigFileController extends GetxController {
   ConfigFileModel _model = ConfigFileModel();
-  String fileDire = Directory.current.path;
   ConfigFileModel get getConfigModel => _model;
+  String fileDire = Directory.current.path;
 
   Future<Map<String, dynamic>> readData() async {
     File configFile = File("$fileDire/data/config.json");
@@ -15,6 +15,12 @@ class ConfigFileController extends GetxController {
         jsonDecode(configFile.readAsStringSync());
     _model = ConfigFileModel.fromJson(decoderConfigFile);
     return decoderConfigFile;
+  }
+
+  @override
+  void onInit() {
+    readData();
+    super.onInit();
   }
 
   void updateConfigFile({required String key, required dynamic data}) async {
@@ -40,14 +46,19 @@ class ConfigFileController extends GetxController {
       configFile.create();
       Map<String, dynamic> configData = {
         'business_logo': "",
+        'business_logo_position': "Alignment.topRight",
+        'business_logo_selected_index': 0,
+        'show_business_logo': true,
         'brands_logo': [],
+        'brands_position': "Alignment.bottomLeft",
+        'brands_selected_index': 2,
+        'show_brands_logo': true,
         'water_mark': "",
-        'water_mark_box_fit': "",
-        'water_mark_logo_position': "",
-        'product_brands_position': "",
-        'business_logo_position': "",
+        "water_mark_box_fit_index": 0,
+        'water_mark_box_fit': "BoxFit.contain",
+        "water_mark_position_index": 1,
+        'water_mark_position': "Alignment.center",
         'water_mark_opacity': 0.5,
-        'boarder_color': "",
         'image_border_radius': 8.0,
       };
       configFile.writeAsStringSync(jsonEncode(configData));

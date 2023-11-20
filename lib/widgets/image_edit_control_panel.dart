@@ -29,7 +29,7 @@ class ImageEditControlPanel extends StatelessWidget {
                 color: myGrey[700], borderRadius: BorderRadius.circular(13)),
             verticalOffset: -44,
             activeIconColor: Colors.cyan.withOpacity(0.7),
-            onRadioClick: (fit) {},
+            onRadioClick: (fit, index) {},
             data: [
               RadioData(
                   iconPath: 'svgs/fill.svg',

@@ -5,6 +5,7 @@ import 'package:image_water_marker/controller/setting_controller.dart';
 import 'package:image_water_marker/customs/model/radio_data.dart';
 import 'package:image_water_marker/customs/widget_radio_group.dart';
 import 'package:image_water_marker/utils/colors.dart';
+import 'package:image_water_marker/widgets/setting.dart';
 
 class Design extends StatelessWidget {
   const Design({super.key});
@@ -31,7 +32,8 @@ class Design extends StatelessWidget {
               WidgetRadioGroup(
                 alignment: WrapAlignment.spaceBetween,
                 direction: Axis.horizontal,
-                activeDefault: 0,
+                activeDefault: Get.find<SettingController>()
+                    .getSelectedWaterMarkBoxFitIndex,
                 itemMargin: const EdgeInsets.symmetric(horizontal: 8),
                 iconTye: IconType.svgAsset,
                 deactivateIconColor: myGrey[400],
@@ -40,8 +42,8 @@ class Design extends StatelessWidget {
                     borderRadius: BorderRadius.circular(13)),
                 verticalOffset: -44,
                 activeIconColor: Colors.cyan.withOpacity(0.7),
-                onRadioClick: (fit) {
-                  Get.find<SettingController>().setWaterBoxFit(fit);
+                onRadioClick: (fit, index) {
+                  Get.find<SettingController>().setWaterBoxFit(fit, index);
                 },
                 data: [
                   RadioData(
@@ -87,7 +89,8 @@ class Design extends StatelessWidget {
               WidgetRadioGroup(
                 alignment: WrapAlignment.spaceBetween,
                 direction: Axis.horizontal,
-                activeDefault: 1,
+                activeDefault:
+                    Get.find<SettingController>().getSelectedWatermarkPosition,
                 itemMargin: const EdgeInsets.symmetric(horizontal: 8),
                 iconTye: IconType.svgAsset,
                 deactivateIconColor: myGrey[400],
@@ -96,7 +99,10 @@ class Design extends StatelessWidget {
                     borderRadius: BorderRadius.circular(13)),
                 verticalOffset: -44,
                 activeIconColor: Colors.cyan.withOpacity(0.7),
-                onRadioClick: (fit) {},
+                onRadioClick: (fit, index) {
+                  Get.find<SettingController>()
+                      .setWaterMarkAlignment(fit, index);
+                },
                 data: [
                   RadioData(
                       iconPath: 'svgs/top.svg',
@@ -142,9 +148,9 @@ class Design extends StatelessWidget {
                     borderRadius: BorderRadius.circular(13)),
                 verticalOffset: -44,
                 activeIconColor: Colors.cyan.withOpacity(0.7),
-                onRadioClick: (align) {
+                onRadioClick: (align, index) {
                   Get.find<SettingController>()
-                      .changeBrandsLogoAlignment(align);
+                      .changeBrandsLogoAlignment(align, index);
                 },
                 data: [
                   RadioData(
@@ -195,9 +201,9 @@ class Design extends StatelessWidget {
                     borderRadius: BorderRadius.circular(13)),
                 verticalOffset: -44,
                 activeIconColor: Colors.cyan.withOpacity(0.7),
-                onRadioClick: (businessAlign) {
+                onRadioClick: (businessAlign, index) {
                   Get.find<SettingController>()
-                      .changeBusinessLogoAlignment(businessAlign);
+                      .changeBusinessLogoAlignment(businessAlign, index);
                 },
                 data: [
                   RadioData(

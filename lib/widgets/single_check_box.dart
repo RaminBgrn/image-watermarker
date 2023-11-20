@@ -6,7 +6,9 @@ typedef SingleValue = Function(bool isChecked);
 
 class SingleCheckBox extends StatefulWidget {
   final SingleValue onClick;
-  const SingleCheckBox({required this.onClick, super.key});
+  final bool defaultValue;
+  const SingleCheckBox(
+      {required this.onClick, required this.defaultValue, super.key});
 
   @override
   State<SingleCheckBox> createState() => _SingleCheckBoxState();
@@ -19,7 +21,7 @@ class _SingleCheckBoxState extends State<SingleCheckBox> {
 
   @override
   void initState() {
-    _isChecked = true;
+    _isChecked = widget.defaultValue;
     super.initState();
   }
 

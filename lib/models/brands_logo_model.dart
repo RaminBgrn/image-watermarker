@@ -8,4 +8,11 @@ class BrandsLogoModel {
     title = json['brand_title'];
     imagePath = json['image_path'];
   }
+
+  Map<String, String> toJson(BrandsLogoModel model) {
+    return {
+      'brand_title': model.title ?? '',
+      'image_path': model.imagePath ?? '',
+    };
+  }
 }

@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_water_marker/controller/screens_controller.dart';
 import 'package:image_water_marker/controller/setting_controller.dart';
 import 'package:image_water_marker/utils/colors.dart';
 import 'package:image_water_marker/widgets/design.dart';
@@ -77,10 +78,12 @@ class SettingsPage extends StatelessWidget {
                                         style: GoogleFonts.karla(
                                             fontSize: 16, color: myGrey[300]),
                                       ),
-                                      SingleCheckBox(onClick: (value) {
-                                        Get.find<SettingController>()
-                                            .checkToShowLog = value;
-                                      }),
+                                      SingleCheckBox(
+                                          defaultValue: clr.hasShowLogo,
+                                          onClick: (value) {
+                                            Get.find<SettingController>()
+                                                .checkToShowLog = value;
+                                          }),
                                     ],
                                   ),
                                   Row(
@@ -90,10 +93,12 @@ class SettingsPage extends StatelessWidget {
                                         style: GoogleFonts.karla(
                                             fontSize: 16, color: myGrey[300]),
                                       ),
-                                      SingleCheckBox(onClick: (value) {
-                                        Get.find<SettingController>()
-                                            .showOrHideBrand = value;
-                                      }),
+                                      SingleCheckBox(
+                                          defaultValue: clr.hasShowBrands,
+                                          onClick: (value) {
+                                            Get.find<SettingController>()
+                                                .showOrHideBrand = value;
+                                          }),
                                     ],
                                   ),
                                 ],
@@ -372,7 +377,9 @@ class SettingsPage extends StatelessWidget {
                                       ),
                                       backgroundColor:
                                           myGreen[900]!.withOpacity(0.2)),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Get.find<ScreenController>().moveToGrid();
+                                  },
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 8.0, vertical: 6.0),

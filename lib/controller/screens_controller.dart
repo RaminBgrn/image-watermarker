@@ -9,4 +9,9 @@ class ScreenController extends GetxController {
     _controller.animateToPage(1,
         duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
   }
+
+  void moveToGrid() {
+    _controller.animateToPage(0,
+        duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+  }
 }

@@ -1,10 +1,9 @@
-import 'dart:convert';
 import 'dart:io';
 
-import 'package:cyclop/cyclop.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_water_marker/common/my_snackbar.dart';
+import 'package:image_water_marker/common/utilis_design.dart';
 import 'package:image_water_marker/controller/config_file_controller.dart';
 import 'package:image_water_marker/controller/import_image_controller.dart';
 import 'package:image_water_marker/models/brands_logo_model.dart';
@@ -73,9 +72,13 @@ class SettingController extends GetxController {
   TextEditingController get getBrandsFolderPathController =>
       _brandsFolderPathController;
 
+  int _brandAlignmentSelectedIndex = 2;
+  int get getBrandAlignmentSelectedIndex => _brandAlignmentSelectedIndex;
   Alignment _brandsLogoAlignment = Alignment.bottomLeft;
   Alignment get getBrandsLogoAlignment => _brandsLogoAlignment;
 
+  int _businessLogoAlignmentIndex = 0;
+  int get getBusinessLogoAlignmentIndex => _businessLogoAlignmentIndex;
   Alignment _businessLogoAlignment = Alignment.topRight;
   Alignment get getBusinessLogoAlignment => _businessLogoAlignment;
 
@@ -96,10 +99,14 @@ class SettingController extends GetxController {
   double get getRightBusinessBoarderWidth => _rightBusinessBoarderWidth;
 
   // water mark position
+  int _selectedWaterMarkPositionIndex = 1;
+  int get getSelectedWatermarkPosition => _selectedWaterMarkPositionIndex;
   Alignment _waterMarkAlignment = Alignment.center;
   Alignment get getWaterMarkAlignment => _waterMarkAlignment;
 
   // water mark box fit
+  int _selectedWaterMarkBoxFitIndex = 0;
+  int get getSelectedWaterMarkBoxFitIndex => _selectedWaterMarkBoxFitIndex;
   BoxFit _waterMarkBoxFit = BoxFit.contain;
   BoxFit get getWaterMarkBoxFit => _waterMarkBoxFit;
 
@@ -114,12 +121,35 @@ class SettingController extends GetxController {
   @override
   void onReady() {
     _configFileModel = Get.find<ConfigFileController>().getConfigModel;
+    initComponents();
+    super.onReady();
+  }
+
+  void initComponents() {
+    _selectedWaterMarkBoxFitIndex = _configFileModel.waterMarkBoxFitIndex ?? 0;
+    _selectedWaterMarkPositionIndex =
+        _configFileModel.waterMarkPositionIndex ?? 1;
+    _showBrandsLogo = _configFileModel.showBrandsLogo ?? true;
+    _showLogoSection = _configFileModel.showBusinessLogo ?? true;
     _waterMarkImageFilePathController.text =
         _configFileModel.waterMarkImage ?? '';
-
     _businessLogosPathTextController.text = _configFileModel.businessLogo ?? '';
+    _brandsLogoModel = _configFileModel.brandsLogo ?? [];
+    _waterMarkBoxFit = convertStringToBoxFitEnum(
+        _configFileModel.waterMarkImageBoxFit ?? "BoxFit.contain");
+    _waterMarkAlignment = convertAlignmentsToEnum(
+        _configFileModel.waterMarkLogoPosition ?? "Alignment.center");
+    _brandsLogoAlignment = convertAlignmentsToEnum(
+        _configFileModel.brandsPosition ?? "Alignment.bottomLeft");
+    _businessLogoAlignment = convertAlignmentsToEnum(
+        _configFileModel.businessLogoPosition ?? 'Alignment.topRight');
     _waterMarkOpacity = _configFileModel.waterMarkOpacity ?? 0.6;
-    super.onReady();
+    _imageBoarderRadius = _configFileModel.imageBorderRadius ?? 4;
+    _businessLogoAlignmentIndex =
+        _configFileModel.businessLogoSelectedIndex ?? 0;
+    _brandAlignmentSelectedIndex = _configFileModel.brandSelectedIndex ?? 2;
+    _showBrandsLogo = _configFileModel.showBrandsLogo ?? true;
+    _showLogoSection = _configFileModel.showBusinessLogo ?? true;
   }
 
   // get business Logo file
@@ -128,8 +158,7 @@ class SettingController extends GetxController {
     _businessLogoFile = await Get.find<ImportImageController>()
         .getImageFromStorage('business logo');
     _hasBusinessLogoSet = true;
-    Get.find<ConfigFileController>()
-        .updateConfigFile(key: 'business_logo', data: _businessLogoFile!.path);
+    _configFileModel.businessLogo = _businessLogoFile!.path;
     _businessLogosPathTextController.text = basename(_businessLogoFile!.path);
     update();
   }
@@ -139,8 +168,8 @@ class SettingController extends GetxController {
   void clearBusinessLogo() {
     _businessLogosPathTextController.text = "";
     _hasBusinessLogoSet = false;
-    Get.find<ConfigFileController>()
-        .updateConfigFile(data: '', key: 'business_logo');
+    _configFileModel.businessLogo = "";
+
     update();
   }
 
@@ -152,8 +181,7 @@ class SettingController extends GetxController {
           .getImageFromStorage('water mark');
       _isWaterMarkFileSelected = true;
       _waterMarkImageFilePathController.text = basename(_waterMarkFile.path);
-      Get.find<ConfigFileController>()
-          .updateConfigFile(data: _waterMarkFile.path, key: 'water_mark');
+      _configFileModel.waterMarkImage = _waterMarkFile.path;
       update();
     } catch (e) {
       e.printError();
@@ -169,8 +197,8 @@ class SettingController extends GetxController {
   void clearWaterMarkImage() {
     _isWaterMarkFileSelected = false;
     _waterMarkImageFilePathController.clear();
-    Get.find<ConfigFileController>()
-        .updateConfigFile(data: '', key: 'water_mark');
+    _configFileModel.waterMarkImage = "";
+
     update();
   }
 
@@ -201,27 +229,20 @@ class SettingController extends GetxController {
 
   // convert to model
   void convertBrandsDataToModel(List<File> images) {
-    Map<String, String> brandsToJson = {};
     for (File image in images) {
-      brandsToJson = {
-        'brand_title': basename(image.path),
-        'image_path': image.path
-      };
       _brandsLogoModel.add(
           BrandsLogoModel(title: basename(image.path), imagePath: image.path));
     }
     _configFileModel.brandsLogo = _brandsLogoModel;
-    Get.find<ConfigFileController>()
-        .updateConfigFile(key: 'brands_logo', data: jsonEncode(brandsToJson));
     update();
   }
 
   // change brand logo alignment and update config file
-  void changeBrandsLogoAlignment(Alignment align) {
+  void changeBrandsLogoAlignment(Alignment align, int index) {
     _brandsLogoAlignment = align;
     _checkBrandsBoarder(align);
-    Get.find<ConfigFileController>().updateConfigFile(
-        key: 'product_brands_position', data: align.toString());
+    _brandAlignmentSelectedIndex = index;
+    _configFileModel.brandsPosition = align.toString();
   }
 
   void _checkBrandsBoarder(Alignment align) {
@@ -235,11 +256,11 @@ class SettingController extends GetxController {
     update();
   }
 
-  void changeBusinessLogoAlignment(Alignment align) {
+  void changeBusinessLogoAlignment(Alignment align, int index) {
     _businessLogoAlignment = align;
     _checkBusinessBoarder(align);
-    Get.find<ConfigFileController>().updateConfigFile(
-        key: 'business_logo_position', data: align.toString());
+    _businessLogoAlignmentIndex = index;
+    _configFileModel.businessLogoPosition = align.toString();
   }
 
   void _checkBusinessBoarder(Alignment align) {
@@ -255,31 +276,28 @@ class SettingController extends GetxController {
 
   void setImageBoarderRadius(double radius) {
     _imageBoarderRadius = radius;
-    Get.find<ConfigFileController>()
-        .updateConfigFile(data: radius, key: 'image_border_radius');
+    _configFileModel.imageBorderRadius = radius;
+
     update();
+  }
+
+  void setWaterMarkAlignment(Alignment alignment, int index) {
+    _waterMarkAlignment = alignment;
+    _selectedWaterMarkPositionIndex = index;
   }
 
   void setWaterMarkOpacity(double opacity) {
     _waterMarkOpacity = opacity;
-    Get.find<ConfigFileController>()
-        .updateConfigFile(key: 'water_mark_opacity', data: opacity);
+    _configFileModel.waterMarkOpacity = opacity;
+
     update();
   }
 
-  void setWaterBoxFit(BoxFit fit) {
+  void setWaterBoxFit(BoxFit fit, int index) {
     _waterMarkBoxFit = fit;
-    Get.find<ConfigFileController>()
-        .updateConfigFile(key: 'water_mark_box_fit', data: fit.toString());
+    _configFileModel.waterMarkImageBoxFit = fit.toString();
+    _selectedWaterMarkBoxFitIndex = index;
   }
 
-  void saveConfigs() {
-    // Get.find<ConfigFileController>().updateConfigFile(
-    //     key: 'product_brands_position',
-    //     data: configFileModel.productBrandsPosition);
-    // Get.find<ConfigFileController>().updateConfigFile(
-    //   key: 'business_logo',
-    //   data: _businessLogoFile!.path,
-    // );
-  }
+  void saveConfigs() {}
 }

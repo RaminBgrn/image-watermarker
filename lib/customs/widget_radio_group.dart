@@ -11,7 +11,7 @@ enum RadioIconAndTextDirection { ltr, rtl }
 
 enum IconType { svgAsset, svgUrl, imageAsset, imageUrl }
 
-typedef OnRadioClick = Function(dynamic data);
+typedef OnRadioClick = Function(dynamic data, int index);
 
 class WidgetRadioGroup extends StatefulWidget {
   /// data which you want as radio button
@@ -144,13 +144,14 @@ class _WidgetRadioGroupState extends State<WidgetRadioGroup> {
               verticalOffset: widget.verticalOffset,
               child: GestureDetector(
                 onTap: () {
+                  if (previousActiveButton == index) return;
                   setState(() {
                     buttonState[index] = true;
                     if (previousActiveButton >= 0) {
                       buttonState[previousActiveButton] = false;
                     }
                     previousActiveButton = index;
-                    widget.onRadioClick(widget.data[index].value);
+                    widget.onRadioClick(widget.data[index].value, index);
                   });
                 },
                 child: Row(
