@@ -2,18 +2,18 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:get/get.dart';
+import 'package:image_water_marker/controller/setting_controller.dart';
 import 'package:image_water_marker/models/config_file_model.dart';
 
 class ConfigFileController extends GetxController {
-  ConfigFileModel _model = ConfigFileModel();
-  ConfigFileModel get getConfigModel => _model;
   String fileDire = Directory.current.path;
 
   Future<Map<String, dynamic>> readData() async {
     File configFile = File("$fileDire/data/config.json");
     Map<String, dynamic> decoderConfigFile =
         jsonDecode(configFile.readAsStringSync());
-    _model = ConfigFileModel.fromJson(decoderConfigFile);
+    Get.find<SettingController>().setConfigFile =
+        ConfigFileModel.fromJson(decoderConfigFile);
     return decoderConfigFile;
   }
 

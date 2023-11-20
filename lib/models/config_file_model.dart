@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:image_water_marker/models/brands_logo_model.dart';
 
 class ConfigFileModel {
@@ -57,10 +55,10 @@ class ConfigFileModel {
       'water_mark_box_fit_index': model.waterMarkBoxFitIndex,
       'water_mark_box_fit': model.waterMarkImageBoxFit,
       'water_mark_position_index': model.waterMarkPositionIndex,
-      'water_mark_logo_position': model.waterMarkLogoPosition,
+      'water_mark_position': model.waterMarkLogoPosition,
       'water_mark_opacity': model.waterMarkOpacity,
       'image_border_radius': model.imageBorderRadius,
-      'brands_logo': jsonEncode(brands),
+      'brands_logo': brands,
     };
   }
 
@@ -76,7 +74,7 @@ class ConfigFileModel {
     waterMarkBoxFitIndex = json["water_mark_box_fit_index"];
     waterMarkImageBoxFit = json['water_mark_box_fit'];
     waterMarkPositionIndex = json["water_mark_position_index"];
-    waterMarkLogoPosition = json['water_mark_logo_position'];
+    waterMarkLogoPosition = json['water_mark_position'];
     waterMarkOpacity = json['water_mark_opacity'];
     imageBorderRadius = json['image_border_radius'];
     if (json['brands_logo'].length > 0) {

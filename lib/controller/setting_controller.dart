@@ -14,7 +14,7 @@ import 'package:path/path.dart';
 class SettingController extends GetxController {
   // config file model;
   ConfigFileModel _configFileModel = ConfigFileModel();
-
+  set setConfigFile(ConfigFileModel model) => _configFileModel = model;
   // =========================== logo section ===============================
   bool _showLogoSection = true;
   bool get hasShowLogo => _showLogoSection;
@@ -120,7 +120,6 @@ class SettingController extends GetxController {
 
   @override
   void onReady() {
-    _configFileModel = Get.find<ConfigFileController>().getConfigModel;
     initComponents();
     super.onReady();
   }

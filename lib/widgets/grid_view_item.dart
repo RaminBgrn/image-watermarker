@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:image_water_marker/common/my_tool_tip.dart';
-import 'package:image_water_marker/controller/config_file_controller.dart';
 import 'package:image_water_marker/controller/edit_image_controller.dart';
+import 'package:image_water_marker/controller/setting_controller.dart';
 import 'package:image_water_marker/customs/model/radio_data.dart';
 import 'package:image_water_marker/customs/widget_radio_group.dart';
 import 'package:image_water_marker/utils/colors.dart';
@@ -32,7 +32,7 @@ class _GridViewItemState extends State<GridViewItem> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ConfigFileController>(builder: (configClr) {
+    return GetBuilder<SettingController>(builder: (settingClr) {
       return AnimatedContainer(
         width: 300,
         height: height,
@@ -212,8 +212,7 @@ class _GridViewItemState extends State<GridViewItem> {
                         height: 300,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(
-                                configClr.getConfigModel.imageBorderRadius ??
-                                    0),
+                                settingClr.getImageBoarderRadius),
                             color: Colors.white),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(12),
