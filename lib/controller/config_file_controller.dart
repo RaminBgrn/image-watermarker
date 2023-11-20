@@ -17,16 +17,10 @@ class ConfigFileController extends GetxController {
     return decoderConfigFile;
   }
 
-  @override
-  void onInit() {
-    readData();
-    super.onInit();
-  }
-
-  void updateConfigFile({required String key, required dynamic data}) async {
+  void updateConfigFile({required ConfigFileModel model}) async {
+    ConfigFileModel updateModel = ConfigFileModel();
     Map<String, dynamic> configMap = await readData();
-    configMap[key] = data;
-
+    configMap = updateModel.toJson(model);
     File updateConfigFile = File("$fileDire/data/config.json");
     updateConfigFile.writeAsStringSync(jsonEncode(configMap));
   }

@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_water_marker/controller/screens_controller.dart';
 import 'package:image_water_marker/controller/setting_controller.dart';
 import 'package:image_water_marker/utils/colors.dart';
 import 'package:image_water_marker/widgets/design.dart';
@@ -378,7 +377,7 @@ class SettingsPage extends StatelessWidget {
                                       backgroundColor:
                                           myGreen[900]!.withOpacity(0.2)),
                                   onPressed: () {
-                                    Get.find<ScreenController>().moveToGrid();
+                                    Get.find<SettingController>().saveConfigs();
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(

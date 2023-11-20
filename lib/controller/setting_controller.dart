@@ -299,5 +299,7 @@ class SettingController extends GetxController {
     _selectedWaterMarkBoxFitIndex = index;
   }
 
-  void saveConfigs() {}
+  void saveConfigs() {
+    Get.find<ConfigFileController>().updateConfigFile(model: _configFileModel);
+  }
 }

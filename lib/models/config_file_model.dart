@@ -39,27 +39,27 @@ class ConfigFileModel {
 
   Map<String, dynamic> toJson(ConfigFileModel model) {
     BrandsLogoModel tempModel = BrandsLogoModel();
-    Map<String, String> brands = {};
+    List<Map<String, String>> brands = [];
     if (model.brandsLogo != null) {
       for (BrandsLogoModel brand in model.brandsLogo!) {
-        brands = tempModel.toJson(brand);
+        brands.add(tempModel.toJson(brand));
       }
     }
     return {
-      'business_log': businessLogo,
-      'business_logo_position': businessLogoPosition,
-      'business_logo_selected_index': businessLogoSelectedIndex,
-      'show_business_logo': showBusinessLogo,
-      'brandsPosition': brandsPosition,
-      'brands_selected_index': brandSelectedIndex,
-      'show_brands_logo': showBrandsLogo,
-      'water_mark': waterMarkImage,
-      'water_mark_box_fit_index': waterMarkBoxFitIndex,
-      'water_mark_box_fit': waterMarkImageBoxFit,
-      'water_mark_position_index': waterMarkPositionIndex,
-      'water_mark_logo_position': waterMarkLogoPosition,
-      'water_mark_opacity': waterMarkOpacity,
-      'image_border_radius': imageBorderRadius,
+      'business_log': model.businessLogo,
+      'business_logo_position': model.businessLogoPosition,
+      'business_logo_selected_index': model.businessLogoSelectedIndex,
+      'show_business_logo': model.showBusinessLogo,
+      'brandsPosition': model.brandsPosition,
+      'brands_selected_index': model.brandSelectedIndex,
+      'show_brands_logo': model.showBrandsLogo,
+      'water_mark': model.waterMarkImage,
+      'water_mark_box_fit_index': model.waterMarkBoxFitIndex,
+      'water_mark_box_fit': model.waterMarkImageBoxFit,
+      'water_mark_position_index': model.waterMarkPositionIndex,
+      'water_mark_logo_position': model.waterMarkLogoPosition,
+      'water_mark_opacity': model.waterMarkOpacity,
+      'image_border_radius': model.imageBorderRadius,
       'brands_logo': jsonEncode(brands),
     };
   }
