@@ -48,6 +48,8 @@ dependencies:
   cyclop: ^0.7.0
   syncfusion_flutter_sliders: ^23.1.43
   image_picker: ^1.0.4
+  dropdown_button2: ^2.3.9
+  path: ^1.8.3
 dev_dependencies:
   flutter_test:
     sdk: flutter

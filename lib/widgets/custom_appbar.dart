@@ -1,12 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:image_water_marker/controller/make_out_put_controller.dart';
+
 import 'package:image_water_marker/utils/colors.dart';
 import 'package:image_water_marker/widgets/add_image.dart';
+import 'package:image_water_marker/widgets/brands_dropdown.dart';
 import 'package:image_water_marker/widgets/logo_button.dart';
-import 'package:image_water_marker/widgets/custom_text_field.dart';
 import 'package:image_water_marker/widgets/save_image.dart';
 import 'package:image_water_marker/widgets/setting.dart';
 
@@ -45,12 +44,12 @@ class CustomAppBar extends StatelessWidget {
             decoration: BoxDecoration(
               color: myGrey[900]!.withOpacity(0.6),
             ),
-            child: Row(
+            child: const Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               textDirection: TextDirection.rtl,
               children: [
-                const Row(
+                Row(
                   children: [
                     SaveImage(),
                     SizedBox(width: 20),
@@ -59,11 +58,8 @@ class CustomAppBar extends StatelessWidget {
                     Setting(),
                   ],
                 ),
-                CustomTextField(
-                  controller: Get.find<MakeOutPutController>()
-                      .getSaveFileNameController,
-                ),
-                const LogoButton(),
+                BrandsDropdown(),
+                LogoButton(),
               ],
             ),
           ),

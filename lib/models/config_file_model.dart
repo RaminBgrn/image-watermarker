@@ -27,8 +27,6 @@ class ConfigFileModel {
 
   ConfigFileModel.fromJson(Map<String, dynamic> json) {
     businessLogo = json['business_logo'];
-    //TODO : add for loop to extract data
-    // brandsLogo = json['brands_logo'];
     waterMarkImage = json['water_mark'];
     waterMarkImageBoxFit = json['water_mark_box_fit'];
     waterMarkLogoPosition = json['water_mark_logo_position'];
@@ -37,5 +35,10 @@ class ConfigFileModel {
     waterMarkOpacity = json['water_mark_opacity'];
     borderColor = json['boarder_color'];
     imageBorderRadius = json['image_border_radius'];
+    if (json['brands_logo'].length > 0) {
+      for (int i = 0; i < json['brands_logo']; i++) {
+        brandsLogo!.add(BrandsLogoModel.formJson(json['brands_logo'][i]));
+      }
+    }
   }
 }

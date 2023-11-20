@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:image_water_marker/common/my_snackbar.dart';
 import 'package:image_water_marker/controller/config_file_controller.dart';
 import 'package:image_water_marker/controller/import_image_controller.dart';
+import 'package:image_water_marker/models/brands_logo_model.dart';
 import 'package:image_water_marker/models/config_file_model.dart';
 import 'package:image_water_marker/utils/colors.dart';
 import 'package:path/path.dart';
@@ -57,8 +57,14 @@ class SettingController extends GetxController {
     update();
   }
 
+  bool _hasBrandsSelected = false;
+  bool get hasBrands => _hasBrandsSelected;
+
   List<File> _brands = [];
   List<File> get getBrands => _brands;
+
+  List<BrandsLogoModel> _brandsLogoModel = [];
+  List<BrandsLogoModel> get getBrandsLogoModel => _brandsLogoModel;
 
   final TextEditingController _brandsFolderPathController =
       TextEditingController();
@@ -159,6 +165,38 @@ class SettingController extends GetxController {
   }
 
   // get brands from hard disk
+
+  void getBrandsLogoFormHard() async {
+    try {
+      _brands = await Get.find<ImportImageController>().getMultiImage();
+      _hasBrandsSelected = true;
+      _brandsFolderPathController.text = "$applicationPath/data/products logos";
+      update();
+    } catch (e) {
+      MySnackBar.showMySnackBar(
+          titleColor: myRed[400]!,
+          messageColor: myRed[100]!,
+          title: 'Error',
+          message: 'Image has not select');
+    }
+  }
+
+  // clear brands data
+  void clearBrandsLogoPath() {
+    _brands = [];
+    _hasBrandsSelected = false;
+    _brandsFolderPathController.text = '';
+    update();
+  }
+
+  // convert to model
+  void convertBrandsDataToModel(List<File> images) {
+    for (File image in images) {
+      _brandsLogoModel.add(
+          BrandsLogoModel(title: basename(image.path), imagePath: image.path));
+    }
+    update();
+  }
 
   void changeBrandsLogoAlignment(Alignment align) {
     _brandsLogoAlignment = align;

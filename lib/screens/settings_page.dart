@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:image_water_marker/controller/setting_controller.dart';
 import 'package:image_water_marker/utils/colors.dart';
 import 'package:image_water_marker/widgets/design.dart';
@@ -133,12 +132,14 @@ class SettingsPage extends StatelessWidget {
                               ),
                               TextFieldWithTitle(
                                 hasEnableButton: true,
-                                controller: TextEditingController(),
+                                clearButtonColor:
+                                    clr.hasBrands ? myRed[400] : myGrey[300],
+                                controller: clr.getBrandsFolderPathController,
                                 isReadOnly: true,
+                                onClearTap: clr.clearBrandsLogoPath,
                                 textFieldHint: 'brands folder file(s)',
                                 onTap: () async {
-                                  ImagePicker pick = ImagePicker();
-                                  pick.pickMultiImage();
+                                  clr.getBrandsLogoFormHard();
                                 },
                               ),
                             ],
