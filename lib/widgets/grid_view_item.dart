@@ -212,10 +212,8 @@ class _GridViewItemState extends State<GridViewItem> {
                           color: Colors.white),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(12),
-                        child: Image.asset(
-                          'images/test.jpg',
-                          fit: clr.getBoxFit,
-                        ),
+                        child:
+                            Image.asset('images/test.jpg', fit: clr.getBoxFit),
                       ),
                     ),
                   ),

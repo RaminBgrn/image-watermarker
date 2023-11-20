@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cyclop/cyclop.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_water_marker/common/my_snackbar.dart';
@@ -93,6 +94,14 @@ class SettingController extends GetxController {
   double get getLeftBusinessBoarderWidth => _leftBusinessBoarderWidth;
   double _rightBusinessBoarderWidth = 5;
   double get getRightBusinessBoarderWidth => _rightBusinessBoarderWidth;
+
+  // water mark position
+  Alignment _waterMarkAlignment = Alignment.center;
+  Alignment get getWaterMarkAlignment => _waterMarkAlignment;
+
+  // water mark box fit
+  BoxFit _waterMarkBoxFit = BoxFit.contain;
+  BoxFit get getWaterMarkBoxFit => _waterMarkBoxFit;
 
   // Functions
 
@@ -201,15 +210,18 @@ class SettingController extends GetxController {
       _brandsLogoModel.add(
           BrandsLogoModel(title: basename(image.path), imagePath: image.path));
     }
-
+    _configFileModel.brandsLogo = _brandsLogoModel;
     Get.find<ConfigFileController>()
         .updateConfigFile(key: 'brands_logo', data: jsonEncode(brandsToJson));
     update();
   }
 
+  // change brand logo alignment and update config file
   void changeBrandsLogoAlignment(Alignment align) {
     _brandsLogoAlignment = align;
     _checkBrandsBoarder(align);
+    Get.find<ConfigFileController>().updateConfigFile(
+        key: 'product_brands_position', data: align.toString());
   }
 
   void _checkBrandsBoarder(Alignment align) {
@@ -226,6 +238,8 @@ class SettingController extends GetxController {
   void changeBusinessLogoAlignment(Alignment align) {
     _businessLogoAlignment = align;
     _checkBusinessBoarder(align);
+    Get.find<ConfigFileController>().updateConfigFile(
+        key: 'business_logo_position', data: align.toString());
   }
 
   void _checkBusinessBoarder(Alignment align) {
@@ -241,11 +255,31 @@ class SettingController extends GetxController {
 
   void setImageBoarderRadius(double radius) {
     _imageBoarderRadius = radius;
+    Get.find<ConfigFileController>()
+        .updateConfigFile(data: radius, key: 'image_border_radius');
     update();
   }
 
   void setWaterMarkOpacity(double opacity) {
     _waterMarkOpacity = opacity;
+    Get.find<ConfigFileController>()
+        .updateConfigFile(key: 'water_mark_opacity', data: opacity);
     update();
+  }
+
+  void setWaterBoxFit(BoxFit fit) {
+    _waterMarkBoxFit = fit;
+    Get.find<ConfigFileController>()
+        .updateConfigFile(key: 'water_mark_box_fit', data: fit.toString());
+  }
+
+  void saveConfigs() {
+    // Get.find<ConfigFileController>().updateConfigFile(
+    //     key: 'product_brands_position',
+    //     data: configFileModel.productBrandsPosition);
+    // Get.find<ConfigFileController>().updateConfigFile(
+    //   key: 'business_logo',
+    //   data: _businessLogoFile!.path,
+    // );
   }
 }

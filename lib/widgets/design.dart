@@ -40,7 +40,9 @@ class Design extends StatelessWidget {
                     borderRadius: BorderRadius.circular(13)),
                 verticalOffset: -44,
                 activeIconColor: Colors.cyan.withOpacity(0.7),
-                onRadioClick: (fit) {},
+                onRadioClick: (fit) {
+                  Get.find<SettingController>().setWaterBoxFit(fit);
+                },
                 data: [
                   RadioData(
                       iconPath: 'svgs/fill.svg',
@@ -299,7 +301,7 @@ class Design extends StatelessWidget {
                       ),
                       child: Slider(
                         value: clr.getImageBoarderRadius,
-                        max: 100.0,
+                        max: 18.0,
                         min: 0.0,
                         inactiveColor: myGrey[400],
                         activeColor: Colors.cyan,
