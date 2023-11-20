@@ -35,6 +35,7 @@ class ImportImageController extends GetxController {
     Get.find<SettingController>()
         .convertBrandsDataToModel(convertedBrandsImage);
     _copeAllBrandsInDataFolder(convertedBrandsImage);
+
     return convertedBrandsImage;
   }
 

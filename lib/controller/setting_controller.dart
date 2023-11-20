@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -191,10 +192,18 @@ class SettingController extends GetxController {
 
   // convert to model
   void convertBrandsDataToModel(List<File> images) {
+    Map<String, String> brandsToJson = {};
     for (File image in images) {
+      brandsToJson = {
+        'brand_title': basename(image.path),
+        'image_path': image.path
+      };
       _brandsLogoModel.add(
           BrandsLogoModel(title: basename(image.path), imagePath: image.path));
     }
+
+    Get.find<ConfigFileController>()
+        .updateConfigFile(key: 'brands_logo', data: jsonEncode(brandsToJson));
     update();
   }
 

@@ -20,6 +20,7 @@ class ConfigFileController extends GetxController {
   void updateConfigFile({required String key, required dynamic data}) async {
     Map<String, dynamic> configMap = await readData();
     configMap[key] = data;
+
     File updateConfigFile = File("$fileDire/data/config.json");
     updateConfigFile.writeAsStringSync(jsonEncode(configMap));
   }
