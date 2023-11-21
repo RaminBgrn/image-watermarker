@@ -19,7 +19,12 @@ class SettingController extends GetxController {
     try {
       _configFileModel = ConfigFileModel.fromJson(await Get.find<ConfigFileController>().readData());
     } catch (e) {
-      print(e);
+      MySnackBar.showMySnackBar(
+        titleColor: myRed[400]!,
+        messageColor: myRed[100]!,
+        title: 'Error',
+        message: 'Something went wrong',
+      );
     }
   }
 
@@ -63,6 +68,11 @@ class SettingController extends GetxController {
     _configFileModel.showBrandsLogo = hasShow;
     update();
   }
+
+  //========================== dropdown variables ============================
+
+  String _dropdownButtonTitle = 'Brands not set yet';
+  String get getDropdownButtonTitle => _dropdownButtonTitle;
 
   bool _hasBrandsSelected = false;
   bool get hasBrands => _hasBrandsSelected;
@@ -184,7 +194,10 @@ class SettingController extends GetxController {
       _hasBusinessLogoSet = true;
       _businessLogoFile = File(_configFileModel.businessLogo!);
     }
-    _brandsLogoModel = _configFileModel.brandsLogo ?? [];
+    if (_configFileModel.brandsLogo != null && _configFileModel.brandsLogo!.isNotEmpty) {
+      _brandsLogoModel = _configFileModel.brandsLogo ?? [];
+      _dropdownButtonTitle = "Select brand logo";
+    }
     _waterMarkBoxFit = convertStringToBoxFitEnum(_configFileModel.waterMarkImageBoxFit ?? "BoxFit.contain");
     _waterMarkAlignment = convertAlignmentsToEnum(_configFileModel.waterMarkLogoPosition ?? "Alignment.center");
     _brandsLogoAlignment = convertAlignmentsToEnum(_configFileModel.brandsPosition ?? "Alignment.bottomLeft");
@@ -264,7 +277,12 @@ class SettingController extends GetxController {
       _brandsFolderPathController.text = "$applicationPath/data/products logos";
       update();
     } catch (e) {
-      MySnackBar.showMySnackBar(titleColor: myRed[400]!, messageColor: myRed[100]!, title: 'Error', message: 'Image has not select');
+      MySnackBar.showMySnackBar(
+        titleColor: myRed[400]!,
+        messageColor: myRed[100]!,
+        title: 'Error',
+        message: 'Image has not select',
+      );
     }
   }
 

@@ -14,7 +14,7 @@ class AddImage extends StatelessWidget {
         child: SvgPicture.asset(
           'svgs/import.svg',
           colorFilter: ColorFilter.mode(
-            myGrey[300]!,
+            myPurple[300]!,
             BlendMode.srcIn,
           ),
         ),

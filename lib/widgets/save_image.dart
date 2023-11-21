@@ -13,7 +13,7 @@ class SaveImage extends StatelessWidget {
         onTap: () {},
         child: SvgPicture.asset(
           'svgs/export.svg',
-          colorFilter: ColorFilter.mode(myGrey[300]!, BlendMode.srcIn),
+          colorFilter: ColorFilter.mode(myGreen[300]!, BlendMode.srcIn),
         ),
       ),
     );
