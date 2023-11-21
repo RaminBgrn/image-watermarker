@@ -7,11 +7,13 @@ import 'package:image_water_marker/controller/edit_image_controller.dart';
 import 'package:image_water_marker/controller/setting_controller.dart';
 import 'package:image_water_marker/customs/model/radio_data.dart';
 import 'package:image_water_marker/customs/widget_radio_group.dart';
+import 'package:image_water_marker/models/image_model.dart';
 import 'package:image_water_marker/utils/colors.dart';
 import 'package:image_water_marker/widgets/my_color_picker.dart';
 
 class GridViewItem extends StatefulWidget {
-  const GridViewItem({super.key});
+  final ImageModel model;
+  const GridViewItem({required this.model, super.key});
 
   @override
   State<GridViewItem> createState() => _GridViewItemState();
@@ -48,8 +50,7 @@ class _GridViewItemState extends State<GridViewItem> {
                 Align(
                   alignment: Alignment.topCenter,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12.0, vertical: 8),
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
                     child: Column(
                       children: [
                         Row(
@@ -61,13 +62,7 @@ class _GridViewItemState extends State<GridViewItem> {
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(8),
                                     color: myGrey[600],
-                                    boxShadow: [
-                                      BoxShadow(
-                                          offset: const Offset(0, 1),
-                                          blurRadius: 6,
-                                          color:
-                                              myOrange[300]!.withOpacity(0.4))
-                                    ]),
+                                    boxShadow: [BoxShadow(offset: const Offset(0, 1), blurRadius: 6, color: myOrange[300]!.withOpacity(0.4))]),
                                 child: MyToolTip(
                                   message: 'Edit Photo',
                                   child: AnimatedSvg(
@@ -76,22 +71,18 @@ class _GridViewItemState extends State<GridViewItem> {
                                       isExpand = !isExpand;
                                       setState(() {
                                         isExpand ? height = 450 : height = 360;
-                                        svgController.isCompleted
-                                            ? svgController.reverse()
-                                            : svgController.forward();
+                                        svgController.isCompleted ? svgController.reverse() : svgController.forward();
                                       });
                                     },
                                     controller: svgController,
                                     children: [
                                       SvgPicture.asset(
                                         'svgs/edit.svg',
-                                        colorFilter: ColorFilter.mode(
-                                            myOrange[100]!, BlendMode.srcIn),
+                                        colorFilter: ColorFilter.mode(myOrange[100]!, BlendMode.srcIn),
                                       ),
                                       SvgPicture.asset(
                                         'svgs/back.svg',
-                                        colorFilter: ColorFilter.mode(
-                                            myOrange[100]!, BlendMode.srcIn),
+                                        colorFilter: ColorFilter.mode(myOrange[100]!, BlendMode.srcIn),
                                       ),
                                     ],
                                   ),
@@ -105,20 +96,14 @@ class _GridViewItemState extends State<GridViewItem> {
                                 child: Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(8),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          offset: const Offset(0, 1),
-                                          blurRadius: 6,
-                                          color: myRed[300]!.withOpacity(0.4))
-                                    ],
+                                    boxShadow: [BoxShadow(offset: const Offset(0, 1), blurRadius: 6, color: myRed[300]!.withOpacity(0.4))],
                                     color: myGrey[600],
                                   ),
                                   child: MyToolTip(
                                     message: "Remove Photo",
                                     child: SvgPicture.asset(
                                       'svgs/remove.svg',
-                                      colorFilter: ColorFilter.mode(
-                                          myRed[300]!, BlendMode.srcIn),
+                                      colorFilter: ColorFilter.mode(myRed[300]!, BlendMode.srcIn),
                                     ),
                                   ),
                                 ),
@@ -131,56 +116,36 @@ class _GridViewItemState extends State<GridViewItem> {
                           height: 100,
                           alignment: Alignment.topCenter,
                           margin: const EdgeInsets.only(top: 20),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                WidgetRadioGroup(
-                                    iconTye: IconType.svgAsset,
-                                    activeIconColor: Colors.cyan,
-                                    deactivateIconColor: myGrey[400],
-                                    backgroundColor: myGrey[700],
-                                    activeShadow: [
-                                      BoxShadow(
-                                          offset: const Offset(0, 3),
-                                          color: myGreen[800]!,
-                                          blurRadius: 7),
-                                    ],
-                                    toolTipDecoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      color: myGrey[800],
-                                    ),
-                                    verticalOffset: -40,
-                                    direction: Axis.horizontal,
-                                    itemMargin: const EdgeInsets.symmetric(
-                                        horizontal: 8),
-                                    activeDefault: 1,
-                                    data: [
-                                      RadioData(
-                                          iconPath: 'svgs/fill.svg',
-                                          value: BoxFit.fill,
-                                          toolTipText: 'Fill'),
-                                      RadioData(
-                                          iconPath: 'svgs/contain.svg',
-                                          value: BoxFit.contain,
-                                          toolTipText: "Contain"),
-                                      RadioData(
-                                          iconPath: 'svgs/cover.svg',
-                                          value: BoxFit.cover,
-                                          toolTipText: "Cover"),
-                                      RadioData(
-                                          iconPath: 'svgs/fill_width.svg',
-                                          value: BoxFit.fitWidth,
-                                          toolTipText: "Fill Width"),
-                                      RadioData(
-                                          iconPath: 'svgs/fill_height.svg',
-                                          value: BoxFit.fitHeight,
-                                          toolTipText: 'Fill Height'),
-                                    ],
-                                    onRadioClick: (value, index) {
-                                      Get.find<EditImageController>()
-                                          .changeImageFit(value);
-                                    })
-                              ]),
+                          child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+                            WidgetRadioGroup(
+                                iconTye: IconType.svgAsset,
+                                activeIconColor: Colors.cyan,
+                                deactivateIconColor: myGrey[400],
+                                backgroundColor: myGrey[700],
+                                activeShadow: [
+                                  BoxShadow(offset: const Offset(0, 3), color: myGreen[800]!, blurRadius: 7),
+                                ],
+                                toolTipDecoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: myGrey[800],
+                                ),
+                                verticalOffset: -40,
+                                direction: Axis.horizontal,
+                                itemMargin: const EdgeInsets.symmetric(horizontal: 8),
+                                activeDefault: 1,
+                                data: [
+                                  RadioData(iconPath: 'svgs/fill.svg', value: BoxFit.fill, toolTipText: 'Fill'),
+                                  RadioData(iconPath: 'svgs/contain.svg', value: BoxFit.contain, toolTipText: "Contain"),
+                                  RadioData(iconPath: 'svgs/cover.svg', value: BoxFit.cover, toolTipText: "Cover"),
+                                  RadioData(iconPath: 'svgs/fill_width.svg', value: BoxFit.fitWidth, toolTipText: "Fill Width"),
+                                  RadioData(iconPath: 'svgs/fill_height.svg', value: BoxFit.fitHeight, toolTipText: 'Fill Height'),
+                                ],
+                                onRadioClick: (value, index) {
+                                  setState(() {
+                                    widget.model.imageBoxFit = value;
+                                  });
+                                })
+                          ]),
                         ),
                         MyColorPicker(
                           onColor: (value) {},
@@ -211,13 +176,17 @@ class _GridViewItemState extends State<GridViewItem> {
                         width: 300,
                         height: 300,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                                settingClr.getImageBoarderRadius),
-                            color: Colors.white),
+                          borderRadius: BorderRadius.circular(
+                            settingClr.getImageBoarderRadius,
+                          ),
+                          color: widget.model.backgroundColor,
+                        ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(12),
-                          child: Image.asset('images/test.jpg',
-                              fit: imageClr.getBoxFit),
+                          child: Image.file(
+                            widget.model.image!,
+                            fit: widget.model.imageBoxFit,
+                          ),
                         ),
                       ),
                     ),

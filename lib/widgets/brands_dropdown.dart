@@ -20,7 +20,7 @@ class BrandsDropdown extends StatelessWidget {
         child: DropdownButtonHideUnderline(
           child: DropdownButton2(
             isExpanded: true,
-            hint: clr.getBrands.isNotEmpty
+            hint: clr.getBrandsLogoModel.isNotEmpty
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -90,7 +90,9 @@ class BrandsDropdown extends StatelessWidget {
                   ),
                 )
                 .toList(),
-            onChanged: (value) {},
+            onChanged: (value) {
+              print(value!.imagePath);
+            },
             iconStyleData: const IconStyleData(
               iconDisabledColor: Colors.transparent,
               iconEnabledColor: Colors.transparent,

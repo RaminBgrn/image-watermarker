@@ -202,9 +202,16 @@ class SettingsPage extends StatelessWidget {
                                   width: 300,
                                   height: 400,
                                   decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(clr.getImageBoarderRadius),
-                                      boxShadow: [BoxShadow(offset: const Offset(0, 4), blurRadius: 8, color: myGrey[600]!.withOpacity(0.3))]),
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(clr.getImageBoarderRadius),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        offset: const Offset(0, 4),
+                                        blurRadius: 8,
+                                        color: myGrey[600]!.withOpacity(0.3),
+                                      ),
+                                    ],
+                                  ),
                                   child: GetBuilder<SettingController>(builder: (clr) {
                                     return Stack(
                                       children: [

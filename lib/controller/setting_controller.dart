@@ -71,9 +71,6 @@ class SettingController extends GetxController {
 
   //========================== dropdown variables ============================
 
-  String _dropdownButtonTitle = 'Brands not set yet';
-  String get getDropdownButtonTitle => _dropdownButtonTitle;
-
   bool _hasBrandsSelected = false;
   bool get hasBrands => _hasBrandsSelected;
 
@@ -119,7 +116,7 @@ class SettingController extends GetxController {
   Alignment get getWaterMarkAlignment => _waterMarkAlignment;
 
   // water mark box fit
-  int _selectedWaterMarkBoxFitIndex = 0;
+  int _selectedWaterMarkBoxFitIndex = 1;
   int get getSelectedWaterMarkBoxFitIndex => _selectedWaterMarkBoxFitIndex;
   BoxFit _waterMarkBoxFit = BoxFit.contain;
   BoxFit get getWaterMarkBoxFit => _waterMarkBoxFit;
@@ -166,9 +163,9 @@ class SettingController extends GetxController {
       ),
     ));
     setConfigFile();
-    initComponents();
 
     Future.delayed(const Duration(seconds: 2), () {
+      initComponents();
       Get.back();
     });
     super.onReady();
@@ -180,7 +177,7 @@ class SettingController extends GetxController {
       height: 100,
       color: Colors.white,
     ));
-    _selectedWaterMarkBoxFitIndex = _configFileModel.waterMarkBoxFitIndex ?? 0;
+    _selectedWaterMarkBoxFitIndex = _configFileModel.waterMarkBoxFitIndex ?? 1;
     _selectedWaterMarkPositionIndex = _configFileModel.waterMarkPositionIndex ?? 1;
     _showBrandsLogo = _configFileModel.showBrandsLogo ?? true;
     _showLogoSection = _configFileModel.showBusinessLogo ?? true;
@@ -196,7 +193,6 @@ class SettingController extends GetxController {
     }
     if (_configFileModel.brandsLogo != null && _configFileModel.brandsLogo!.isNotEmpty) {
       _brandsLogoModel = _configFileModel.brandsLogo ?? [];
-      _dropdownButtonTitle = "Select brand logo";
     }
     _waterMarkBoxFit = convertStringToBoxFitEnum(_configFileModel.waterMarkImageBoxFit ?? "BoxFit.contain");
     _waterMarkAlignment = convertAlignmentsToEnum(_configFileModel.waterMarkLogoPosition ?? "Alignment.center");
@@ -351,6 +347,8 @@ class SettingController extends GetxController {
   void setWaterMarkAlignment(Alignment alignment, int index) {
     _waterMarkAlignment = alignment;
     _selectedWaterMarkPositionIndex = index;
+    _configFileModel.waterMarkLogoPosition = alignment.toString();
+    _configFileModel.waterMarkPositionIndex = index;
     update();
   }
 
@@ -363,11 +361,18 @@ class SettingController extends GetxController {
   void setWaterBoxFit(BoxFit fit, int index) {
     _waterMarkBoxFit = fit;
     _configFileModel.waterMarkImageBoxFit = fit.toString();
+    _configFileModel.waterMarkBoxFitIndex = index;
     _selectedWaterMarkBoxFitIndex = index;
     update();
   }
 
   void saveConfigs() {
+    MySnackBar.showMySnackBar(
+      titleColor: myGreen[400]!,
+      messageColor: myGreen[100]!,
+      title: 'Success',
+      message: 'Setting has saved',
+    );
     Get.find<ConfigFileController>().updateConfigFile(model: _configFileModel);
   }
 }

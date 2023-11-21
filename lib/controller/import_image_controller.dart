@@ -10,6 +10,15 @@ class ImportImageController extends GetxController {
     label: 'images',
     extensions: <String>['svg'],
   );
+  XTypeGroup selectImagesForWaterMark = const XTypeGroup(
+    label: 'images',
+    extensions: <String>[
+      'png',
+      'jpg',
+      'jpeg',
+      'wepb',
+    ],
+  );
 
   final String _applicationDataPath = Directory.current.path;
   Future<File> getSingleSvg(String path) async {
@@ -31,6 +40,16 @@ class ImportImageController extends GetxController {
     _copeAllBrandsInDataFolder(convertedBrandsImage);
 
     return convertedBrandsImage;
+  }
+
+  Future<List<File>> selectImageToWaterMark() async {
+    List<XFile> selectedImages = await openFiles(acceptedTypeGroups: <XTypeGroup>[selectImagesForWaterMark]);
+    if (selectedImages.isEmpty) throw Exception();
+    List<File> convertedSelectedImages = [];
+    for (XFile image in selectedImages) {
+      convertedSelectedImages.add(File(image.path));
+    }
+    return convertedSelectedImages;
   }
 
   void _copeAllBrandsInDataFolder(List<File> images) {
