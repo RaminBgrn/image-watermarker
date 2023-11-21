@@ -40,28 +40,40 @@ class BrandsDropdown extends StatelessWidget {
             ],
           ),
           items: clr.getBrandsLogoModel
-              .map((brand) => DropdownMenuItem<BrandsLogoModel>(
+              .map(
+                (brand) => DropdownMenuItem<BrandsLogoModel>(
                   value: brand,
                   child: Row(
                     children: [
-                      Expanded(
-                        flex: 1,
-                        child: Image.file(
-                          File(brand.imagePath!),
+                      Container(
+                        width: 90,
+                        height: 50,
+                        margin: const EdgeInsets.all(2),
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                        decoration: BoxDecoration(color: myGrey[300], borderRadius: BorderRadius.circular(4)),
+                        child: SvgPicture.file(
+                          File(
+                            brand.imagePath!,
+                          ),
+                          fit: BoxFit.contain,
                         ),
                       ),
                       Expanded(
-                        flex: 2,
-                        child: Text(
-                          brand.title!,
-                          style: GoogleFonts.karla(
-                            fontSize: 14,
-                            color: myGrey[300],
+                        flex: 1,
+                        child: Center(
+                          child: Text(
+                            brand.title!,
+                            style: GoogleFonts.karla(
+                              fontSize: 14,
+                              color: myGrey[300],
+                            ),
                           ),
                         ),
                       )
                     ],
-                  )))
+                  ),
+                ),
+              )
               .toList(),
           onChanged: (value) {},
           iconStyleData: const IconStyleData(
@@ -82,22 +94,22 @@ class BrandsDropdown extends StatelessWidget {
             elevation: 2,
           ),
           dropdownStyleData: DropdownStyleData(
-              maxHeight: 800,
-              width: 500,
+              maxHeight: 400,
+              width: 300,
               padding: null,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(14),
                 color: myGrey[800],
               ),
               elevation: 8,
-              offset: const Offset(-150, 0),
+              offset: const Offset(-50, 0),
               scrollbarTheme: ScrollbarThemeData(
                 radius: const Radius.circular(40),
                 thickness: MaterialStateProperty.all(6),
                 thumbVisibility: MaterialStateProperty.all(true),
               )),
           menuItemStyleData: const MenuItemStyleData(
-            height: 40,
+            height: 60,
             padding: EdgeInsets.only(left: 8, right: 8),
           ),
         ),

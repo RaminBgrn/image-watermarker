@@ -4,24 +4,23 @@ import 'package:get/get.dart';
 import 'package:image_water_marker/controller/base_controller.dart';
 import 'package:image_water_marker/controller/config_file_controller.dart';
 import 'package:image_water_marker/screens/home.dart';
-import 'package:window_manager/window_manager.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await windowManager.ensureInitialized();
-  WindowOptions options = const WindowOptions(
-      size: Size(1000, 500),
-      center: true,
-      skipTaskbar: false,
-      minimumSize: Size(1200, 800),
-      titleBarStyle: TitleBarStyle.normal,
-      title: "WaterMarker");
-  windowManager.waitUntilReadyToShow(options, () async {
-    await windowManager.show();
-    await windowManager.focus();
-    // await windowManager.setMinimizable(false);
-    await windowManager.setMinimumSize(const Size(1200, 800));
-  });
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await windowManager.ensureInitialized();
+  // WindowOptions options = const WindowOptions(
+  //     size: Size(1000, 500),
+  //     center: true,
+  //     skipTaskbar: false,
+  //     minimumSize: Size(1200, 800),
+  //     titleBarStyle: TitleBarStyle.normal,
+  //     title: "WaterMarker");
+  // windowManager.waitUntilReadyToShow(options, () async {
+  //   await windowManager.show();
+  //   await windowManager.focus();
+  //   // await windowManager.setMinimizable(false);
+  //   await windowManager.setMinimumSize(const Size(1200, 800));
+  // });
   runApp(const MyApp());
 }
 

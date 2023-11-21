@@ -28,10 +28,8 @@ class SettingController extends GetxController {
   bool _hasBusinessLogoSet = false;
   bool get hasBusinessLogo => _hasBusinessLogoSet;
 
-  final TextEditingController _businessLogosPathTextController =
-      TextEditingController();
-  TextEditingController get getBusinessLogoPathTextController =>
-      _businessLogosPathTextController;
+  final TextEditingController _businessLogosPathTextController = TextEditingController();
+  TextEditingController get getBusinessLogoPathTextController => _businessLogosPathTextController;
 
   File? _businessLogoFile;
   File get getLogoImage => _businessLogoFile!;
@@ -44,10 +42,8 @@ class SettingController extends GetxController {
   late File _waterMarkFile;
   File get getWaterMarkFile => _waterMarkFile;
 
-  final TextEditingController _waterMarkImageFilePathController =
-      TextEditingController();
-  TextEditingController get getWaterMarkImageFilePathController =>
-      _waterMarkImageFilePathController;
+  final TextEditingController _waterMarkImageFilePathController = TextEditingController();
+  TextEditingController get getWaterMarkImageFilePathController => _waterMarkImageFilePathController;
 
 // ============================= brand Section ==============================
 
@@ -67,10 +63,8 @@ class SettingController extends GetxController {
   List<BrandsLogoModel> _brandsLogoModel = [];
   List<BrandsLogoModel> get getBrandsLogoModel => _brandsLogoModel;
 
-  final TextEditingController _brandsFolderPathController =
-      TextEditingController();
-  TextEditingController get getBrandsFolderPathController =>
-      _brandsFolderPathController;
+  final TextEditingController _brandsFolderPathController = TextEditingController();
+  TextEditingController get getBrandsFolderPathController => _brandsFolderPathController;
 
   int _brandAlignmentSelectedIndex = 2;
   int get getBrandAlignmentSelectedIndex => _brandAlignmentSelectedIndex;
@@ -126,26 +120,19 @@ class SettingController extends GetxController {
 
   void initComponents() {
     _selectedWaterMarkBoxFitIndex = _configFileModel.waterMarkBoxFitIndex ?? 0;
-    _selectedWaterMarkPositionIndex =
-        _configFileModel.waterMarkPositionIndex ?? 1;
+    _selectedWaterMarkPositionIndex = _configFileModel.waterMarkPositionIndex ?? 1;
     _showBrandsLogo = _configFileModel.showBrandsLogo ?? true;
     _showLogoSection = _configFileModel.showBusinessLogo ?? true;
-    _waterMarkImageFilePathController.text =
-        _configFileModel.waterMarkImage ?? '';
+    _waterMarkImageFilePathController.text = _configFileModel.waterMarkImage ?? '';
     _businessLogosPathTextController.text = _configFileModel.businessLogo ?? '';
     _brandsLogoModel = _configFileModel.brandsLogo ?? [];
-    _waterMarkBoxFit = convertStringToBoxFitEnum(
-        _configFileModel.waterMarkImageBoxFit ?? "BoxFit.contain");
-    _waterMarkAlignment = convertAlignmentsToEnum(
-        _configFileModel.waterMarkLogoPosition ?? "Alignment.center");
-    _brandsLogoAlignment = convertAlignmentsToEnum(
-        _configFileModel.brandsPosition ?? "Alignment.bottomLeft");
-    _businessLogoAlignment = convertAlignmentsToEnum(
-        _configFileModel.businessLogoPosition ?? 'Alignment.topRight');
+    _waterMarkBoxFit = convertStringToBoxFitEnum(_configFileModel.waterMarkImageBoxFit ?? "BoxFit.contain");
+    _waterMarkAlignment = convertAlignmentsToEnum(_configFileModel.waterMarkLogoPosition ?? "Alignment.center");
+    _brandsLogoAlignment = convertAlignmentsToEnum(_configFileModel.brandsPosition ?? "Alignment.bottomLeft");
+    _businessLogoAlignment = convertAlignmentsToEnum(_configFileModel.businessLogoPosition ?? 'Alignment.topRight');
     _waterMarkOpacity = _configFileModel.waterMarkOpacity ?? 0.6;
     _imageBoarderRadius = _configFileModel.imageBorderRadius ?? 4;
-    _businessLogoAlignmentIndex =
-        _configFileModel.businessLogoSelectedIndex ?? 0;
+    _businessLogoAlignmentIndex = _configFileModel.businessLogoSelectedIndex ?? 0;
     _brandAlignmentSelectedIndex = _configFileModel.brandSelectedIndex ?? 2;
     _showBrandsLogo = _configFileModel.showBrandsLogo ?? true;
     _showLogoSection = _configFileModel.showBusinessLogo ?? true;
@@ -154,12 +141,20 @@ class SettingController extends GetxController {
   // get business Logo file
 
   void chooseBusinessLogoFile() async {
-    _businessLogoFile = await Get.find<ImportImageController>()
-        .getImageFromStorage('business logo');
-    _hasBusinessLogoSet = true;
-    _configFileModel.businessLogo = _businessLogoFile!.path;
-    _businessLogosPathTextController.text = basename(_businessLogoFile!.path);
-    update();
+    try {
+      _businessLogoFile = await Get.find<ImportImageController>().getSingleSvg('business logo');
+      _hasBusinessLogoSet = true;
+      _configFileModel.businessLogo = _businessLogoFile!.path;
+      _businessLogosPathTextController.text = basename(_businessLogoFile!.path);
+      update();
+    } catch (e) {
+      MySnackBar.showMySnackBar(
+        titleColor: myRed[400]!,
+        messageColor: myRed[100]!,
+        title: 'Error',
+        message: 'Image has not select',
+      );
+    }
   }
 
   // clear business logo data
@@ -176,8 +171,7 @@ class SettingController extends GetxController {
 
   void chooseWaterMark() async {
     try {
-      _waterMarkFile = await Get.find<ImportImageController>()
-          .getImageFromStorage('water mark');
+      _waterMarkFile = await Get.find<ImportImageController>().getSingleSvg('water mark');
       _isWaterMarkFileSelected = true;
       _waterMarkImageFilePathController.text = basename(_waterMarkFile.path);
       _configFileModel.waterMarkImage = _waterMarkFile.path;
@@ -185,10 +179,11 @@ class SettingController extends GetxController {
     } catch (e) {
       e.printError();
       MySnackBar.showMySnackBar(
-          titleColor: myRed[400]!,
-          messageColor: myRed[100]!,
-          title: 'Error',
-          message: 'Image has not select');
+        titleColor: myRed[400]!,
+        messageColor: myRed[100]!,
+        title: 'Error',
+        message: 'Image has not select',
+      );
     }
   }
 
@@ -205,16 +200,12 @@ class SettingController extends GetxController {
 
   void getBrandsLogoFormHard() async {
     try {
-      _brands = await Get.find<ImportImageController>().getMultiImage();
+      _brands = await Get.find<ImportImageController>().getMultiSvg();
       _hasBrandsSelected = true;
       _brandsFolderPathController.text = "$applicationPath/data/products logos";
       update();
     } catch (e) {
-      MySnackBar.showMySnackBar(
-          titleColor: myRed[400]!,
-          messageColor: myRed[100]!,
-          title: 'Error',
-          message: 'Image has not select');
+      MySnackBar.showMySnackBar(titleColor: myRed[400]!, messageColor: myRed[100]!, title: 'Error', message: 'Image has not select');
     }
   }
 
@@ -229,8 +220,7 @@ class SettingController extends GetxController {
   // convert to model
   void convertBrandsDataToModel(List<File> images) {
     for (File image in images) {
-      _brandsLogoModel.add(
-          BrandsLogoModel(title: basename(image.path), imagePath: image.path));
+      _brandsLogoModel.add(BrandsLogoModel(title: basename(image.path), imagePath: image.path));
     }
     _configFileModel.brandsLogo = _brandsLogoModel;
     update();
@@ -283,12 +273,12 @@ class SettingController extends GetxController {
   void setWaterMarkAlignment(Alignment alignment, int index) {
     _waterMarkAlignment = alignment;
     _selectedWaterMarkPositionIndex = index;
+    update();
   }
 
   void setWaterMarkOpacity(double opacity) {
     _waterMarkOpacity = opacity;
     _configFileModel.waterMarkOpacity = opacity;
-
     update();
   }
 
@@ -296,6 +286,7 @@ class SettingController extends GetxController {
     _waterMarkBoxFit = fit;
     _configFileModel.waterMarkImageBoxFit = fit.toString();
     _selectedWaterMarkBoxFitIndex = index;
+    update();
   }
 
   void saveConfigs() {
