@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_water_marker/common/my_snackbar.dart';
 import 'package:image_water_marker/common/utilis_design.dart';
 import 'package:image_water_marker/controller/config_file_controller.dart';
@@ -14,12 +15,20 @@ import 'package:path/path.dart';
 class SettingController extends GetxController {
   // config file model;
   ConfigFileModel _configFileModel = ConfigFileModel();
-  set setConfigFile(ConfigFileModel model) => _configFileModel = model;
+  void setConfigFile() async {
+    try {
+      _configFileModel = ConfigFileModel.fromJson(await Get.find<ConfigFileController>().readData());
+    } catch (e) {
+      print(e);
+    }
+  }
+
   // =========================== logo section ===============================
   bool _showLogoSection = true;
   bool get hasShowLogo => _showLogoSection;
   set checkToShowLog(bool data) {
     _showLogoSection = data;
+    _configFileModel.showBusinessLogo = data;
     update();
   }
 
@@ -51,6 +60,7 @@ class SettingController extends GetxController {
   bool get hasShowBrands => _showBrandsLogo;
   set showOrHideBrand(bool hasShow) {
     _showBrandsLogo = hasShow;
+    _configFileModel.showBrandsLogo = hasShow;
     update();
   }
 
@@ -109,22 +119,71 @@ class SettingController extends GetxController {
   @override
   void onInit() {
     applicationPath = Directory.current.path;
+
     super.onInit();
   }
 
   @override
   void onReady() {
+    Get.dialog(Dialog(
+      child: Container(
+        width: 150,
+        height: 120,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: myGrey[200],
+          boxShadow: [
+            BoxShadow(
+              offset: const Offset(0, 1),
+              color: myGrey[100]!.withOpacity(0.2),
+              blurRadius: 8,
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            const CircularProgressIndicator(),
+            Text(
+              'Please wait a few second...',
+              style: GoogleFonts.karla(
+                fontSize: 18,
+                color: myGrey[700],
+              ),
+            )
+          ],
+        ),
+      ),
+    ));
+    setConfigFile();
     initComponents();
+
+    Future.delayed(const Duration(seconds: 2), () {
+      Get.back();
+    });
     super.onReady();
   }
 
   void initComponents() {
+    Get.dialog(Container(
+      width: 100,
+      height: 100,
+      color: Colors.white,
+    ));
     _selectedWaterMarkBoxFitIndex = _configFileModel.waterMarkBoxFitIndex ?? 0;
     _selectedWaterMarkPositionIndex = _configFileModel.waterMarkPositionIndex ?? 1;
     _showBrandsLogo = _configFileModel.showBrandsLogo ?? true;
     _showLogoSection = _configFileModel.showBusinessLogo ?? true;
     _waterMarkImageFilePathController.text = _configFileModel.waterMarkImage ?? '';
+    if (_configFileModel.waterMarkImage != null && _configFileModel.waterMarkImage!.isNotEmpty) {
+      _waterMarkFile = File(_configFileModel.waterMarkImage!);
+      _isWaterMarkFileSelected = true;
+    }
     _businessLogosPathTextController.text = _configFileModel.businessLogo ?? '';
+    if (_configFileModel.businessLogo != null && _configFileModel.businessLogo!.isNotEmpty) {
+      _hasBusinessLogoSet = true;
+      _businessLogoFile = File(_configFileModel.businessLogo!);
+    }
     _brandsLogoModel = _configFileModel.brandsLogo ?? [];
     _waterMarkBoxFit = convertStringToBoxFitEnum(_configFileModel.waterMarkImageBoxFit ?? "BoxFit.contain");
     _waterMarkAlignment = convertAlignmentsToEnum(_configFileModel.waterMarkLogoPosition ?? "Alignment.center");
@@ -134,8 +193,8 @@ class SettingController extends GetxController {
     _imageBoarderRadius = _configFileModel.imageBorderRadius ?? 4;
     _businessLogoAlignmentIndex = _configFileModel.businessLogoSelectedIndex ?? 0;
     _brandAlignmentSelectedIndex = _configFileModel.brandSelectedIndex ?? 2;
-    _showBrandsLogo = _configFileModel.showBrandsLogo ?? true;
-    _showLogoSection = _configFileModel.showBusinessLogo ?? true;
+    update();
+    Get.back();
   }
 
   // get business Logo file
@@ -232,6 +291,7 @@ class SettingController extends GetxController {
     _checkBrandsBoarder(align);
     _brandAlignmentSelectedIndex = index;
     _configFileModel.brandsPosition = align.toString();
+    _configFileModel.brandSelectedIndex = _brandAlignmentSelectedIndex;
   }
 
   void _checkBrandsBoarder(Alignment align) {
@@ -250,6 +310,7 @@ class SettingController extends GetxController {
     _checkBusinessBoarder(align);
     _businessLogoAlignmentIndex = index;
     _configFileModel.businessLogoPosition = align.toString();
+    _configFileModel.businessLogoSelectedIndex = index;
   }
 
   void _checkBusinessBoarder(Alignment align) {
@@ -266,7 +327,6 @@ class SettingController extends GetxController {
   void setImageBoarderRadius(double radius) {
     _imageBoarderRadius = radius;
     _configFileModel.imageBorderRadius = radius;
-
     update();
   }
 

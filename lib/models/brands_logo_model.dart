@@ -4,7 +4,7 @@ class BrandsLogoModel {
 
   BrandsLogoModel({this.title, this.imagePath});
 
-  BrandsLogoModel.formJson(Map<String, String> json) {
+  BrandsLogoModel.formJson(Map<String, dynamic> json) {
     title = json['brand_title'];
     imagePath = json['image_path'];
   }

@@ -44,11 +44,11 @@ class ConfigFileModel {
       }
     }
     return {
-      'business_log': model.businessLogo,
+      'business_logo': model.businessLogo,
       'business_logo_position': model.businessLogoPosition,
       'business_logo_selected_index': model.businessLogoSelectedIndex,
       'show_business_logo': model.showBusinessLogo,
-      'brandsPosition': model.brandsPosition,
+      'brands_position': model.brandsPosition,
       'brands_selected_index': model.brandSelectedIndex,
       'show_brands_logo': model.showBrandsLogo,
       'water_mark': model.waterMarkImage,
@@ -77,8 +77,9 @@ class ConfigFileModel {
     waterMarkLogoPosition = json['water_mark_position'];
     waterMarkOpacity = json['water_mark_opacity'];
     imageBorderRadius = json['image_border_radius'];
+    brandsLogo = [];
     if (json['brands_logo'].length > 0) {
-      for (int i = 0; i < json['brands_logo']; i++) {
+      for (int i = 0; i < json['brands_logo'].length; i++) {
         brandsLogo!.add(BrandsLogoModel.formJson(json['brands_logo'][i]));
       }
     }

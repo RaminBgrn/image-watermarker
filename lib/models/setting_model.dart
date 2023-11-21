@@ -13,7 +13,7 @@ class SettingModel {
   List<String>? brandsLogo;
 
   SettingModel.fromJson(Map<String, dynamic> json) {
-    businessLogo = json['business_log0'];
+    businessLogo = json['business_logo'];
     brandsLogo = json['brands_logo'];
     waterMarkLogo = json['water_mark'];
     waterMarkBoxFit = json['water_mark_box_fit'];
