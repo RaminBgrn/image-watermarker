@@ -8,7 +8,7 @@ class SaveImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
-      cursor: SystemMouseCursors.cell,
+      cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: () {},
         child: SvgPicture.asset(
