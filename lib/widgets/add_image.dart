@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:image_water_marker/controller/water_mark_controller.dart';
+import 'package:image_water_marker/controller/edit_image_controller.dart';
 import 'package:image_water_marker/utils/colors.dart';
 
 class AddImage extends StatelessWidget {
@@ -13,7 +13,7 @@ class AddImage extends StatelessWidget {
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: () {
-          Get.find<WaterMarkController>().importImage();
+          Get.find<EditImageController>().importImage();
         },
         child: SvgPicture.asset(
           'svgs/import.svg',

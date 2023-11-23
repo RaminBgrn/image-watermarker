@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_water_marker/controller/edit_image_controller.dart';
 import 'package:image_water_marker/controller/setting_controller.dart';
 import 'package:image_water_marker/models/brands_logo_model.dart';
 import 'package:image_water_marker/utils/colors.dart';
@@ -91,7 +92,7 @@ class BrandsDropdown extends StatelessWidget {
                 )
                 .toList(),
             onChanged: (value) {
-              print(value!.imagePath);
+              Get.find<EditImageController>().selectBrand(value!.imagePath!);
             },
             iconStyleData: const IconStyleData(
               iconDisabledColor: Colors.transparent,

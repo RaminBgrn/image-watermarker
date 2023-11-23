@@ -260,7 +260,6 @@ class SettingController extends GetxController {
     _isWaterMarkFileSelected = false;
     _waterMarkImageFilePathController.clear();
     _configFileModel.waterMarkImage = "";
-
     update();
   }
 
