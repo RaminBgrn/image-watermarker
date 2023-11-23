@@ -14,7 +14,6 @@ import 'package:image_water_marker/customs/model/radio_data.dart';
 import 'package:image_water_marker/customs/widget_radio_group.dart';
 import 'package:image_water_marker/models/image_model.dart';
 import 'package:image_water_marker/utils/colors.dart';
-import 'package:image_water_marker/utils/colors.dart';
 import 'package:image_water_marker/widgets/my_color_picker.dart';
 
 class GridViewItem extends StatefulWidget {
