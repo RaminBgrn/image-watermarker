@@ -3,9 +3,12 @@ import 'dart:io';
 
 import 'package:get/get.dart';
 import 'package:image_water_marker/models/config_file_model.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ConfigFileController extends GetxController {
   String fileDire = Directory.current.path;
+  String _defaultOutputPath = "";
+  String get getDefaultOutputPath => _defaultOutputPath;
 
   Future<Map<String, dynamic>> readData() async {
     try {
@@ -34,7 +37,8 @@ class ConfigFileController extends GetxController {
     Directory('$fileDire/data/water mark').createSync(recursive: true);
     Directory('$fileDire/data/products logos').createSync(recursive: true);
     Directory('$fileDire/data/business logo').createSync(recursive: true);
-
+    Directory('${await getApplicationDocumentsDirectory()}/Water Mark').createSync(recursive: true);
+    _defaultOutputPath = "${await getApplicationDocumentsDirectory()}/Water Mark";
     File configFile = File("$fileDire/data/config.json");
     if (!await configFile.exists()) {
       configFile.create();
