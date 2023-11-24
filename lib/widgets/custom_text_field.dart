@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_water_marker/utils/colors.dart';
 
@@ -9,15 +10,20 @@ class CustomTextField extends StatelessWidget {
   final bool? isReadOnly;
   final double? height;
   final double? width;
+  final int? maxLength;
+  final List<TextInputFormatter>? formatters;
 
-  const CustomTextField(
-      {required this.controller,
-      this.focusBorderColor,
-      this.height,
-      this.width,
-      this.hint,
-      this.isReadOnly,
-      super.key});
+  const CustomTextField({
+    required this.controller,
+    this.focusBorderColor,
+    this.height,
+    this.maxLength,
+    this.width,
+    this.hint,
+    this.isReadOnly,
+    this.formatters,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +31,9 @@ class CustomTextField extends StatelessWidget {
       width: width ?? 280,
       height: height ?? 40,
       child: TextField(
+        inputFormatters: formatters,
         controller: controller,
+        maxLength: maxLength,
         cursorColor: myGrey[100],
         readOnly: isReadOnly ?? false,
         cursorOpacityAnimates: true,
@@ -39,6 +47,7 @@ class CustomTextField extends StatelessWidget {
         ),
         textAlign: TextAlign.center,
         decoration: InputDecoration(
+          counterText: '',
           hintText: hint ?? "Out put file name",
           hintStyle: GoogleFonts.karla(
             fontWeight: FontWeight.w500,

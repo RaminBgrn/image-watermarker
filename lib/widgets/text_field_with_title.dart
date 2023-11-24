@@ -9,7 +9,8 @@ class TextFieldWithTitle extends StatelessWidget {
   final TextEditingController controller;
   final VoidCallback onTap;
   final VoidCallback? onClearTap;
-
+  final bool removeButtonFlag;
+  final bool browseButtonFlag;
   final bool hasEnableButton;
   final double? textFieldHeight;
   final double? textFieldWidth;
@@ -22,6 +23,8 @@ class TextFieldWithTitle extends StatelessWidget {
       {required this.controller,
       required this.onTap,
       this.onClearTap,
+      this.browseButtonFlag = true,
+      this.removeButtonFlag = true,
       this.hasEnableButton = false,
       this.textFieldWidth,
       this.clearButtonColor,
@@ -48,41 +51,44 @@ class TextFieldWithTitle extends StatelessWidget {
                 isReadOnly: isReadOnly,
               ),
             ),
-            const SizedBox(
-              width: 8,
+            SizedBox(
+              width: removeButtonFlag ? 8 : 0,
             ),
-            MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                onTap: onClearTap,
-                child: SvgPicture.asset(
-                  'svgs/close.svg',
-                  colorFilter: ColorFilter.mode(
-                      clearButtonColor ?? Colors.red, BlendMode.srcIn),
-                ),
-              ),
+            removeButtonFlag
+                ? MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: GestureDetector(
+                      onTap: onClearTap,
+                      child: SvgPicture.asset(
+                        'svgs/close.svg',
+                        colorFilter: ColorFilter.mode(clearButtonColor ?? Colors.red, BlendMode.srcIn),
+                      ),
+                    ),
+                  )
+                : const SizedBox(),
+            SizedBox(
+              width: browseButtonFlag ? 8 : 0,
             ),
-            const SizedBox(
-              width: 8,
-            ),
-            ElevatedButton(
-              onPressed: onTap,
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(myGrey[500]!),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-              ),
-              child: Text(
-                'Browse',
-                style: GoogleFonts.karla(
-                  fontSize: 14,
-                  color: myGrey[300],
-                ),
-              ),
-            ),
+            browseButtonFlag
+                ? ElevatedButton(
+                    onPressed: onTap,
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(myGrey[500]!),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
+                    child: Text(
+                      'Browse',
+                      style: GoogleFonts.karla(
+                        fontSize: 14,
+                        color: myGrey[300],
+                      ),
+                    ),
+                  )
+                : const SizedBox(),
           ],
         ),
       ),

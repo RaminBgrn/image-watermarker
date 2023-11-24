@@ -37,8 +37,9 @@ class ConfigFileController extends GetxController {
     Directory('$fileDire/data/water mark').createSync(recursive: true);
     Directory('$fileDire/data/products logos').createSync(recursive: true);
     Directory('$fileDire/data/business logo').createSync(recursive: true);
-    Directory('${await getApplicationDocumentsDirectory()}/Water Mark').createSync(recursive: true);
-    _defaultOutputPath = "${await getApplicationDocumentsDirectory()}/Water Mark";
+    Directory outPutPath = await getApplicationDocumentsDirectory();
+    Directory('${outPutPath.absolute.path}/Water Mark').createSync(recursive: true);
+    _defaultOutputPath = "${outPutPath.absolute.path}/Water Mark";
     File configFile = File("$fileDire/data/config.json");
     if (!await configFile.exists()) {
       configFile.create();
