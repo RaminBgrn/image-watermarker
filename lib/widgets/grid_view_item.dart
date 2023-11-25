@@ -19,7 +19,8 @@ import 'package:image_water_marker/widgets/my_color_picker.dart';
 class GridViewItem extends StatefulWidget {
   final ImageModel model;
   final int imageIndex;
-  const GridViewItem({required this.model, required this.imageIndex, super.key});
+  const GridViewItem(
+      {required this.model, required this.imageIndex, super.key});
 
   @override
   State<GridViewItem> createState() => _GridViewItemState();
@@ -58,7 +59,8 @@ class _GridViewItemState extends State<GridViewItem> {
               Align(
                 alignment: Alignment.topCenter,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
                   child: Column(
                     children: [
                       Row(
@@ -70,7 +72,12 @@ class _GridViewItemState extends State<GridViewItem> {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8),
                                   color: myGrey[600],
-                                  boxShadow: [BoxShadow(offset: const Offset(0, 1), blurRadius: 6, color: myOrange[300]!.withOpacity(0.4))]),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        offset: const Offset(0, 1),
+                                        blurRadius: 6,
+                                        color: myOrange[300]!.withOpacity(0.4))
+                                  ]),
                               child: MyToolTip(
                                 message: 'Edit Photo',
                                 child: AnimatedSvg(
@@ -86,18 +93,22 @@ class _GridViewItemState extends State<GridViewItem> {
                                         opacity = 0;
                                       }
 
-                                      svgController.isCompleted ? svgController.reverse() : svgController.forward();
+                                      svgController.isCompleted
+                                          ? svgController.reverse()
+                                          : svgController.forward();
                                     });
                                   },
                                   controller: svgController,
                                   children: [
                                     SvgPicture.asset(
                                       'svgs/edit.svg',
-                                      colorFilter: ColorFilter.mode(myOrange[100]!, BlendMode.srcIn),
+                                      colorFilter: ColorFilter.mode(
+                                          myOrange[100]!, BlendMode.srcIn),
                                     ),
                                     SvgPicture.asset(
                                       'svgs/back.svg',
-                                      colorFilter: ColorFilter.mode(myOrange[100]!, BlendMode.srcIn),
+                                      colorFilter: ColorFilter.mode(
+                                          myOrange[100]!, BlendMode.srcIn),
                                     ),
                                   ],
                                 ),
@@ -111,7 +122,8 @@ class _GridViewItemState extends State<GridViewItem> {
                                 myDialog(
                                     title: 'Deleted item ?',
                                     yes: () {
-                                      Get.find<EditImageController>().removeImage(widget.imageIndex);
+                                      Get.find<EditImageController>()
+                                          .removeImage(widget.imageIndex);
                                       Get.back();
                                     },
                                     no: Get.back);
@@ -119,14 +131,20 @@ class _GridViewItemState extends State<GridViewItem> {
                               child: Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8),
-                                  boxShadow: [BoxShadow(offset: const Offset(0, 1), blurRadius: 6, color: myRed[300]!.withOpacity(0.4))],
+                                  boxShadow: [
+                                    BoxShadow(
+                                        offset: const Offset(0, 1),
+                                        blurRadius: 6,
+                                        color: myRed[300]!.withOpacity(0.4))
+                                  ],
                                   color: myGrey[600],
                                 ),
                                 child: MyToolTip(
                                   message: "Remove Photo",
                                   child: SvgPicture.asset(
                                     'svgs/remove.svg',
-                                    colorFilter: ColorFilter.mode(myRed[300]!, BlendMode.srcIn),
+                                    colorFilter: ColorFilter.mode(
+                                        myRed[300]!, BlendMode.srcIn),
                                   ),
                                 ),
                               ),
@@ -145,36 +163,59 @@ class _GridViewItemState extends State<GridViewItem> {
                               height: 40,
                               alignment: Alignment.topCenter,
                               margin: const EdgeInsets.only(top: 20),
-                              child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-                                WidgetRadioGroup(
-                                    iconTye: IconType.svgAsset,
-                                    activeIconColor: Colors.cyan,
-                                    deactivateIconColor: myGrey[400],
-                                    backgroundColor: myGrey[700],
-                                    activeShadow: [
-                                      BoxShadow(offset: const Offset(0, 3), color: myGreen[800]!, blurRadius: 7),
-                                    ],
-                                    toolTipDecoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      color: myGrey[800],
-                                    ),
-                                    verticalOffset: -40,
-                                    direction: Axis.horizontal,
-                                    itemMargin: const EdgeInsets.symmetric(horizontal: 8),
-                                    activeDefault: 1,
-                                    data: [
-                                      RadioData(iconPath: 'svgs/fill.svg', value: BoxFit.fill, toolTipText: 'Fill'),
-                                      RadioData(iconPath: 'svgs/contain.svg', value: BoxFit.contain, toolTipText: "Contain"),
-                                      RadioData(iconPath: 'svgs/cover.svg', value: BoxFit.cover, toolTipText: "Cover"),
-                                      RadioData(iconPath: 'svgs/fill_width.svg', value: BoxFit.fitWidth, toolTipText: "Fill Width"),
-                                      RadioData(iconPath: 'svgs/fill_height.svg', value: BoxFit.fitHeight, toolTipText: 'Fill Height'),
-                                    ],
-                                    onRadioClick: (value, index) {
-                                      setState(() {
-                                        widget.model.imageBoxFit = value;
-                                      });
-                                    })
-                              ]),
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    WidgetRadioGroup(
+                                        iconTye: IconType.svgAsset,
+                                        activeIconColor: Colors.cyan,
+                                        deactivateIconColor: myGrey[400],
+                                        backgroundColor: myGrey[700],
+                                        activeShadow: [
+                                          BoxShadow(
+                                              offset: const Offset(0, 3),
+                                              color: myGreen[800]!,
+                                              blurRadius: 7),
+                                        ],
+                                        toolTipDecoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          color: myGrey[800],
+                                        ),
+                                        verticalOffset: -40,
+                                        direction: Axis.horizontal,
+                                        itemMargin: const EdgeInsets.symmetric(
+                                            horizontal: 8),
+                                        activeDefault: 1,
+                                        data: [
+                                          RadioData(
+                                              iconPath: 'svgs/fill.svg',
+                                              value: BoxFit.fill,
+                                              toolTipText: 'Fill'),
+                                          RadioData(
+                                              iconPath: 'svgs/contain.svg',
+                                              value: BoxFit.contain,
+                                              toolTipText: "Contain"),
+                                          RadioData(
+                                              iconPath: 'svgs/cover.svg',
+                                              value: BoxFit.cover,
+                                              toolTipText: "Cover"),
+                                          RadioData(
+                                              iconPath: 'svgs/fill_width.svg',
+                                              value: BoxFit.fitWidth,
+                                              toolTipText: "Fill Width"),
+                                          RadioData(
+                                              iconPath: 'svgs/fill_height.svg',
+                                              value: BoxFit.fitHeight,
+                                              toolTipText: 'Fill Height'),
+                                        ],
+                                        onRadioClick: (value, index) {
+                                          setState(() {
+                                            widget.model.imageBoxFit = value;
+                                          });
+                                        })
+                                  ]),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -252,7 +293,8 @@ class _GridViewItemState extends State<GridViewItem> {
                             Align(
                               alignment: Alignment.center,
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(settingClr.getImageBoarderRadius),
+                                borderRadius: BorderRadius.circular(
+                                    settingClr.getImageBoarderRadius),
                                 child: Image.file(
                                   widget.model.image!,
                                   width: 300,
@@ -265,22 +307,30 @@ class _GridViewItemState extends State<GridViewItem> {
                                 ? Positioned.fill(
                                     top: 16,
                                     child: Align(
-                                      alignment: settingClr.getBusinessLogoAlignment,
+                                      alignment:
+                                          settingClr.getBusinessLogoAlignment,
                                       child: ClipRRect(
                                         child: BackdropFilter(
-                                          filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+                                          filter: ImageFilter.blur(
+                                              sigmaX: 4, sigmaY: 4),
                                           child: Container(
                                             width: 60,
                                             height: 25,
                                             decoration: BoxDecoration(
                                               border: Border(
                                                 right: BorderSide(
-                                                  width: (settingClr.getRightBusinessBoarderWidth / 3),
-                                                  color: const Color(0xFFFDBCC7),
+                                                  width: (settingClr
+                                                          .getRightBusinessBoarderWidth /
+                                                      3),
+                                                  color:
+                                                      const Color(0xFFFDBCC7),
                                                 ),
                                                 left: BorderSide(
-                                                  width: (settingClr.getLeftBusinessBoarderWidth / 3),
-                                                  color: const Color(0xFFFDBCC7),
+                                                  width: (settingClr
+                                                          .getLeftBusinessBoarderWidth /
+                                                      3),
+                                                  color:
+                                                      const Color(0xFFFDBCC7),
                                                 ),
                                                 top: const BorderSide(
                                                   width: 1,
@@ -293,8 +343,12 @@ class _GridViewItemState extends State<GridViewItem> {
                                               ),
                                             ),
                                             child: Padding(
-                                              padding: const EdgeInsets.all(2.0),
-                                              child: SvgPicture.file(settingClr.getLogoImage),
+                                              padding:
+                                                  const EdgeInsets.all(2.0),
+                                              child: settingClr.hasBusinessLogo
+                                                  ? SvgPicture.file(
+                                                      settingClr.getLogoImage)
+                                                  : const SizedBox(),
                                             ),
                                           ),
                                         ),
@@ -306,22 +360,30 @@ class _GridViewItemState extends State<GridViewItem> {
                                 ? Positioned.fill(
                                     bottom: 16,
                                     child: Align(
-                                      alignment: settingClr.getBrandsLogoAlignment,
+                                      alignment:
+                                          settingClr.getBrandsLogoAlignment,
                                       child: ClipRRect(
                                         child: BackdropFilter(
-                                          filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+                                          filter: ImageFilter.blur(
+                                              sigmaX: 4, sigmaY: 4),
                                           child: Container(
                                             width: 60,
                                             height: 25,
                                             decoration: BoxDecoration(
                                               border: Border(
                                                 right: BorderSide(
-                                                  width: (settingClr.getRightBrandBoarderWidth / 3),
-                                                  color: const Color(0xFFFDBCC7),
+                                                  width: (settingClr
+                                                          .getRightBrandBoarderWidth /
+                                                      3),
+                                                  color:
+                                                      const Color(0xFFFDBCC7),
                                                 ),
                                                 left: BorderSide(
-                                                  width: (settingClr.getLeftBrandBoarderWidth / 3),
-                                                  color: const Color(0xFFFDBCC7),
+                                                  width: (settingClr
+                                                          .getLeftBrandBoarderWidth /
+                                                      3),
+                                                  color:
+                                                      const Color(0xFFFDBCC7),
                                                 ),
                                                 top: const BorderSide(
                                                   width: 1,
@@ -334,7 +396,8 @@ class _GridViewItemState extends State<GridViewItem> {
                                               ),
                                             ),
                                             child: Padding(
-                                              padding: const EdgeInsets.all(2.0),
+                                              padding:
+                                                  const EdgeInsets.all(2.0),
                                               child: SvgPicture.file(
                                                 File(
                                                   imageClr.getBrandFilePath,
@@ -387,7 +450,10 @@ class _GridViewItemState extends State<GridViewItem> {
               selectedColor = color;
             },
             selectedColor: Colors.white,
-            config: const ColorPickerConfig(enableLibrary: false, enableEyePicker: false, enableOpacity: true),
+            config: const ColorPickerConfig(
+                enableLibrary: false,
+                enableEyePicker: false,
+                enableOpacity: true),
             onClose: () {
               setState(() {
                 widget.model.backgroundColor = selectedColor;

@@ -13,7 +13,8 @@ class ConfigFileController extends GetxController {
   Future<Map<String, dynamic>> readData() async {
     try {
       File configFile = File("$fileDire/data/config.json");
-      Map<String, dynamic> decoderConfigFile = jsonDecode(configFile.readAsStringSync());
+      Map<String, dynamic> decoderConfigFile =
+          jsonDecode(configFile.readAsStringSync());
       return decoderConfigFile;
     } catch (e) {
       return {};
@@ -38,7 +39,8 @@ class ConfigFileController extends GetxController {
     Directory('$fileDire/data/products logos').createSync(recursive: true);
     Directory('$fileDire/data/business logo').createSync(recursive: true);
     Directory outPutPath = await getApplicationDocumentsDirectory();
-    Directory('${outPutPath.absolute.path}/Water Mark').createSync(recursive: true);
+    Directory('${outPutPath.absolute.path}/Water Mark')
+        .createSync(recursive: true);
     _defaultOutputPath = "${outPutPath.absolute.path}/Water Mark";
     File configFile = File("$fileDire/data/config.json");
     if (!await configFile.exists()) {
