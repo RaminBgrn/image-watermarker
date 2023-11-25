@@ -56,6 +56,7 @@ dependencies:
   widgets_to_image: ^0.0.2
   path_provider: ^2.1.1
   simple_circular_progress_bar: ^1.0.2
+  screenshot: ^2.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

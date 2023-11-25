@@ -20,6 +20,7 @@ class Home extends StatelessWidget {
           PageView(
             controller: Get.find<ScreenController>().getPageController,
             children: const [
+              // ScreenTest(),
               MainPage(),
               SettingsPage(),
             ],

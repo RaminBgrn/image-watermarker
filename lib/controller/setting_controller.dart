@@ -15,6 +15,7 @@ import 'package:path/path.dart';
 class SettingController extends GetxController {
   // config file model;
   ConfigFileModel _configFileModel = ConfigFileModel();
+  ConfigFileModel get getConfigFileModel => _configFileModel;
   void setConfigFile() async {
     try {
       _configFileModel = ConfigFileModel.fromJson(await Get.find<ConfigFileController>().readData());
@@ -99,14 +100,14 @@ class SettingController extends GetxController {
   double _imageBoarderRadius = 0;
   double get getImageBoarderRadius => _imageBoarderRadius;
 
-  double _leftBrandBoarderWidth = 5;
+  double _leftBrandBoarderWidth = 15;
   double get getLeftBrandBoarderWidth => _leftBrandBoarderWidth;
-  double _rightBrandBoarderWidth = 1;
+  double _rightBrandBoarderWidth = 3;
   double get getRightBrandBoarderWidth => _rightBrandBoarderWidth;
 
-  double _leftBusinessBoarderWidth = 1;
+  double _leftBusinessBoarderWidth = 3;
   double get getLeftBusinessBoarderWidth => _leftBusinessBoarderWidth;
-  double _rightBusinessBoarderWidth = 5;
+  double _rightBusinessBoarderWidth = 15;
   double get getRightBusinessBoarderWidth => _rightBusinessBoarderWidth;
 
   // water mark position
@@ -309,11 +310,11 @@ class SettingController extends GetxController {
 
   void _checkBrandsBoarder(Alignment align) {
     if (align == Alignment.topRight || align == Alignment.bottomRight) {
-      _leftBrandBoarderWidth = 1;
-      _rightBrandBoarderWidth = 5;
+      _leftBrandBoarderWidth = 3;
+      _rightBrandBoarderWidth = 15;
     } else {
-      _leftBrandBoarderWidth = 5;
-      _rightBrandBoarderWidth = 1;
+      _leftBrandBoarderWidth = 15;
+      _rightBrandBoarderWidth = 3;
     }
     update();
   }
@@ -328,11 +329,11 @@ class SettingController extends GetxController {
 
   void _checkBusinessBoarder(Alignment align) {
     if (align == Alignment.topRight || align == Alignment.bottomRight) {
-      _leftBusinessBoarderWidth = 1;
-      _rightBusinessBoarderWidth = 5;
+      _leftBusinessBoarderWidth = 3;
+      _rightBusinessBoarderWidth = 15;
     } else {
-      _leftBusinessBoarderWidth = 5;
-      _rightBusinessBoarderWidth = 1;
+      _leftBusinessBoarderWidth = 15;
+      _rightBusinessBoarderWidth = 3;
     }
     update();
   }

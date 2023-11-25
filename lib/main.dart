@@ -6,7 +6,7 @@ import 'package:image_water_marker/controller/config_file_controller.dart';
 import 'package:image_water_marker/screens/home.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   // await windowManager.ensureInitialized();
   // WindowOptions options = const WindowOptions(
   //     size: Size(1000, 500),
@@ -21,6 +21,7 @@ void main() async {
   //   // await windowManager.setMinimizable(false);
   //   await windowManager.setMinimumSize(const Size(1200, 800));
   // });
+
   runApp(const MyApp());
 }
 

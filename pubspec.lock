@@ -568,6 +568,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.1.9"
+  screenshot:
+    dependency: "direct main"
+    description:
+      name: screenshot
+      sha256: "455284ff1f5b911d94a43c25e1385485cf6b4f288293eba68f15dad711c7b81c"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.1.0"
   simple_circular_progress_bar:
     dependency: "direct main"
     description:

@@ -275,11 +275,11 @@ class _GridViewItemState extends State<GridViewItem> {
                                             decoration: BoxDecoration(
                                               border: Border(
                                                 right: BorderSide(
-                                                  width: settingClr.getRightBusinessBoarderWidth,
+                                                  width: (settingClr.getRightBusinessBoarderWidth / 3),
                                                   color: const Color(0xFFFDBCC7),
                                                 ),
                                                 left: BorderSide(
-                                                  width: settingClr.getLeftBusinessBoarderWidth,
+                                                  width: (settingClr.getLeftBusinessBoarderWidth / 3),
                                                   color: const Color(0xFFFDBCC7),
                                                 ),
                                                 top: const BorderSide(
@@ -316,11 +316,11 @@ class _GridViewItemState extends State<GridViewItem> {
                                             decoration: BoxDecoration(
                                               border: Border(
                                                 right: BorderSide(
-                                                  width: settingClr.getRightBrandBoarderWidth,
+                                                  width: (settingClr.getRightBrandBoarderWidth / 3),
                                                   color: const Color(0xFFFDBCC7),
                                                 ),
                                                 left: BorderSide(
-                                                  width: settingClr.getLeftBrandBoarderWidth,
+                                                  width: (settingClr.getLeftBrandBoarderWidth / 3),
                                                   color: const Color(0xFFFDBCC7),
                                                 ),
                                                 top: const BorderSide(
