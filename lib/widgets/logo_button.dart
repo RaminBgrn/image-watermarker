@@ -14,7 +14,7 @@ class LogoButton extends StatelessWidget {
         cursor: SystemMouseCursors.click,
         child: GestureDetector(
           onTap: () {
-            UtilsMethods.urlLauncher('traderassistant.ir');
+            UtilsMethods.urlLauncher('rammin.ir');
           },
           child: Text(
             'Ramin BGrn',
