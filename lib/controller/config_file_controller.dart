@@ -6,7 +6,9 @@ import 'package:image_water_marker/models/config_file_model.dart';
 import 'package:path_provider/path_provider.dart';
 
 class ConfigFileController extends GetxController {
-  String fileDire = Directory.current.path;
+  String fileDire = Platform.isWindows
+      ? Platform.environment['APPDATA']!
+      : Directory.current.path;
   String _defaultOutputPath = "";
   String get getDefaultOutputPath => _defaultOutputPath;
 
@@ -64,6 +66,6 @@ class ConfigFileController extends GetxController {
       };
       configFile.writeAsStringSync(jsonEncode(configData));
     }
-    readData();
+    // readData();
   }
 }

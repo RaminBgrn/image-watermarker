@@ -133,7 +133,9 @@ class SettingController extends GetxController {
 
   @override
   void onInit() {
-    applicationPath = Directory.current.path;
+    applicationPath = (Platform.isWindows
+        ? Platform.environment['APPDATA']
+        : Directory.current.path)!;
 
     super.onInit();
   }
@@ -170,7 +172,7 @@ class SettingController extends GetxController {
         ),
       ),
     ));
-    Future.delayed(const Duration(milliseconds: 400), () {
+    Future.delayed(const Duration(seconds: 1), () {
       setConfigFile();
     });
 
