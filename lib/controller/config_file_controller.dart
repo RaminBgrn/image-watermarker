@@ -6,17 +6,14 @@ import 'package:image_water_marker/models/config_file_model.dart';
 import 'package:path_provider/path_provider.dart';
 
 class ConfigFileController extends GetxController {
-  String fileDire = Platform.isWindows
-      ? Platform.environment['APPDATA']!
-      : Directory.current.path;
+  String fileDire = Platform.isWindows ? Platform.environment['APPDATA']! : Directory.current.path;
   String _defaultOutputPath = "";
   String get getDefaultOutputPath => _defaultOutputPath;
 
   Future<Map<String, dynamic>> readData() async {
     try {
       File configFile = File("$fileDire/data/config.json");
-      Map<String, dynamic> decoderConfigFile =
-          jsonDecode(configFile.readAsStringSync());
+      Map<String, dynamic> decoderConfigFile = jsonDecode(configFile.readAsStringSync());
       return decoderConfigFile;
     } catch (e) {
       return {};
@@ -31,6 +28,15 @@ class ConfigFileController extends GetxController {
     updateConfigFile.writeAsStringSync(jsonEncode(configMap));
   }
 
+  void deleteSingleData(String key, dynamic value) async {
+    Map<String, dynamic> data = await readData();
+    if (data.isEmpty) return;
+    data[key] = value;
+    File updateSingleFile = File("$fileDire/data/config.json");
+    updateSingleFile.writeAsStringSync(jsonEncode(data), mode: FileMode.writeOnlyAppend);
+    update();
+  }
+
   dynamic getSingleData({required String key}) async {
     Map<String, dynamic> jsonMap = await readData();
     return jsonMap[key];
@@ -41,8 +47,7 @@ class ConfigFileController extends GetxController {
     Directory('$fileDire/data/products logos').createSync(recursive: true);
     Directory('$fileDire/data/business logo').createSync(recursive: true);
     Directory outPutPath = await getApplicationDocumentsDirectory();
-    Directory('${outPutPath.absolute.path}/Water Mark')
-        .createSync(recursive: true);
+    Directory('${outPutPath.absolute.path}/Water Mark').createSync(recursive: true);
     _defaultOutputPath = "${outPutPath.absolute.path}/Water Mark";
     File configFile = File("$fileDire/data/config.json");
     if (!await configFile.exists()) {

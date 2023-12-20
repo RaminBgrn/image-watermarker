@@ -10,7 +10,7 @@ class AddImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
-      cursor: SystemMouseCursors.cell,
+      cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: () {
           Get.find<EditImageController>().importImage();

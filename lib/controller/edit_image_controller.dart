@@ -11,7 +11,7 @@ class EditImageController extends GetxController {
   BoxFit _fit = BoxFit.contain;
   BoxFit get getBoxFit => _fit;
 
-  final List<ImageModel> _imageModel = [];
+  List<ImageModel> _imageModel = [];
   List<ImageModel> get getImageModel => _imageModel;
 
   bool _brandFlag = false;
@@ -30,9 +30,15 @@ class EditImageController extends GetxController {
     update();
   }
 
+  void removeAllImages() {
+    _imageModel = [];
+    update();
+  }
+
   void importImage() async {
     try {
-      List<File> images = await Get.find<ImportImageController>().selectImageToWaterMark();
+      List<File> images =
+          await Get.find<ImportImageController>().selectImageToWaterMark();
       for (File file in images) {
         _imageModel.add(
           ImageModel(

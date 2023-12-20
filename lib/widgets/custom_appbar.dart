@@ -6,6 +6,7 @@ import 'package:image_water_marker/utils/colors.dart';
 import 'package:image_water_marker/widgets/add_image.dart';
 import 'package:image_water_marker/widgets/brands_dropdown.dart';
 import 'package:image_water_marker/widgets/logo_button.dart';
+import 'package:image_water_marker/widgets/remove_all_images.dart';
 import 'package:image_water_marker/widgets/save_image.dart';
 import 'package:image_water_marker/widgets/setting.dart';
 
@@ -51,6 +52,7 @@ class CustomAppBar extends StatelessWidget {
               children: [
                 Row(
                   children: [
+                    RemoveAllImages(),
                     SaveImage(),
                     SizedBox(width: 20),
                     AddImage(),

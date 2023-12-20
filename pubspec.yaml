@@ -46,12 +46,10 @@ dependencies:
   flutter_staggered_animations: ^1.1.1
   flutter_staggered_grid_view: ^0.7.0
   cyclop: ^0.7.0
-  syncfusion_flutter_sliders: ^23.1.43
+  syncfusion_flutter_sliders: ^24.1.41
   image_picker: ^1.0.4
   dropdown_button2: ^2.3.9
   path: ^1.8.3
-  file_picker: ^6.1.1
-  filesystem_picker: ^4.0.0
   file_selector: ^1.0.1
   widgets_to_image: ^0.0.2
   path_provider: ^2.1.1
