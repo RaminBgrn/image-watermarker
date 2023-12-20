@@ -65,7 +65,7 @@ class BrandsDropdown extends StatelessWidget {
                           width: 90,
                           height: 50,
                           margin: const EdgeInsets.all(2),
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                          // padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
                           decoration: BoxDecoration(color: myGrey[300], borderRadius: BorderRadius.circular(4)),
                           child: SvgPicture.file(
                             File(

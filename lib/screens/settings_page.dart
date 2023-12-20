@@ -62,28 +62,24 @@ class SettingsPage extends StatelessWidget {
                             children: [
                               Text(
                                 'Files Configuration',
-                                style: GoogleFonts.karla(
-                                    fontSize: 22, color: myGrey[300]),
+                                style: GoogleFonts.karla(fontSize: 22, color: myGrey[300]),
                               ),
                               const SizedBox(
                                 height: 8,
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   Row(
                                     children: [
                                       Text(
                                         'Show business logo  ',
-                                        style: GoogleFonts.karla(
-                                            fontSize: 16, color: myGrey[300]),
+                                        style: GoogleFonts.karla(fontSize: 16, color: myGrey[300]),
                                       ),
                                       SingleCheckBox(
                                           defaultValue: clr.hasShowLogo,
                                           onClick: (value) {
-                                            Get.find<SettingController>()
-                                                .checkToShowLog = value;
+                                            Get.find<SettingController>().checkToShowLog = value;
                                           }),
                                     ],
                                   ),
@@ -91,14 +87,12 @@ class SettingsPage extends StatelessWidget {
                                     children: [
                                       Text(
                                         'Show brands logo  ',
-                                        style: GoogleFonts.karla(
-                                            fontSize: 16, color: myGrey[300]),
+                                        style: GoogleFonts.karla(fontSize: 16, color: myGrey[300]),
                                       ),
                                       SingleCheckBox(
                                           defaultValue: clr.hasShowBrands,
                                           onClick: (value) {
-                                            Get.find<SettingController>()
-                                                .showOrHideBrand = value;
+                                            Get.find<SettingController>().showOrHideBrand = value;
                                           }),
                                     ],
                                   ),
@@ -108,29 +102,23 @@ class SettingsPage extends StatelessWidget {
                                 height: 8,
                               ),
                               TextFieldWithTitle(
-                                controller:
-                                    clr.getWaterMarkImageFilePathController,
+                                controller: clr.getWaterMarkImageFilePathController,
                                 textFieldHint: "water mark image file",
                                 onClearTap: () {
                                   clr.clearWaterMarkImage();
                                 },
                                 isReadOnly: true,
-                                clearButtonColor: clr.isWaterMarkSelect
-                                    ? myRed[400]
-                                    : myGrey[300],
+                                clearButtonColor: clr.isWaterMarkSelect ? myRed[400] : myGrey[300],
                                 onTap: () async {
                                   clr.chooseWaterMark();
                                 },
                               ),
                               TextFieldWithTitle(
                                 hasEnableButton: true,
-                                controller:
-                                    clr.getBusinessLogoPathTextController,
+                                controller: clr.getBusinessLogoPathTextController,
                                 isReadOnly: true,
                                 textFieldHint: 'your business logo',
-                                clearButtonColor: clr.hasBusinessLogo
-                                    ? myRed[400]
-                                    : myGrey[300],
+                                clearButtonColor: clr.hasBusinessLogo ? myRed[400] : myGrey[300],
                                 onClearTap: clr.clearBusinessLogo,
                                 onTap: () async {
                                   clr.chooseBusinessLogoFile();
@@ -138,8 +126,7 @@ class SettingsPage extends StatelessWidget {
                               ),
                               TextFieldWithTitle(
                                 hasEnableButton: true,
-                                clearButtonColor:
-                                    clr.hasBrands ? myRed[400] : myGrey[300],
+                                clearButtonColor: clr.hasBrands ? myRed[400] : myGrey[300],
                                 controller: clr.getBrandsFolderPathController,
                                 isReadOnly: true,
                                 onClearTap: clr.clearBrandsLogoPath,
@@ -174,8 +161,7 @@ class SettingsPage extends StatelessWidget {
                         ),
                         Text(
                           'Design',
-                          style: GoogleFonts.karla(
-                              fontSize: 22, color: myGrey[300]),
+                          style: GoogleFonts.karla(fontSize: 22, color: myGrey[300]),
                         ),
                         const SizedBox(
                           height: 15,
@@ -211,15 +197,13 @@ class SettingsPage extends StatelessWidget {
                           const SizedBox(),
                           Align(
                               alignment: Alignment.center,
-                              child:
-                                  GetBuilder<SettingController>(builder: (clr) {
+                              child: GetBuilder<SettingController>(builder: (clr) {
                                 return Container(
                                   width: 300,
                                   height: 400,
                                   decoration: BoxDecoration(
                                     color: Colors.white,
-                                    borderRadius: BorderRadius.circular(
-                                        clr.getImageBoarderRadius),
+                                    borderRadius: BorderRadius.circular(clr.getImageBoarderRadius),
                                     boxShadow: [
                                       BoxShadow(
                                         offset: const Offset(0, 4),
@@ -228,8 +212,7 @@ class SettingsPage extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  child: GetBuilder<SettingController>(
-                                      builder: (clr) {
+                                  child: GetBuilder<SettingController>(builder: (clr) {
                                     return Stack(
                                       children: [
                                         Align(
@@ -240,13 +223,11 @@ class SettingsPage extends StatelessWidget {
                                         ),
                                         clr.isWaterMarkSelect
                                             ? Opacity(
-                                                opacity:
-                                                    clr.getWaterMarkOpacity,
+                                                opacity: clr.getWaterMarkOpacity,
                                                 child: SvgPicture.file(
                                                   clr.getWaterMarkFile,
                                                   fit: clr.getWaterMarkBoxFit,
-                                                  alignment:
-                                                      clr.getWaterMarkAlignment,
+                                                  alignment: clr.getWaterMarkAlignment,
                                                 ),
                                               )
                                             : const SizedBox(),
@@ -254,47 +235,40 @@ class SettingsPage extends StatelessWidget {
                                           bottom: 18,
                                           top: 18,
                                           child: Align(
-                                            alignment:
-                                                clr.getBrandsLogoAlignment,
+                                            alignment: clr.getBrandsLogoAlignment,
                                             child: clr.hasShowBrands
                                                 ? Container(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 12,
-                                                        vertical: 4),
+                                                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                                                     decoration: BoxDecoration(
                                                       border: Border(
-                                                        bottom: BorderSide(
-                                                            width: 1,
-                                                            color:
-                                                                myPink[400]!),
+                                                        bottom: BorderSide(width: 1, color: myPink[400]!),
                                                         top: BorderSide(
                                                           width: 1,
                                                           color: myPink[400]!,
                                                         ),
                                                         right: BorderSide(
-                                                          width:
-                                                              (clr.getRightBrandBoarderWidth /
-                                                                  3),
+                                                          width: (clr.getRightBrandBoarderWidth / 3),
                                                           color: myPink[400]!,
                                                         ),
                                                         left: BorderSide(
-                                                          width:
-                                                              (clr.getLeftBrandBoarderWidth /
-                                                                  3),
+                                                          width: (clr.getLeftBrandBoarderWidth / 3),
                                                           color: myPink[400]!,
                                                         ),
                                                       ),
                                                     ),
-                                                    child: Text(
-                                                      'brands logo',
-                                                      style: GoogleFonts.karla(
-                                                        color: myGrey[700],
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    ),
+                                                    child: clr.getBrands.isEmpty
+                                                        ? Text(
+                                                            'brands logo',
+                                                            style: GoogleFonts.karla(
+                                                              color: myGrey[700],
+                                                              fontSize: 14,
+                                                              fontWeight: FontWeight.bold,
+                                                            ),
+                                                          )
+                                                        : SvgPicture.file(
+                                                            clr.getBrands.first,
+                                                            width: 60,
+                                                          ),
                                                   )
                                                 : const SizedBox(),
                                           ),
@@ -304,76 +278,44 @@ class SettingsPage extends StatelessWidget {
                                                 top: 18,
                                                 bottom: 18,
                                                 child: Align(
-                                                  alignment: clr
-                                                      .getBusinessLogoAlignment,
+                                                  alignment: clr.getBusinessLogoAlignment,
                                                   child: Container(
                                                     decoration: BoxDecoration(
                                                       border: Border(
-                                                        bottom: BorderSide(
-                                                            width: 1,
-                                                            color:
-                                                                myPink[400]!),
+                                                        bottom: BorderSide(width: 1, color: myPink[400]!),
                                                         top: BorderSide(
                                                           width: 1,
                                                           color: myPink[400]!,
                                                         ),
                                                         left: BorderSide(
-                                                          width:
-                                                              (clr.getLeftBusinessBoarderWidth /
-                                                                  3),
+                                                          width: (clr.getLeftBusinessBoarderWidth / 3),
                                                           color: myPink[400]!,
                                                         ),
-                                                        right: BorderSide(
-                                                            width:
-                                                                (clr.getRightBusinessBoarderWidth /
-                                                                    3),
-                                                            color:
-                                                                myPink[400]!),
+                                                        right: BorderSide(width: (clr.getRightBusinessBoarderWidth / 3), color: myPink[400]!),
                                                       ),
                                                     ),
                                                     child: clr.hasBusinessLogo
                                                         ? ClipRect(
-                                                            child:
-                                                                BackdropFilter(
-                                                              filter: ImageFilter
-                                                                  .blur(
-                                                                      sigmaX: 4,
-                                                                      sigmaY:
-                                                                          4),
+                                                            child: BackdropFilter(
+                                                              filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
                                                               child: Container(
-                                                                padding: const EdgeInsets
-                                                                    .symmetric(
-                                                                    horizontal:
-                                                                        12,
-                                                                    vertical:
-                                                                        4),
-                                                                color: Colors
-                                                                    .white
-                                                                    .withOpacity(
-                                                                        0.1),
-                                                                child: clr
-                                                                        .hasBusinessLogo
-                                                                    ? SvgPicture.file(
-                                                                        clr
-                                                                            .getLogoImage,
+                                                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                                                                color: Colors.white.withOpacity(0.1),
+                                                                child: clr.hasBusinessLogo
+                                                                    ? SvgPicture.file(clr.getLogoImage,
                                                                         // width: 50,
 
-                                                                        height:
-                                                                            25)
+                                                                        height: 25)
                                                                     : const SizedBox(),
                                                               ),
                                                             ),
                                                           )
                                                         : Text(
                                                             'logo',
-                                                            style: GoogleFonts
-                                                                .karla(
+                                                            style: GoogleFonts.karla(
                                                               fontSize: 14,
-                                                              color:
-                                                                  myGrey[700],
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
+                                                              color: myGrey[700],
+                                                              fontWeight: FontWeight.bold,
                                                             ),
                                                           ),
                                                   ),
@@ -395,14 +337,12 @@ class SettingsPage extends StatelessWidget {
                                         width: 1,
                                         color: myGreen[600]!,
                                       ),
-                                      backgroundColor:
-                                          myGreen[900]!.withOpacity(0.2)),
+                                      backgroundColor: myGreen[900]!.withOpacity(0.2)),
                                   onPressed: () {
                                     Get.find<SettingController>().saveConfigs();
                                   },
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0, vertical: 6.0),
+                                    padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
                                     child: Text(
                                       "Save",
                                       style: GoogleFonts.karla(
