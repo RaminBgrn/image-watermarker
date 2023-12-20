@@ -23,3 +23,9 @@ URL Launcher
 Project Contribution: This project is open-source, allowing you to contribute to its development, add new features, and address issues. This opportunity enables other developers to assist in improving and expanding this application.
 
 With this software, you can easily convert your images into watermarked versions and share them. The program is designed with a focus on user interface design, flexibility, and performance, utilizing the selected packages to achieve these goals.
+
+## Main Page
+![alt text](https://github.com/RaminBgrn/image-watermarker/blob/main/screenshots/Screenshot%20from%202023-12-20%2009-38-47.png?row=true)
+
+as you can see in the picture, on the top right corner we have some buttons which help us to control some values
+one of the important of them is setting button which is last one
