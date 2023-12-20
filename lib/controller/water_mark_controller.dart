@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:ui';
 
-import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -59,6 +58,8 @@ class WaterMarkController extends GetxController {
     super.onClose();
   }
 
+  void savePath() {}
+
   void makeWatermark(List<ImageModel> model, ConfigFileModel configModel) {
     ReceivePort port = ReceivePort();
     WaterMarkGeneratorModel waterMarkModel = WaterMarkGeneratorModel(
@@ -72,9 +73,12 @@ class WaterMarkController extends GetxController {
       savePath: _savePath,
       title: _titleController.text,
       leftBrandsBorder: Get.find<SettingController>().getLeftBrandBoarderWidth,
-      rightBrandsBorder: Get.find<SettingController>().getRightBrandBoarderWidth,
-      leftBusinessBorder: Get.find<SettingController>().getLeftBusinessBoarderWidth,
-      rightBusinessBorder: Get.find<SettingController>().getRightBusinessBoarderWidth,
+      rightBrandsBorder:
+          Get.find<SettingController>().getRightBrandBoarderWidth,
+      leftBusinessBorder:
+          Get.find<SettingController>().getLeftBusinessBoarderWidth,
+      rightBusinessBorder:
+          Get.find<SettingController>().getRightBusinessBoarderWidth,
     );
     executeWidgetToImage(waterMarkModel);
     // Isolate.spawn<WaterMarkGeneratorModel>(
@@ -121,94 +125,95 @@ class WaterMarkController extends GetxController {
 
   Widget _firstPage() {
     return SizedBox(
-      child: Column(crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-        CustomTextField(
-          controller: _titleController,
-        ),
-        Row(
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            const Expanded(
-              flex: 1,
-              child: SizedBox(),
+            CustomTextField(
+              controller: _titleController,
             ),
-            Expanded(
-                flex: 3,
-                child: CustomTextField(
-                  hint: "Image With (PX)",
-                  controller: _widthController,
-                  maxLength: 4,
-                  formatters: [
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                    FilteringTextInputFormatter.digitsOnly,
-                  ],
-                )),
-            const SizedBox(
-              width: 8,
+            Row(
+              children: [
+                const Expanded(
+                  flex: 1,
+                  child: SizedBox(),
+                ),
+                Expanded(
+                    flex: 3,
+                    child: CustomTextField(
+                      hint: "Image With (PX)",
+                      controller: _widthController,
+                      maxLength: 4,
+                      formatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+                    )),
+                const SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  flex: 3,
+                  child: CustomTextField(
+                    hint: "Image Height (PX)",
+                    controller: _heightController,
+                    formatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
+                    maxLength: 4,
+                  ),
+                ),
+                const Expanded(
+                  flex: 1,
+                  child: SizedBox(),
+                ),
+              ],
             ),
-            Expanded(
-              flex: 3,
-              child: CustomTextField(
-                hint: "Image Height (PX)",
-                controller: _heightController,
-                formatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-                maxLength: 4,
-              ),
+            TextFieldWithTitle(
+              controller: _savePathController,
+              textFieldHint: 'Save images path',
+              onTap: () {},
+              removeButtonFlag: false,
             ),
-            const Expanded(
-              flex: 1,
-              child: SizedBox(),
-            ),
-          ],
-        ),
-        TextFieldWithTitle(
-          controller: _savePathController,
-          textFieldHint: 'Save images path',
-          onTap: () async {
-            final String? directoryPath = await getDirectoryPath();
-            if (directoryPath == null) return;
-            _savePath = directoryPath;
-            _savePathController.text = directoryPath;
-          },
-          removeButtonFlag: false,
-        ),
-        MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            onTap: () {
-              _controller.animateToPage(1, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
-              makeWatermark(Get.find<EditImageController>().getImageModel, Get.find<SettingController>().getConfigFileModel);
-              _height = double.tryParse(_heightController.text)!;
-              _width = double.tryParse(_widthController.text)!;
-              _title = _titleController.text;
-              _savePath = _savePathController.text;
-            },
-            child: Container(
-              width: 80,
-              height: 35,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: myGreen[900]!.withOpacity(0.2),
-                border: Border.all(
-                  width: 1,
-                  color: myGreen[300]!,
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () {
+                  _controller.animateToPage(1,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut);
+                  makeWatermark(Get.find<EditImageController>().getImageModel,
+                      Get.find<SettingController>().getConfigFileModel);
+                  _height = double.tryParse(_heightController.text)!;
+                  _width = double.tryParse(_widthController.text)!;
+                  _title = _titleController.text;
+                  _savePath = _savePathController.text;
+                },
+                child: Container(
+                  width: 80,
+                  height: 35,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: myGreen[900]!.withOpacity(0.2),
+                    border: Border.all(
+                      width: 1,
+                      color: myGreen[300]!,
+                    ),
+                  ),
+                  child: Text(
+                    'START',
+                    style: GoogleFonts.karla(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: myGreen[400],
+                    ),
+                  ),
                 ),
               ),
-              child: Text(
-                'START',
-                style: GoogleFonts.karla(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: myGreen[400],
-                ),
-              ),
-            ),
-          ),
-        )
-      ]),
+            )
+          ]),
     );
   }
 
@@ -217,7 +222,8 @@ class WaterMarkController extends GetxController {
     List<ImageModel> images = models.imageModels!;
     Directory("${models.savePath}/${models.title}").createSync(recursive: true);
     for (int i = 0; i < images.length; i++) {
-      String watermark = "${models.savePath}/${models.title}/${models.title}-$i.png";
+      String watermark =
+          "${models.savePath}/${models.title}/${models.title}-$i.png";
       shot
           .captureFromWidget(
               SizedBox(
@@ -229,11 +235,13 @@ class WaterMarkController extends GetxController {
                       alignment: Alignment.center,
                       child: Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(models.configModel!.imageBorderRadius ?? 0),
+                          borderRadius: BorderRadius.circular(
+                              models.configModel!.imageBorderRadius ?? 0),
                           color: images[i].backgroundColor,
                         ),
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(models.configModel!.imageBorderRadius ?? 0),
+                          borderRadius: BorderRadius.circular(
+                              models.configModel!.imageBorderRadius ?? 0),
                           child: Image.file(
                             images[i].image!,
                             width: models.width,
@@ -244,14 +252,17 @@ class WaterMarkController extends GetxController {
                       ),
                     ),
                     Align(
-                      alignment: convertAlignmentsToEnum(models.configModel!.waterMarkLogoPosition!),
+                      alignment: convertAlignmentsToEnum(
+                          models.configModel!.waterMarkLogoPosition!),
                       child: Opacity(
                         opacity: models.configModel!.waterMarkOpacity!,
-                        child: models.configModel!.waterMarkImage != null && models.configModel!.waterMarkImage!.isNotEmpty
+                        child: models.configModel!.waterMarkImage != null &&
+                                models.configModel!.waterMarkImage!.isNotEmpty
                             ? SvgPicture.file(
                                 File(models.configModel!.waterMarkImage!),
                                 width: models.height,
-                                fit: convertStringToBoxFitEnum(models.configModel!.waterMarkImageBoxFit!),
+                                fit: convertStringToBoxFitEnum(
+                                    models.configModel!.waterMarkImageBoxFit!),
                               )
                             : const SizedBox(),
                       ),
@@ -259,7 +270,8 @@ class WaterMarkController extends GetxController {
                     Positioned.fill(
                       top: 16,
                       child: Align(
-                        alignment: convertAlignmentsToEnum(models.configModel!.businessLogoPosition!),
+                        alignment: convertAlignmentsToEnum(
+                            models.configModel!.businessLogoPosition!),
                         child: ClipRect(
                           child: BackdropFilter(
                             filter: ImageFilter.blur(
@@ -272,13 +284,21 @@ class WaterMarkController extends GetxController {
                               padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                 border: Border(
-                                  right: BorderSide(width: models.rightBusinessBorder!, color: const Color(0xFFFDBCC7)),
-                                  top: const BorderSide(width: 3, color: Color(0xFFFDBCC7)),
-                                  bottom: const BorderSide(width: 3, color: Color(0xFFFDBCC7)),
-                                  left: BorderSide(width: models.leftBusinessBorder!, color: const Color(0xFFFDBCC7)),
+                                  right: BorderSide(
+                                      width: models.rightBusinessBorder!,
+                                      color: const Color(0xFFFDBCC7)),
+                                  top: const BorderSide(
+                                      width: 3, color: Color(0xFFFDBCC7)),
+                                  bottom: const BorderSide(
+                                      width: 3, color: Color(0xFFFDBCC7)),
+                                  left: BorderSide(
+                                      width: models.leftBusinessBorder!,
+                                      color: const Color(0xFFFDBCC7)),
                                 ),
                               ),
-                              child: models.configModel!.businessLogo != null && models.configModel!.businessLogo!.isNotEmpty
+                              child: models.configModel!.businessLogo != null &&
+                                      models
+                                          .configModel!.businessLogo!.isNotEmpty
                                   ? SvgPicture.file(
                                       File(models.configModel!.businessLogo!),
                                       width: 240,
@@ -293,7 +313,8 @@ class WaterMarkController extends GetxController {
                     Positioned.fill(
                       bottom: 60,
                       child: Align(
-                        alignment: convertAlignmentsToEnum(models.configModel!.brandsPosition!),
+                        alignment: convertAlignmentsToEnum(
+                            models.configModel!.brandsPosition!),
                         child: ClipRect(
                           child: BackdropFilter(
                             filter: ImageFilter.blur(
@@ -306,13 +327,20 @@ class WaterMarkController extends GetxController {
                               padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                 border: Border(
-                                  right: BorderSide(width: models.rightBrandsBorder!, color: const Color(0xFFFDBCC7)),
-                                  top: const BorderSide(width: 3, color: Color(0xFFFDBCC7)),
-                                  bottom: const BorderSide(width: 3, color: Color(0xFFFDBCC7)),
-                                  left: BorderSide(width: models.leftBrandsBorder!, color: const Color(0xFFFDBCC7)),
+                                  right: BorderSide(
+                                      width: models.rightBrandsBorder!,
+                                      color: const Color(0xFFFDBCC7)),
+                                  top: const BorderSide(
+                                      width: 3, color: Color(0xFFFDBCC7)),
+                                  bottom: const BorderSide(
+                                      width: 3, color: Color(0xFFFDBCC7)),
+                                  left: BorderSide(
+                                      width: models.leftBrandsBorder!,
+                                      color: const Color(0xFFFDBCC7)),
                                 ),
                               ),
-                              child: models.brandFilePath != null && models.brandFilePath!.isNotEmpty
+                              child: models.brandFilePath != null &&
+                                      models.brandFilePath!.isNotEmpty
                                   ? SvgPicture.file(
                                       File(models.brandFilePath!),
                                       width: 240,
@@ -328,8 +356,10 @@ class WaterMarkController extends GetxController {
                       alignment: Alignment.bottomCenter,
                       child: ClipRRect(
                         borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(models.configModel!.imageBorderRadius ?? 0),
-                          bottomRight: Radius.circular(models.configModel!.imageBorderRadius ?? 0),
+                          bottomLeft: Radius.circular(
+                              models.configModel!.imageBorderRadius ?? 0),
+                          bottomRight: Radius.circular(
+                              models.configModel!.imageBorderRadius ?? 0),
                         ),
                         child: BackdropFilter(
                           filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
@@ -337,40 +367,46 @@ class WaterMarkController extends GetxController {
                             width: models.width,
                             height: 60,
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 4),
-                              child: Row(crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                // RichText(
-                                //   text: TextSpan(
-                                //     children: [
-                                //       TextSpan(
-                                //         text: 'https:// ',
-                                //         style: GoogleFonts.openSans(
-                                //           fontSize: 16,
-                                //           color: myGrey[500],
-                                //           fontWeight: FontWeight.w600,
-                                //         ),
-                                //       ),
-                                //       TextSpan(
-                                //         text: 'GOLEYAKH.STORE', // from model
-                                //         style: GoogleFonts.openSans(
-                                //           fontSize: 25,
-                                //           fontWeight: FontWeight.bold,
-                                //           color: myGrey[500],
-                                //         ),
-                                //       )
-                                //     ],
-                                //   ),
-                                // ),
-                                Text(
-                                  models.title!,
-                                  style: GoogleFonts.openSans(
-                                    fontSize: 53,
-                                    color: myGrey[500],
-                                    fontWeight: FontWeight.w900,
-                                    height: 1,
-                                  ),
-                                )
-                              ]),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 32.0, vertical: 4),
+                              child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    RichText(
+                                      text: TextSpan(
+                                        children: [
+                                          TextSpan(
+                                            text: 'https:// ',
+                                            style: GoogleFonts.openSans(
+                                              fontSize: 16,
+                                              color: myGrey[500],
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text:
+                                                'GOLEYAKH.STORE', // from model
+                                            style: GoogleFonts.openSans(
+                                              fontSize: 25,
+                                              fontWeight: FontWeight.bold,
+                                              color: myGrey[500],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Text(
+                                      models.title!,
+                                      style: GoogleFonts.openSans(
+                                        fontSize: 53,
+                                        color: myGrey[500],
+                                        fontWeight: FontWeight.w900,
+                                        height: 1,
+                                      ),
+                                    )
+                                  ]),
                             ),
                           ),
                         ),
